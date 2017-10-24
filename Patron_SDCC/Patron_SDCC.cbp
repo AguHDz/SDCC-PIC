@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Patron_SDCC" />
+		<Option pch_mode="2" />
+		<Option compiler="small_device_c_compiler_to_pic" />
+		<Build>
+			<Target title="Release">
+				<Option output="bin/Release/Patron_SDCC" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="small_device_c_compiler_to_pic" />
+				<Compiler>
+					<Add option="-mpic14" />
+					<Add option="--opt-code-size" />
+					<Add option="-p16f84a" />
+				</Compiler>
+			</Target>
+		</Build>
+		<Unit filename="bin/Release/Patron_SDCC.hex" />
+		<Unit filename="bin/Release/Patron_SDCC.lst" />
+		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="obj/Release/main.asm">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="obj/Release/main.lst" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

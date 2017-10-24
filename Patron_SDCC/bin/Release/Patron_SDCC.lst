@@ -1,0 +1,328 @@
+gplink-1.5.0 #1285 (Sep 12 2016)
+Copyright (c) 1998-2016 gputils project
+Listing File Generated: 10-20-2017  22:10:09
+
+
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           ;--------------------------------------------------------
+                                           ; File Created by SDCC : free open source ANSI-C Compiler
+                                           ; Version 3.6.0 #9615 (MINGW64)
+                                           ;--------------------------------------------------------
+                                           ; PIC port for the 14-bit core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"main.c"
+                                           	list	p=16f84a
+                                           	radix dec
+                                           	include "p16f84a.inc"
+                                                   LIST
+
+                                           ;==========================================================================
+                                           ; Build date : Oct 21 2015
+                                           ;  MPASM PIC16F84A processor include
+                                           ; 
+                                           ;  (c) Copyright 1999-2015 Microchip Technology, All rights reserved
+                                           ;==========================================================================
+
+                                                   NOLIST
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_STATUSbits
+                                           	extern	_PORTAbits
+                                           	extern	_PORTBbits
+                                           	extern	_INTCONbits
+                                           	extern	_OPTION_REGbits
+                                           	extern	_TRISAbits
+                                           	extern	_TRISBbits
+                                           	extern	_EECON1bits
+                                           	extern	_INDF
+                                           	extern	_TMR0
+                                           	extern	_PCL
+                                           	extern	_STATUS
+                                           	extern	_FSR
+                                           	extern	_PORTA
+                                           	extern	_PORTB
+                                           	extern	_EEDATA
+                                           	extern	_EEADR
+                                           	extern	_PCLATH
+                                           	extern	_INTCON
+                                           	extern	_OPTION_REG
+                                           	extern	_TRISA
+                                           	extern	_TRISB
+                                           	extern	_EECON1
+                                           	extern	_EECON2
+                                           	extern	__sdcc_gsinit_startup
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_izquierda
+                                           	global	_derecha
+                                           	global	_delay_ms
+                                           	global	_main
+
+                                           	global PSAVE
+                                           	global SSAVE
+                                           	global WSAVE
+                                           	global STK12
+                                           	global STK11
+                                           	global STK10
+                                           	global STK09
+                                           	global STK08
+                                           	global STK07
+                                           	global STK06
+                                           	global STK05
+                                           	global STK04
+                                           	global STK03
+                                           	global STK02
+                                           	global STK01
+                                           	global STK00
+
+                                           sharebank udata_ovr 0x000C
+                                           PSAVE	res 1
+                                           SSAVE	res 1
+                                           WSAVE	res 1
+                                           STK12	res 1
+                                           STK11	res 1
+                                           STK10	res 1
+                                           STK09	res 1
+                                           STK08	res 1
+                                           STK07	res 1
+                                           STK06	res 1
+                                           STK05	res 1
+                                           STK04	res 1
+                                           STK03	res 1
+                                           STK02	res 1
+                                           STK01	res 1
+                                           STK00	res 1
+
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           UDL_main_0	udata
+                                           r0x1001	res	1
+                                           r0x1000	res	1
+                                           r0x1002	res	1
+                                           r0x1003	res	1
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; reset vector 
+                                           ;--------------------------------------------------------
+                                           STARTUP	code 0x0000
+000000   0000     nop                      	nop
+                                           	pagesel __sdcc_gsinit_startup
+000001   2802     goto    0x0002           	goto	__sdcc_gsinit_startup
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_main	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = M
+                                           ;***
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _derecha
+                                           ;   _izquierda
+                                           ;   _derecha
+                                           ;   _izquierda
+                                           ;; Starting pCode block
+                                           S_main__main	code
+                                           _main:
+                                           ; 2 exit points
+                                           ;	.line	33; "main.c"	TRISA = 0xF0;                 //porta como salida menos RA4(desactivado)
+000118   30f0     movlw   0xf0             	MOVLW	0xf0
+000119   1683     bsf     0x03, 0x5        	BANKSEL	_TRISA
+00011a   0085     movwf   0x05             	MOVWF	_TRISA
+                                           ;	.line	34; "main.c"	GIE   = 0;                    //todas las interrupciones desactivadas
+00011b   1283     bcf     0x03, 0x5        	BANKSEL	_INTCONbits
+00011c   138b     bcf     0x0b, 0x7        	BCF	_INTCONbits,7
+                                           _00106_DS_:
+                                           ;	.line	37; "main.c"	derecha();
+                                           	PAGESEL	_derecha
+00011d   20d2     call    0x00d2           	CALL	_derecha
+                                           	PAGESEL	$
+                                           ;	.line	38; "main.c"	izquierda();
+                                           	PAGESEL	_izquierda
+00011e   2107     call    0x0107           	CALL	_izquierda
+                                           	PAGESEL	$
+00011f   291d     goto    0x011d           	GOTO	_00106_DS_
+000120   0008     return                   	RETURN	
+                                           ; exit point of _main
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _delay_ms
+                                           ;   _delay_ms
+                                           ;   _delay_ms
+                                           ;   _delay_ms
+                                           ;1 compiler assigned register :
+                                           ;   STK00
+                                           ;; Starting pCode block
+                                           S_main__izquierda	code
+                                           _izquierda:
+                                           ; 2 exit points
+                                           ;	.line	71; "main.c"	RA3 = 0;
+000107   1283     bcf     0x03, 0x5        	BANKSEL	_PORTAbits
+000108   1185     bcf     0x05, 0x3        	BCF	_PORTAbits,3
+                                           ;	.line	72; "main.c"	RA2 = 1;
+000109   1505     bsf     0x05, 0x2        	BSF	_PORTAbits,2
+                                           ;	.line	73; "main.c"	delay_ms(300);
+00010a   302c     movlw   0x2c             	MOVLW	0x2c
+00010b   009b     movwf   0x1b             	MOVWF	STK00
+00010c   3001     movlw   0x01             	MOVLW	0x01
+                                           	PAGESEL	_delay_ms
+00010d   20ee     call    0x00ee           	CALL	_delay_ms
+                                           	PAGESEL	$
+                                           ;	.line	74; "main.c"	RA2 = 0;
+00010e   1283     bcf     0x03, 0x5        	BANKSEL	_PORTAbits
+00010f   1105     bcf     0x05, 0x2        	BCF	_PORTAbits,2
+                                           ;	.line	75; "main.c"	RA1 = 1;
+000110   1485     bsf     0x05, 0x1        	BSF	_PORTAbits,1
+                                           ;	.line	76; "main.c"	delay_ms(300);
+000111   302c     movlw   0x2c             	MOVLW	0x2c
+000112   009b     movwf   0x1b             	MOVWF	STK00
+000113   3001     movlw   0x01             	MOVLW	0x01
+                                           	PAGESEL	_delay_ms
+000114   20ee     call    0x00ee           	CALL	_delay_ms
+                                           	PAGESEL	$
+                                           ;	.line	77; "main.c"	RA1 = 0;
+000115   1283     bcf     0x03, 0x5        	BANKSEL	_PORTAbits
+000116   1085     bcf     0x05, 0x1        	BCF	_PORTAbits,1
+000117   0008     return                   	RETURN	
+                                           ; exit point of _izquierda
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _delay_ms
+                                           ;   _delay_ms
+                                           ;   _delay_ms
+                                           ;   _delay_ms
+                                           ;   _delay_ms
+                                           ;   _delay_ms
+                                           ;   _delay_ms
+                                           ;   _delay_ms
+                                           ;1 compiler assigned register :
+                                           ;   STK00
+                                           ;; Starting pCode block
+                                           S_main__derecha	code
+                                           _derecha:
+                                           ; 2 exit points
+                                           ;	.line	56; "main.c"	RA0 = 1;
+0000d2   1283     bcf     0x03, 0x5        	BANKSEL	_PORTAbits
+0000d3   1405     bsf     0x05, 0x0        	BSF	_PORTAbits,0
+                                           ;	.line	57; "main.c"	delay_ms(300);  // ~300ms @ 4MHz
+0000d4   302c     movlw   0x2c             	MOVLW	0x2c
+0000d5   009b     movwf   0x1b             	MOVWF	STK00
+0000d6   3001     movlw   0x01             	MOVLW	0x01
+                                           	PAGESEL	_delay_ms
+0000d7   20ee     call    0x00ee           	CALL	_delay_ms
+                                           	PAGESEL	$
+                                           ;	.line	58; "main.c"	RA0 = 0;
+0000d8   1283     bcf     0x03, 0x5        	BANKSEL	_PORTAbits
+0000d9   1005     bcf     0x05, 0x0        	BCF	_PORTAbits,0
+                                           ;	.line	59; "main.c"	RA1 = 1;
+0000da   1485     bsf     0x05, 0x1        	BSF	_PORTAbits,1
+                                           ;	.line	60; "main.c"	delay_ms(300);
+0000db   302c     movlw   0x2c             	MOVLW	0x2c
+0000dc   009b     movwf   0x1b             	MOVWF	STK00
+0000dd   3001     movlw   0x01             	MOVLW	0x01
+                                           	PAGESEL	_delay_ms
+0000de   20ee     call    0x00ee           	CALL	_delay_ms
+                                           	PAGESEL	$
+                                           ;	.line	61; "main.c"	RA1 = 0;
+0000df   1283     bcf     0x03, 0x5        	BANKSEL	_PORTAbits
+0000e0   1085     bcf     0x05, 0x1        	BCF	_PORTAbits,1
+                                           ;	.line	62; "main.c"	RA2 = 1;
+0000e1   1505     bsf     0x05, 0x2        	BSF	_PORTAbits,2
+                                           ;	.line	63; "main.c"	delay_ms(300);
+0000e2   302c     movlw   0x2c             	MOVLW	0x2c
+0000e3   009b     movwf   0x1b             	MOVWF	STK00
+0000e4   3001     movlw   0x01             	MOVLW	0x01
+                                           	PAGESEL	_delay_ms
+0000e5   20ee     call    0x00ee           	CALL	_delay_ms
+                                           	PAGESEL	$
+                                           ;	.line	64; "main.c"	RA2 = 0;
+0000e6   1283     bcf     0x03, 0x5        	BANKSEL	_PORTAbits
+0000e7   1105     bcf     0x05, 0x2        	BCF	_PORTAbits,2
+                                           ;	.line	65; "main.c"	RA3 = 1;
+0000e8   1585     bsf     0x05, 0x3        	BSF	_PORTAbits,3
+                                           ;	.line	66; "main.c"	delay_ms(300);
+0000e9   302c     movlw   0x2c             	MOVLW	0x2c
+0000ea   009b     movwf   0x1b             	MOVWF	STK00
+0000eb   3001     movlw   0x01             	MOVLW	0x01
+                                           	PAGESEL	_delay_ms
+0000ec   20ee     call    0x00ee           	CALL	_delay_ms
+                                           	PAGESEL	$
+0000ed   0008     return                   	RETURN	
+                                           ; exit point of _derecha
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;5 compiler assigned registers:
+                                           ;   r0x1000
+                                           ;   STK00
+                                           ;   r0x1001
+                                           ;   r0x1002
+                                           ;   r0x1003
+                                           ;; Starting pCode block
+                                           S_main__delay_ms	code
+                                           _delay_ms:
+                                           ; 2 exit points
+                                           ;	.line	43; "main.c"	void delay_ms(int ms)
+0000ee   00a9     movwf   0x29             	MOVWF	r0x1000
+0000ef   081b     movf    0x1b, 0x0        	MOVF	STK00,W
+0000f0   00a8     movwf   0x28             	MOVWF	r0x1001
+                                           _00114_DS_:
+                                           ;	.line	47; "main.c"	while(ms--)
+0000f1   0828     movf    0x28, 0x0        	MOVF	r0x1001,W
+0000f2   00aa     movwf   0x2a             	MOVWF	r0x1002
+0000f3   0829     movf    0x29, 0x0        	MOVF	r0x1000,W
+0000f4   00ab     movwf   0x2b             	MOVWF	r0x1003
+0000f5   30ff     movlw   0xff             	MOVLW	0xff
+0000f6   07a8     addwf   0x28, 0x1        	ADDWF	r0x1001,F
+0000f7   1c03     btfss   0x03, 0x0        	BTFSS	STATUS,0
+0000f8   03a9     decf    0x29, 0x1        	DECF	r0x1000,F
+0000f9   082a     movf    0x2a, 0x0        	MOVF	r0x1002,W
+0000fa   042b     iorwf   0x2b, 0x0        	IORWF	r0x1003,W
+0000fb   1903     btfsc   0x03, 0x2        	BTFSC	STATUS,2
+0000fc   2906     goto    0x0106           	GOTO	_00117_DS_
+                                           ;	.line	50; "main.c"	while(aux--);
+0000fd   3032     movlw   0x32             	MOVLW	0x32
+0000fe   00aa     movwf   0x2a             	MOVWF	r0x1002
+                                           _00111_DS_:
+0000ff   082a     movf    0x2a, 0x0        	MOVF	r0x1002,W
+000100   00ab     movwf   0x2b             	MOVWF	r0x1003
+000101   03aa     decf    0x2a, 0x1        	DECF	r0x1002,F
+000102   082b     movf    0x2b, 0x0        	MOVF	r0x1003,W
+000103   1903     btfsc   0x03, 0x2        	BTFSC	STATUS,2
+000104   28f1     goto    0x00f1           	GOTO	_00114_DS_
+000105   28ff     goto    0x00ff           	GOTO	_00111_DS_
+                                           _00117_DS_:
+000106   0008     return                   	RETURN	
+                                           ; exit point of _delay_ms
+
+
+                                           ;	code size estimation:
+                                           ;	   70+   25 =    95 instructions (  240 byte)
+
+                                           	end

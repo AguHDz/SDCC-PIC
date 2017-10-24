@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1505987178 source:o:\github\pic\patron_sdcc\main.c
+	<pic14/pic16f84a.h>
+
+1508500076 source:o:\github\sdcc-pic\patron_sdcc\main.c
+	<pic14/pic16f84a.h>
+

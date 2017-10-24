@@ -1,0 +1,3099 @@
+gplink-1.5.0 #1285 (Sep 12 2016)
+Copyright (c) 1998-2016 gputils project
+Listing File Generated: 10-24-2017  13:32:23
+
+
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           ;--------------------------------------------------------
+                                           ; File Created by SDCC : free open source ANSI-C Compiler
+                                           ; Version 3.6.0 #9615 (MINGW32)
+                                           ;--------------------------------------------------------
+                                           ; PIC port for the 14-bit core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"main.c"
+                                           	list	p=16f877a
+                                           	radix dec
+                                           	include "p16f877a.inc"
+                                                   LIST
+
+                                           ;==========================================================================
+                                           ; Build date : Oct 21 2015
+                                           ;  MPASM PIC16F877A processor include
+                                           ; 
+                                           ;  (c) Copyright 1999-2015 Microchip Technology, All rights reserved
+                                           ;==========================================================================
+
+                                                   NOLIST
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_STATUSbits
+                                           	extern	_PORTAbits
+                                           	extern	_PORTBbits
+                                           	extern	_PORTCbits
+                                           	extern	_PORTDbits
+                                           	extern	_PORTEbits
+                                           	extern	_INTCONbits
+                                           	extern	_PIR1bits
+                                           	extern	_PIR2bits
+                                           	extern	_T1CONbits
+                                           	extern	_T2CONbits
+                                           	extern	_SSPCONbits
+                                           	extern	_CCP1CONbits
+                                           	extern	_RCSTAbits
+                                           	extern	_CCP2CONbits
+                                           	extern	_ADCON0bits
+                                           	extern	_OPTION_REGbits
+                                           	extern	_TRISAbits
+                                           	extern	_TRISBbits
+                                           	extern	_TRISCbits
+                                           	extern	_TRISDbits
+                                           	extern	_TRISEbits
+                                           	extern	_PIE1bits
+                                           	extern	_PIE2bits
+                                           	extern	_PCONbits
+                                           	extern	_SSPCON2bits
+                                           	extern	_SSPSTATbits
+                                           	extern	_TXSTAbits
+                                           	extern	_CMCONbits
+                                           	extern	_CVRCONbits
+                                           	extern	_ADCON1bits
+                                           	extern	_EECON1bits
+                                           	extern	_INDF
+                                           	extern	_TMR0
+                                           	extern	_PCL
+                                           	extern	_STATUS
+                                           	extern	_FSR
+                                           	extern	_PORTA
+                                           	extern	_PORTB
+                                           	extern	_PORTC
+                                           	extern	_PORTD
+                                           	extern	_PORTE
+                                           	extern	_PCLATH
+                                           	extern	_INTCON
+                                           	extern	_PIR1
+                                           	extern	_PIR2
+                                           	extern	_TMR1
+                                           	extern	_TMR1L
+                                           	extern	_TMR1H
+                                           	extern	_T1CON
+                                           	extern	_TMR2
+                                           	extern	_T2CON
+                                           	extern	_SSPBUF
+                                           	extern	_SSPCON
+                                           	extern	_CCPR1
+                                           	extern	_CCPR1L
+                                           	extern	_CCPR1H
+                                           	extern	_CCP1CON
+                                           	extern	_RCSTA
+                                           	extern	_TXREG
+                                           	extern	_RCREG
+                                           	extern	_CCPR2
+                                           	extern	_CCPR2L
+                                           	extern	_CCPR2H
+                                           	extern	_CCP2CON
+                                           	extern	_ADRESH
+                                           	extern	_ADCON0
+                                           	extern	_OPTION_REG
+                                           	extern	_TRISA
+                                           	extern	_TRISB
+                                           	extern	_TRISC
+                                           	extern	_TRISD
+                                           	extern	_TRISE
+                                           	extern	_PIE1
+                                           	extern	_PIE2
+                                           	extern	_PCON
+                                           	extern	_SSPCON2
+                                           	extern	_PR2
+                                           	extern	_SSPADD
+                                           	extern	_SSPSTAT
+                                           	extern	_TXSTA
+                                           	extern	_SPBRG
+                                           	extern	_CMCON
+                                           	extern	_CVRCON
+                                           	extern	_ADRESL
+                                           	extern	_ADCON1
+                                           	extern	_EEDATA
+                                           	extern	_EEADR
+                                           	extern	_EEDATH
+                                           	extern	_EEADRH
+                                           	extern	_EECON1
+                                           	extern	_EECON2
+                                           	extern	__gptrget1
+                                           	extern	__mulchar
+                                           	extern	__divuchar
+                                           	extern	__moduchar
+                                           	extern	__gptrput1
+                                           	extern	__sdcc_gsinit_startup
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_delay_ms
+                                           	global	_LCD_send4Bits
+                                           	global	_LCD_send
+                                           	global	_LCD_command
+                                           	global	_LCD_putChar
+                                           	global	_LCD_gotoXY
+                                           	global	_LCD_print
+                                           	global	_LCD_init
+                                           	global	_I2C_start
+                                           	global	_I2C_stop
+                                           	global	_I2C_send
+                                           	global	_I2C_read
+                                           	global	_BCDToDecimal
+                                           	global	_decimalToBCD
+                                           	global	_DS1307_timeRead
+                                           	global	_DS1307_timeWrite
+                                           	global	_LCDPrintDiaSemana
+                                           	global	_bisiesto
+                                           	global	_diasDelMes
+                                           	global	_LCDPrintNumero
+                                           	global	_timeShow
+                                           	global	_cicloTimeSet
+                                           	global	_timeSet
+                                           	global	_setup
+                                           	global	_main
+                                           	global	_DS1307_DiaSemana
+                                           	global	_DS1307_Dia
+                                           	global	_DS1307_Mes
+                                           	global	_DS1307_Ano
+                                           	global	_DS1307_Hora
+                                           	global	_DS1307_Minuto
+                                           	global	_DS1307_Segundo
+                                           	global	_editMenuState
+
+                                           	global PSAVE
+                                           	global SSAVE
+                                           	global WSAVE
+                                           	global STK12
+                                           	global STK11
+                                           	global STK10
+                                           	global STK09
+                                           	global STK08
+                                           	global STK07
+                                           	global STK06
+                                           	global STK05
+                                           	global STK04
+                                           	global STK03
+                                           	global STK02
+                                           	global STK01
+                                           	global STK00
+
+                                           sharebank udata_ovr 0x0070
+                                           PSAVE	res 1
+                                           SSAVE	res 1
+                                           WSAVE	res 1
+                                           STK12	res 1
+                                           STK11	res 1
+                                           STK10	res 1
+                                           STK09	res 1
+                                           STK08	res 1
+                                           STK07	res 1
+                                           STK06	res 1
+                                           STK05	res 1
+                                           STK04	res 1
+                                           STK03	res 1
+                                           STK02	res 1
+                                           STK01	res 1
+                                           STK00	res 1
+
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           UD_main_0	udata
+                                           _DS1307_DiaSemana	res	1
+
+                                           UD_main_1	udata
+                                           _DS1307_Dia	res	1
+
+                                           UD_main_2	udata
+                                           _DS1307_Mes	res	1
+
+                                           UD_main_3	udata
+                                           _DS1307_Ano	res	1
+
+                                           UD_main_4	udata
+                                           _DS1307_Hora	res	1
+
+                                           UD_main_5	udata
+                                           _DS1307_Minuto	res	1
+
+                                           UD_main_6	udata
+                                           _DS1307_Segundo	res	1
+
+                                           UD_main_7	udata
+                                           _editMenuState	res	1
+
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           UDL_main_0	udata
+                                           r0x1009	res	1
+                                           r0x1008	res	1
+                                           r0x100A	res	1
+                                           r0x100B	res	1
+                                           r0x100C	res	1
+                                           r0x100D	res	1
+                                           r0x100E	res	1
+                                           r0x100F	res	1
+                                           r0x1010	res	1
+                                           r0x1011	res	1
+                                           r0x1013	res	1
+                                           r0x1014	res	1
+                                           r0x1015	res	1
+                                           r0x1016	res	1
+                                           r0x1017	res	1
+                                           r0x1018	res	1
+                                           r0x1019	res	1
+                                           r0x101A	res	1
+                                           r0x101C	res	1
+                                           r0x101B	res	1
+                                           r0x101D	res	1
+                                           r0x101E	res	1
+                                           r0x1021	res	1
+                                           r0x1020	res	1
+                                           r0x101F	res	1
+                                           r0x1022	res	1
+                                           r0x1023	res	1
+                                           r0x1024	res	1
+                                           r0x1026	res	1
+                                           r0x1025	res	1
+                                           r0x1027	res	1
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+
+                                           ID_main_0	code
+                                           ___str_0
+0007fb   3444     retlw   0x44             	retlw 0x44 ; 'D'
+0007fc   344f     retlw   0x4f             	retlw 0x4f ; 'O'
+0007fd   344d     retlw   0x4d             	retlw 0x4d ; 'M'
+0007fe   3400     retlw   0x00             	retlw 0x00 ; '.'
+
+                                           ID_main_1	code
+                                           ___str_1
+00088d   344c     retlw   0x4c             	retlw 0x4c ; 'L'
+00088e   3455     retlw   0x55             	retlw 0x55 ; 'U'
+00088f   344e     retlw   0x4e             	retlw 0x4e ; 'N'
+000890   3400     retlw   0x00             	retlw 0x00 ; '.'
+
+                                           ID_main_2	code
+                                           ___str_2
+000891   344d     retlw   0x4d             	retlw 0x4d ; 'M'
+000892   3441     retlw   0x41             	retlw 0x41 ; 'A'
+000893   3452     retlw   0x52             	retlw 0x52 ; 'R'
+000894   3400     retlw   0x00             	retlw 0x00 ; '.'
+
+                                           ID_main_3	code
+                                           ___str_3
+000895   344d     retlw   0x4d             	retlw 0x4d ; 'M'
+000896   3449     retlw   0x49             	retlw 0x49 ; 'I'
+000897   3445     retlw   0x45             	retlw 0x45 ; 'E'
+000898   3400     retlw   0x00             	retlw 0x00 ; '.'
+
+                                           ID_main_4	code
+                                           ___str_4
+000899   344a     retlw   0x4a             	retlw 0x4a ; 'J'
+00089a   3455     retlw   0x55             	retlw 0x55 ; 'U'
+00089b   3445     retlw   0x45             	retlw 0x45 ; 'E'
+00089c   3400     retlw   0x00             	retlw 0x00 ; '.'
+
+                                           ID_main_5	code
+                                           ___str_5
+00089d   3456     retlw   0x56             	retlw 0x56 ; 'V'
+00089e   3449     retlw   0x49             	retlw 0x49 ; 'I'
+00089f   3445     retlw   0x45             	retlw 0x45 ; 'E'
+0008a0   3400     retlw   0x00             	retlw 0x00 ; '.'
+
+                                           ID_main_6	code
+                                           ___str_6
+0008a1   3453     retlw   0x53             	retlw 0x53 ; 'S'
+0008a2   3441     retlw   0x41             	retlw 0x41 ; 'A'
+0008a3   3442     retlw   0x42             	retlw 0x42 ; 'B'
+0008a4   3400     retlw   0x00             	retlw 0x00 ; '.'
+
+                                           ID_main_7	code
+                                           ___str_7
+0008a5   3420     retlw   0x20             	retlw 0x20 ; ' '
+0008a6   3420     retlw   0x20             	retlw 0x20 ; ' '
+0008a7   3420     retlw   0x20             	retlw 0x20 ; ' '
+0008a8   3400     retlw   0x00             	retlw 0x00 ; '.'
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; reset vector 
+                                           ;--------------------------------------------------------
+                                           STARTUP	code 0x0000
+000000   0000     nop                      	nop
+000001   118a     bcf     0x0a, 0x3        	pagesel __sdcc_gsinit_startup
+000002   120a     bcf     0x0a, 0x4        
+000003   2aa2     goto    0x02a2           	goto	__sdcc_gsinit_startup
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_main	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = M
+                                           ;***
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _setup
+                                           ;   _delay_ms
+                                           ;   _timeSet
+                                           ;   _DS1307_timeWrite
+                                           ;   _DS1307_timeRead
+                                           ;   _timeShow
+                                           ;   _setup
+                                           ;   _delay_ms
+                                           ;   _timeSet
+                                           ;   _DS1307_timeWrite
+                                           ;   _DS1307_timeRead
+                                           ;   _timeShow
+                                           ;1 compiler assigned register :
+                                           ;   STK00
+                                           ;; Starting pCode block
+                                           S_main__main	code
+                                           _main:
+                                           ; 2 exit points
+                                           ;	.line	630; "main.c"	setup();
+00064b   118a     bcf     0x0a, 0x3        	PAGESEL	_setup
+00064c   120a     bcf     0x0a, 0x4        
+00064d   26e6     call    0x06e6           	CALL	_setup
+00064e   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00064f   120a     bcf     0x0a, 0x4        
+                                           _00363_DS_:
+                                           ;	.line	634; "main.c"	if(P_SET==LOW_ST)   // Comprueba si se ha pulsado SET
+000650   1283     bcf     0x03, 0x5        	BANKSEL	_PORTAbits
+000651   1303     bcf     0x03, 0x6        
+000652   1905     btfsc   0x05, 0x2        	BTFSC	_PORTAbits,2
+000653   2e6f     goto    0x066f           	GOTO	_00355_DS_
+                                           ;	.line	636; "main.c"	editMenuState=1;
+000654   3001     movlw   0x01             	MOVLW	0x01
+000655   1283     bcf     0x03, 0x5        	BANKSEL	_editMenuState
+000656   1303     bcf     0x03, 0x6        
+000657   00e0     movwf   0x60             	MOVWF	_editMenuState
+                                           _00351_DS_:
+                                           ;	.line	638; "main.c"	while(P_SET==LOW_ST) delay_ms(TIEMPO_ANTIREBOTE);
+000658   1283     bcf     0x03, 0x5        	BANKSEL	_PORTAbits
+000659   1303     bcf     0x03, 0x6        
+00065a   1905     btfsc   0x05, 0x2        	BTFSC	_PORTAbits,2
+00065b   2e65     goto    0x0665           	GOTO	_00353_DS_
+00065c   300a     movlw   0x0a             	MOVLW	0x0a
+00065d   00ff     movwf   0x7f             	MOVWF	STK00
+00065e   3000     movlw   0x00             	MOVLW	0x00
+00065f   118a     bcf     0x0a, 0x3        	PAGESEL	_delay_ms
+000660   120a     bcf     0x0a, 0x4        
+000661   2798     call    0x0798           	CALL	_delay_ms
+000662   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000663   120a     bcf     0x0a, 0x4        
+000664   2e58     goto    0x0658           	GOTO	_00351_DS_
+                                           _00353_DS_:
+                                           ;	.line	639; "main.c"	timeSet();
+000665   118a     bcf     0x0a, 0x3        	PAGESEL	_timeSet
+000666   120a     bcf     0x0a, 0x4        
+000667   2112     call    0x0112           	CALL	_timeSet
+000668   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000669   120a     bcf     0x0a, 0x4        
+                                           ;	.line	640; "main.c"	DS1307_timeWrite();
+00066a   118a     bcf     0x0a, 0x3        	PAGESEL	_DS1307_timeWrite
+00066b   120a     bcf     0x0a, 0x4        
+00066c   23cf     call    0x03cf           	CALL	_DS1307_timeWrite
+00066d   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00066e   120a     bcf     0x0a, 0x4        
+                                           _00355_DS_:
+                                           ;	.line	643; "main.c"	DS1307_timeRead();
+00066f   118a     bcf     0x0a, 0x3        	PAGESEL	_DS1307_timeRead
+000670   120a     bcf     0x0a, 0x4        
+000671   233e     call    0x033e           	CALL	_DS1307_timeRead
+000672   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000673   120a     bcf     0x0a, 0x4        
+                                           ;	.line	645; "main.c"	timeShow();         // Actualiza display LCD con fecha y hora.
+000674   118a     bcf     0x0a, 0x3        	PAGESEL	_timeShow
+000675   120a     bcf     0x0a, 0x4        
+000676   244e     call    0x044e           	CALL	_timeShow
+000677   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000678   120a     bcf     0x0a, 0x4        
+                                           _00356_DS_:
+                                           ;	.line	648; "main.c"	while(SOUT);        // Espera durante pulso alto.
+000679   1283     bcf     0x03, 0x5        	BANKSEL	_PORTAbits
+00067a   1303     bcf     0x03, 0x6        
+00067b   1985     btfsc   0x05, 0x3        	BTFSC	_PORTAbits,3
+00067c   2e79     goto    0x0679           	GOTO	_00356_DS_
+                                           _00359_DS_:
+                                           ;	.line	649; "main.c"	while(!SOUT);       // Espera durante pulso bajo.
+00067d   1283     bcf     0x03, 0x5        	BANKSEL	_PORTAbits
+00067e   1303     bcf     0x03, 0x6        
+00067f   1985     btfsc   0x05, 0x3        	BTFSC	_PORTAbits,3
+000680   2e50     goto    0x0650           	GOTO	_00363_DS_
+000681   2e7d     goto    0x067d           	GOTO	_00359_DS_
+000682   0008     return                   	RETURN	
+                                           ; exit point of _main
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _I2C_start
+                                           ;   _I2C_send
+                                           ;   _I2C_send
+                                           ;   _I2C_send
+                                           ;   _I2C_stop
+                                           ;   _LCD_init
+                                           ;   _I2C_start
+                                           ;   _I2C_send
+                                           ;   _I2C_send
+                                           ;   _I2C_send
+                                           ;   _I2C_stop
+                                           ;   _LCD_init
+                                           ;; Starting pCode block
+                                           S_main__setup	code
+                                           _setup:
+                                           ; 2 exit points
+                                           ;	.line	604; "main.c"	ADCON1 = 0x07;          // Todos los pines configurados como digitales.
+0006e6   3007     movlw   0x07             	MOVLW	0x07
+0006e7   1683     bsf     0x03, 0x5        	BANKSEL	_ADCON1
+0006e8   1303     bcf     0x03, 0x6        
+0006e9   009f     movwf   0x1f             	MOVWF	_ADCON1
+                                           ;	.line	605; "main.c"	ADCON0 = 0x00;          // Desactiva conversor A/D.
+0006ea   1283     bcf     0x03, 0x5        	BANKSEL	_ADCON0
+0006eb   1303     bcf     0x03, 0x6        
+0006ec   019f     clrf    0x1f             	CLRF	_ADCON0
+                                           ;	.line	606; "main.c"	GIE    = false;         // Todas las interrupciones desactivadas.
+0006ed   138b     bcf     0x0b, 0x7        	BCF	_INTCONbits,7
+                                           ;	.line	608; "main.c"	TRIS_P_INC = INPUT_PIN; // Configura Pulsadores como Entradas.
+0006ee   1683     bsf     0x03, 0x5        	BANKSEL	_TRISAbits
+0006ef   1303     bcf     0x03, 0x6        
+0006f0   1405     bsf     0x05, 0x0        	BSF	_TRISAbits,0
+                                           ;	.line	609; "main.c"	TRIS_P_DEC = INPUT_PIN;
+0006f1   1485     bsf     0x05, 0x1        	BSF	_TRISAbits,1
+                                           ;	.line	610; "main.c"	TRIS_P_SET = INPUT_PIN;
+0006f2   1505     bsf     0x05, 0x2        	BSF	_TRISAbits,2
+                                           ;	.line	611; "main.c"	TRIS_SOUT  = INPUT_PIN;
+0006f3   1585     bsf     0x05, 0x3        	BSF	_TRISAbits,3
+                                           ;	.line	613; "main.c"	I2C_start();            // Inicia comunicación I2C
+0006f4   158a     bsf     0x0a, 0x3        	PAGESEL	_I2C_start
+0006f5   120a     bcf     0x0a, 0x4        
+0006f6   2066     call    0x0066           	CALL	_I2C_start
+0006f7   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0006f8   120a     bcf     0x0a, 0x4        
+                                           ;	.line	614; "main.c"	I2C_send(0xD0);         // Dirección I2C del DS1307.
+0006f9   30d0     movlw   0xd0             	MOVLW	0xd0
+0006fa   118a     bcf     0x0a, 0x3        	PAGESEL	_I2C_send
+0006fb   120a     bcf     0x0a, 0x4        
+0006fc   2584     call    0x0584           	CALL	_I2C_send
+0006fd   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0006fe   120a     bcf     0x0a, 0x4        
+                                           ;	.line	615; "main.c"	I2C_send(0x07);         // Escribe en la dirección 07h.
+0006ff   3007     movlw   0x07             	MOVLW	0x07
+000700   118a     bcf     0x0a, 0x3        	PAGESEL	_I2C_send
+000701   120a     bcf     0x0a, 0x4        
+000702   2584     call    0x0584           	CALL	_I2C_send
+000703   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000704   120a     bcf     0x0a, 0x4        
+                                           ;	.line	616; "main.c"	I2C_send(DS1307_CONF);  // Configura 1 Hz en salida SOUT del DS1307
+000705   3090     movlw   0x90             	MOVLW	0x90
+000706   118a     bcf     0x0a, 0x3        	PAGESEL	_I2C_send
+000707   120a     bcf     0x0a, 0x4        
+000708   2584     call    0x0584           	CALL	_I2C_send
+000709   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00070a   120a     bcf     0x0a, 0x4        
+                                           ;	.line	617; "main.c"	I2C_stop();
+00070b   158a     bsf     0x0a, 0x3        	PAGESEL	_I2C_stop
+00070c   120a     bcf     0x0a, 0x4        
+00070d   2087     call    0x0087           	CALL	_I2C_stop
+00070e   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00070f   120a     bcf     0x0a, 0x4        
+                                           ;	.line	619; "main.c"	LCD_init();             // Inicializa display LCD.
+000710   118a     bcf     0x0a, 0x3        	PAGESEL	_LCD_init
+000711   120a     bcf     0x0a, 0x4        
+000712   24be     call    0x04be           	CALL	_LCD_init
+000713   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000714   120a     bcf     0x0a, 0x4        
+000715   0008     return                   	RETURN	
+                                           ; exit point of _setup
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _LCD_gotoXY
+                                           ;   _LCDPrintNumero
+                                           ;   _LCD_command
+                                           ;   _cicloTimeSet
+                                           ;   _cicloTimeSet
+                                           ;   _diasDelMes
+                                           ;   _cicloTimeSet
+                                           ;   _cicloTimeSet
+                                           ;   _cicloTimeSet
+                                           ;   _cicloTimeSet
+                                           ;   _LCD_command
+                                           ;   _LCD_gotoXY
+                                           ;   _LCDPrintNumero
+                                           ;   _LCD_command
+                                           ;   _cicloTimeSet
+                                           ;   _cicloTimeSet
+                                           ;   _diasDelMes
+                                           ;   _cicloTimeSet
+                                           ;   _cicloTimeSet
+                                           ;   _cicloTimeSet
+                                           ;   _cicloTimeSet
+                                           ;   _LCD_command
+                                           ;10 compiler assigned registers:
+                                           ;   STK00
+                                           ;   r0x1025
+                                           ;   r0x1026
+                                           ;   r0x1027
+                                           ;   STK05
+                                           ;   STK04
+                                           ;   STK03
+                                           ;   STK02
+                                           ;   STK01
+                                           ;   r0x1028
+                                           ;; Starting pCode block
+                                           S_main__timeSet	code
+                                           _timeSet:
+                                           ; 2 exit points
+                                           ;	.line	579; "main.c"	LCD_gotoXY(7,1);           // Goto posición de Segundos en display.
+000112   3001     movlw   0x01             	MOVLW	0x01
+000113   00ff     movwf   0x7f             	MOVWF	STK00
+000114   3007     movlw   0x07             	MOVLW	0x07
+000115   158a     bsf     0x0a, 0x3        	PAGESEL	_LCD_gotoXY
+000116   120a     bcf     0x0a, 0x4        
+000117   2000     call    0x0000           	CALL	_LCD_gotoXY
+000118   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000119   120a     bcf     0x0a, 0x4        
+                                           ;	.line	580; "main.c"	LCDPrintNumero(0);         // 00 en posición de Segundos del display.
+00011a   3000     movlw   0x00             	MOVLW	0x00
+00011b   118a     bcf     0x0a, 0x3        	PAGESEL	_LCDPrintNumero
+00011c   120a     bcf     0x0a, 0x4        
+00011d   2744     call    0x0744           	CALL	_LCDPrintNumero
+00011e   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00011f   120a     bcf     0x0a, 0x4        
+                                           ;	.line	581; "main.c"	LCD_CURSOR_UNDELINE;       // Cursor On
+000120   300e     movlw   0x0e             	MOVLW	0x0e
+000121   158a     bsf     0x0a, 0x3        	PAGESEL	_LCD_command
+000122   120a     bcf     0x0a, 0x4        
+000123   2057     call    0x0057           	CALL	_LCD_command
+000124   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000125   120a     bcf     0x0a, 0x4        
+                                           ;	.line	582; "main.c"	DS1307_Segundo = 0;        // Siempre que se ajusta la fecha y hora los segundos empiezan en cero.
+000126   1283     bcf     0x03, 0x5        	BANKSEL	_DS1307_Segundo
+000127   1303     bcf     0x03, 0x6        
+000128   01df     clrf    0x5f             	CLRF	_DS1307_Segundo
+                                           ;;unsigned compare: left < lit(0x7=7), size=1
+                                           _00340_DS_:
+                                           ;	.line	583; "main.c"	while(editMenuState<SALIR_SET_TIME)
+000129   3007     movlw   0x07             	MOVLW	0x07
+00012a   1283     bcf     0x03, 0x5        	BANKSEL	_editMenuState
+00012b   1303     bcf     0x03, 0x6        
+00012c   0260     subwf   0x60, 0x0        	SUBWF	_editMenuState,W
+00012d   1803     btfsc   0x03, 0x0        	BTFSC	STATUS,0
+00012e   29f3     goto    0x01f3           	GOTO	_00342_DS_
+                                           ;;genSkipc:3257: created from rifx:02795EB4
+                                           _00322_DS_:
+                                           ;	.line	585; "main.c"	while(editMenuState==SET_ANO)     cicloTimeSet(0,99,7,0,&DS1307_Ano);            // Set año.
+00012f   1283     bcf     0x03, 0x5        	BANKSEL	_editMenuState
+000130   1303     bcf     0x03, 0x6        
+000131   0860     movf    0x60, 0x0        	MOVF	_editMenuState,W
+000132   3a01     xorlw   0x01             	XORLW	0x01
+000133   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
+000134   294f     goto    0x014f           	GOTO	_00325_DS_
+000135   3000     movlw   0x00             	MOVLW	high (_DS1307_Ano + 0)
+000136   1283     bcf     0x03, 0x5        	BANKSEL	r0x1025
+000137   1303     bcf     0x03, 0x6        
+000138   00bd     movwf   0x3d             	MOVWF	r0x1025
+000139   305c     movlw   0x5c             	MOVLW	(_DS1307_Ano + 0)
+00013a   00bc     movwf   0x3c             	MOVWF	r0x1026
+00013b   01be     clrf    0x3e             	CLRF	r0x1027
+00013c   083c     movf    0x3c, 0x0        	MOVF	r0x1026,W
+00013d   00fa     movwf   0x7a             	MOVWF	STK05
+00013e   083d     movf    0x3d, 0x0        	MOVF	r0x1025,W
+00013f   00fb     movwf   0x7b             	MOVWF	STK04
+000140   3000     movlw   0x00             	MOVLW	0x00
+000141   00fc     movwf   0x7c             	MOVWF	STK03
+000142   3000     movlw   0x00             	MOVLW	0x00
+000143   00fd     movwf   0x7d             	MOVWF	STK02
+000144   3007     movlw   0x07             	MOVLW	0x07
+000145   00fe     movwf   0x7e             	MOVWF	STK01
+000146   3063     movlw   0x63             	MOVLW	0x63
+000147   00ff     movwf   0x7f             	MOVWF	STK00
+000148   3000     movlw   0x00             	MOVLW	0x00
+000149   118a     bcf     0x0a, 0x3        	PAGESEL	_cicloTimeSet
+00014a   120a     bcf     0x0a, 0x4        
+00014b   2004     call    0x0004           	CALL	_cicloTimeSet
+00014c   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00014d   120a     bcf     0x0a, 0x4        
+00014e   292f     goto    0x012f           	GOTO	_00322_DS_
+                                           _00325_DS_:
+                                           ;	.line	586; "main.c"	while(editMenuState==SET_MES)     cicloTimeSet(1,12,4,0,&DS1307_Mes);            // Set mes.
+00014f   1283     bcf     0x03, 0x5        	BANKSEL	_editMenuState
+000150   1303     bcf     0x03, 0x6        
+000151   0860     movf    0x60, 0x0        	MOVF	_editMenuState,W
+000152   3a02     xorlw   0x02             	XORLW	0x02
+000153   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
+000154   296f     goto    0x016f           	GOTO	_00328_DS_
+000155   3000     movlw   0x00             	MOVLW	high (_DS1307_Mes + 0)
+000156   1283     bcf     0x03, 0x5        	BANKSEL	r0x1025
+000157   1303     bcf     0x03, 0x6        
+000158   00bd     movwf   0x3d             	MOVWF	r0x1025
+000159   305b     movlw   0x5b             	MOVLW	(_DS1307_Mes + 0)
+00015a   00bc     movwf   0x3c             	MOVWF	r0x1026
+00015b   01be     clrf    0x3e             	CLRF	r0x1027
+00015c   083c     movf    0x3c, 0x0        	MOVF	r0x1026,W
+00015d   00fa     movwf   0x7a             	MOVWF	STK05
+00015e   083d     movf    0x3d, 0x0        	MOVF	r0x1025,W
+00015f   00fb     movwf   0x7b             	MOVWF	STK04
+000160   3000     movlw   0x00             	MOVLW	0x00
+000161   00fc     movwf   0x7c             	MOVWF	STK03
+000162   3000     movlw   0x00             	MOVLW	0x00
+000163   00fd     movwf   0x7d             	MOVWF	STK02
+000164   3004     movlw   0x04             	MOVLW	0x04
+000165   00fe     movwf   0x7e             	MOVWF	STK01
+000166   300c     movlw   0x0c             	MOVLW	0x0c
+000167   00ff     movwf   0x7f             	MOVWF	STK00
+000168   3001     movlw   0x01             	MOVLW	0x01
+000169   118a     bcf     0x0a, 0x3        	PAGESEL	_cicloTimeSet
+00016a   120a     bcf     0x0a, 0x4        
+00016b   2004     call    0x0004           	CALL	_cicloTimeSet
+00016c   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00016d   120a     bcf     0x0a, 0x4        
+00016e   294f     goto    0x014f           	GOTO	_00325_DS_
+                                           _00328_DS_:
+                                           ;	.line	587; "main.c"	while(editMenuState==SET_DIA)     cicloTimeSet(1,diasDelMes(),1,0,&DS1307_Dia);  // Set día.
+00016f   1283     bcf     0x03, 0x5        	BANKSEL	_editMenuState
+000170   1303     bcf     0x03, 0x6        
+000171   0860     movf    0x60, 0x0        	MOVF	_editMenuState,W
+000172   3a03     xorlw   0x03             	XORLW	0x03
+000173   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
+000174   2993     goto    0x0193           	GOTO	_00331_DS_
+000175   118a     bcf     0x0a, 0x3        	PAGESEL	_diasDelMes
+000176   120a     bcf     0x0a, 0x4        
+000177   2683     call    0x0683           	CALL	_diasDelMes
+000178   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000179   120a     bcf     0x0a, 0x4        
+00017a   1283     bcf     0x03, 0x5        	BANKSEL	r0x1026
+00017b   1303     bcf     0x03, 0x6        
+00017c   00bc     movwf   0x3c             	MOVWF	r0x1026
+00017d   3000     movlw   0x00             	MOVLW	high (_DS1307_Dia + 0)
+00017e   00be     movwf   0x3e             	MOVWF	r0x1027
+00017f   305a     movlw   0x5a             	MOVLW	(_DS1307_Dia + 0)
+000180   00bd     movwf   0x3d             	MOVWF	r0x1025
+000181   00fa     movwf   0x7a             	MOVWF	STK05
+000182   083e     movf    0x3e, 0x0        	MOVF	r0x1027,W
+000183   00fb     movwf   0x7b             	MOVWF	STK04
+000184   3000     movlw   0x00             	MOVLW	0x00
+000185   00fc     movwf   0x7c             	MOVWF	STK03
+000186   3000     movlw   0x00             	MOVLW	0x00
+000187   00fd     movwf   0x7d             	MOVWF	STK02
+000188   3001     movlw   0x01             	MOVLW	0x01
+000189   00fe     movwf   0x7e             	MOVWF	STK01
+00018a   083c     movf    0x3c, 0x0        	MOVF	r0x1026,W
+00018b   00ff     movwf   0x7f             	MOVWF	STK00
+00018c   3001     movlw   0x01             	MOVLW	0x01
+00018d   118a     bcf     0x0a, 0x3        	PAGESEL	_cicloTimeSet
+00018e   120a     bcf     0x0a, 0x4        
+00018f   2004     call    0x0004           	CALL	_cicloTimeSet
+000190   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000191   120a     bcf     0x0a, 0x4        
+000192   296f     goto    0x016f           	GOTO	_00328_DS_
+                                           _00331_DS_:
+                                           ;	.line	588; "main.c"	while(editMenuState==SET_HORA)    cicloTimeSet(0,23,1,1,&DS1307_Hora);           // Set hora.
+000193   1283     bcf     0x03, 0x5        	BANKSEL	_editMenuState
+000194   1303     bcf     0x03, 0x6        
+000195   0860     movf    0x60, 0x0        	MOVF	_editMenuState,W
+000196   3a04     xorlw   0x04             	XORLW	0x04
+000197   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
+000198   29b3     goto    0x01b3           	GOTO	_00334_DS_
+000199   3000     movlw   0x00             	MOVLW	high (_DS1307_Hora + 0)
+00019a   1283     bcf     0x03, 0x5        	BANKSEL	r0x1025
+00019b   1303     bcf     0x03, 0x6        
+00019c   00bd     movwf   0x3d             	MOVWF	r0x1025
+00019d   305d     movlw   0x5d             	MOVLW	(_DS1307_Hora + 0)
+00019e   00bc     movwf   0x3c             	MOVWF	r0x1026
+00019f   01be     clrf    0x3e             	CLRF	r0x1027
+0001a0   083c     movf    0x3c, 0x0        	MOVF	r0x1026,W
+0001a1   00fa     movwf   0x7a             	MOVWF	STK05
+0001a2   083d     movf    0x3d, 0x0        	MOVF	r0x1025,W
+0001a3   00fb     movwf   0x7b             	MOVWF	STK04
+0001a4   3000     movlw   0x00             	MOVLW	0x00
+0001a5   00fc     movwf   0x7c             	MOVWF	STK03
+0001a6   3001     movlw   0x01             	MOVLW	0x01
+0001a7   00fd     movwf   0x7d             	MOVWF	STK02
+0001a8   3001     movlw   0x01             	MOVLW	0x01
+0001a9   00fe     movwf   0x7e             	MOVWF	STK01
+0001aa   3017     movlw   0x17             	MOVLW	0x17
+0001ab   00ff     movwf   0x7f             	MOVWF	STK00
+0001ac   3000     movlw   0x00             	MOVLW	0x00
+0001ad   118a     bcf     0x0a, 0x3        	PAGESEL	_cicloTimeSet
+0001ae   120a     bcf     0x0a, 0x4        
+0001af   2004     call    0x0004           	CALL	_cicloTimeSet
+0001b0   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0001b1   120a     bcf     0x0a, 0x4        
+0001b2   2993     goto    0x0193           	GOTO	_00331_DS_
+                                           _00334_DS_:
+                                           ;	.line	589; "main.c"	while(editMenuState==SET_MINUTO)  cicloTimeSet(0,59,4,1,&DS1307_Minuto);         // Set minutos.
+0001b3   1283     bcf     0x03, 0x5        	BANKSEL	_editMenuState
+0001b4   1303     bcf     0x03, 0x6        
+0001b5   0860     movf    0x60, 0x0        	MOVF	_editMenuState,W
+0001b6   3a05     xorlw   0x05             	XORLW	0x05
+0001b7   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
+0001b8   29d3     goto    0x01d3           	GOTO	_00337_DS_
+0001b9   3000     movlw   0x00             	MOVLW	high (_DS1307_Minuto + 0)
+0001ba   1283     bcf     0x03, 0x5        	BANKSEL	r0x1025
+0001bb   1303     bcf     0x03, 0x6        
+0001bc   00bd     movwf   0x3d             	MOVWF	r0x1025
+0001bd   305e     movlw   0x5e             	MOVLW	(_DS1307_Minuto + 0)
+0001be   00bc     movwf   0x3c             	MOVWF	r0x1026
+0001bf   01be     clrf    0x3e             	CLRF	r0x1027
+0001c0   083c     movf    0x3c, 0x0        	MOVF	r0x1026,W
+0001c1   00fa     movwf   0x7a             	MOVWF	STK05
+0001c2   083d     movf    0x3d, 0x0        	MOVF	r0x1025,W
+0001c3   00fb     movwf   0x7b             	MOVWF	STK04
+0001c4   3000     movlw   0x00             	MOVLW	0x00
+0001c5   00fc     movwf   0x7c             	MOVWF	STK03
+0001c6   3001     movlw   0x01             	MOVLW	0x01
+0001c7   00fd     movwf   0x7d             	MOVWF	STK02
+0001c8   3004     movlw   0x04             	MOVLW	0x04
+0001c9   00fe     movwf   0x7e             	MOVWF	STK01
+0001ca   303b     movlw   0x3b             	MOVLW	0x3b
+0001cb   00ff     movwf   0x7f             	MOVWF	STK00
+0001cc   3000     movlw   0x00             	MOVLW	0x00
+0001cd   118a     bcf     0x0a, 0x3        	PAGESEL	_cicloTimeSet
+0001ce   120a     bcf     0x0a, 0x4        
+0001cf   2004     call    0x0004           	CALL	_cicloTimeSet
+0001d0   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0001d1   120a     bcf     0x0a, 0x4        
+0001d2   29b3     goto    0x01b3           	GOTO	_00334_DS_
+                                           _00337_DS_:
+                                           ;	.line	590; "main.c"	while(editMenuState==SET_DIA_SEM) cicloTimeSet(1,7,12,0,&DS1307_DiaSemana);      // Set día de la semana.
+0001d3   1283     bcf     0x03, 0x5        	BANKSEL	_editMenuState
+0001d4   1303     bcf     0x03, 0x6        
+0001d5   0860     movf    0x60, 0x0        	MOVF	_editMenuState,W
+0001d6   3a06     xorlw   0x06             	XORLW	0x06
+0001d7   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
+0001d8   2929     goto    0x0129           	GOTO	_00340_DS_
+0001d9   3000     movlw   0x00             	MOVLW	high (_DS1307_DiaSemana + 0)
+0001da   1283     bcf     0x03, 0x5        	BANKSEL	r0x1025
+0001db   1303     bcf     0x03, 0x6        
+0001dc   00bd     movwf   0x3d             	MOVWF	r0x1025
+0001dd   3059     movlw   0x59             	MOVLW	(_DS1307_DiaSemana + 0)
+0001de   00bc     movwf   0x3c             	MOVWF	r0x1026
+0001df   01be     clrf    0x3e             	CLRF	r0x1027
+0001e0   083c     movf    0x3c, 0x0        	MOVF	r0x1026,W
+0001e1   00fa     movwf   0x7a             	MOVWF	STK05
+0001e2   083d     movf    0x3d, 0x0        	MOVF	r0x1025,W
+0001e3   00fb     movwf   0x7b             	MOVWF	STK04
+0001e4   3000     movlw   0x00             	MOVLW	0x00
+0001e5   00fc     movwf   0x7c             	MOVWF	STK03
+0001e6   3000     movlw   0x00             	MOVLW	0x00
+0001e7   00fd     movwf   0x7d             	MOVWF	STK02
+0001e8   300c     movlw   0x0c             	MOVLW	0x0c
+0001e9   00fe     movwf   0x7e             	MOVWF	STK01
+0001ea   3007     movlw   0x07             	MOVLW	0x07
+0001eb   00ff     movwf   0x7f             	MOVWF	STK00
+0001ec   3001     movlw   0x01             	MOVLW	0x01
+0001ed   118a     bcf     0x0a, 0x3        	PAGESEL	_cicloTimeSet
+0001ee   120a     bcf     0x0a, 0x4        
+0001ef   2004     call    0x0004           	CALL	_cicloTimeSet
+0001f0   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0001f1   120a     bcf     0x0a, 0x4        
+0001f2   29d3     goto    0x01d3           	GOTO	_00337_DS_
+                                           _00342_DS_:
+                                           ;	.line	592; "main.c"	LCD_CURSOR_OFF;
+0001f3   300c     movlw   0x0c             	MOVLW	0x0c
+0001f4   158a     bsf     0x0a, 0x3        	PAGESEL	_LCD_command
+0001f5   120a     bcf     0x0a, 0x4        
+0001f6   2057     call    0x0057           	CALL	_LCD_command
+0001f7   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0001f8   120a     bcf     0x0a, 0x4        
+0001f9   0008     return                   	RETURN	
+                                           ; exit point of _timeSet
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _LCD_command
+                                           ;   __gptrget1
+                                           ;   __gptrput1
+                                           ;   __gptrput1
+                                           ;   __gptrget1
+                                           ;   __gptrput1
+                                           ;   __gptrget1
+                                           ;   __gptrput1
+                                           ;   _LCD_gotoXY
+                                           ;   _LCDPrintDiaSemana
+                                           ;   __gptrget1
+                                           ;   _LCDPrintNumero
+                                           ;   _delay_ms
+                                           ;   _delay_ms
+                                           ;   __gptrget1
+                                           ;   __gptrput1
+                                           ;   _LCD_gotoXY
+                                           ;   _LCD_command
+                                           ;   _LCD_command
+                                           ;   __gptrget1
+                                           ;   __gptrput1
+                                           ;   __gptrput1
+                                           ;   __gptrget1
+                                           ;   __gptrput1
+                                           ;   __gptrget1
+                                           ;   __gptrput1
+                                           ;   _LCD_gotoXY
+                                           ;   _LCDPrintDiaSemana
+                                           ;   __gptrget1
+                                           ;   _LCDPrintNumero
+                                           ;   _delay_ms
+                                           ;   _delay_ms
+                                           ;   __gptrget1
+                                           ;   __gptrput1
+                                           ;   _LCD_gotoXY
+                                           ;   _LCD_command
+                                           ;16 compiler assigned registers:
+                                           ;   r0x101B
+                                           ;   STK00
+                                           ;   r0x101C
+                                           ;   STK01
+                                           ;   r0x101D
+                                           ;   STK02
+                                           ;   r0x101E
+                                           ;   STK03
+                                           ;   r0x101F
+                                           ;   STK04
+                                           ;   r0x1020
+                                           ;   STK05
+                                           ;   r0x1021
+                                           ;   r0x1022
+                                           ;   r0x1023
+                                           ;   r0x1024
+                                           ;; Starting pCode block
+                                           S_main__cicloTimeSet	code
+                                           _cicloTimeSet:
+                                           ; 2 exit points
+                                           ;	.line	524; "main.c"	void cicloTimeSet(uint8_t limInf, uint8_t limSup, uint8_t lcdX, uint8_t lcdY, uint8_t* dato)
+000004   1283     bcf     0x03, 0x5        	BANKSEL	r0x101B
+000005   1303     bcf     0x03, 0x6        
+000006   00b3     movwf   0x33             	MOVWF	r0x101B
+000007   087f     movf    0x7f, 0x0        	MOVF	STK00,W
+000008   00b2     movwf   0x32             	MOVWF	r0x101C
+000009   087e     movf    0x7e, 0x0        	MOVF	STK01,W
+00000a   00b4     movwf   0x34             	MOVWF	r0x101D
+00000b   087d     movf    0x7d, 0x0        	MOVF	STK02,W
+00000c   00b5     movwf   0x35             	MOVWF	r0x101E
+00000d   087c     movf    0x7c, 0x0        	MOVF	STK03,W
+00000e   00b8     movwf   0x38             	MOVWF	r0x101F
+00000f   087b     movf    0x7b, 0x0        	MOVF	STK04,W
+000010   00b7     movwf   0x37             	MOVWF	r0x1020
+000011   087a     movf    0x7a, 0x0        	MOVF	STK05,W
+000012   00b6     movwf   0x36             	MOVWF	r0x1021
+                                           ;	.line	526; "main.c"	while((P_INC && P_DEC)==LOW_ST)  // Si se pulsa INC o DEC.
+000013   01b9     clrf    0x39             	CLRF	r0x1022
+000014   0834     movf    0x34, 0x0        	MOVF	r0x101D,W
+000015   3a0c     xorlw   0x0c             	XORLW	0x0c
+000016   1903     btfsc   0x03, 0x2        	BTFSC	STATUS,2
+000017   0ab9     incf    0x39, 0x1        	INCF	r0x1022,F
+                                           _00269_DS_:
+000018   1283     bcf     0x03, 0x5        	BANKSEL	_PORTAbits
+000019   1303     bcf     0x03, 0x6        
+00001a   1c05     btfss   0x05, 0x0        	BTFSS	_PORTAbits,0
+00001b   281e     goto    0x001e           	GOTO	_00270_DS_
+00001c   1885     btfsc   0x05, 0x1        	BTFSC	_PORTAbits,1
+00001d   28ca     goto    0x00ca           	GOTO	_00271_DS_
+                                           _00270_DS_:
+                                           ;	.line	528; "main.c"	LCD_CURSOR_OFF;
+00001e   300c     movlw   0x0c             	MOVLW	0x0c
+00001f   158a     bsf     0x0a, 0x3        	PAGESEL	_LCD_command
+000020   120a     bcf     0x0a, 0x4        
+000021   2057     call    0x0057           	CALL	_LCD_command
+000022   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000023   120a     bcf     0x0a, 0x4        
+                                           ;	.line	529; "main.c"	if(P_INC==LOW_ST)            // Se ha pulsado INC.
+000024   1283     bcf     0x03, 0x5        	BANKSEL	_PORTAbits
+000025   1303     bcf     0x03, 0x6        
+000026   1805     btfsc   0x05, 0x0        	BTFSC	_PORTAbits,0
+000027   2857     goto    0x0057           	GOTO	_00264_DS_
+                                           ;	.line	531; "main.c"	(*dato)++;
+000028   1283     bcf     0x03, 0x5        	BANKSEL	r0x1021
+000029   1303     bcf     0x03, 0x6        
+00002a   0836     movf    0x36, 0x0        	MOVF	r0x1021,W
+00002b   00fe     movwf   0x7e             	MOVWF	STK01
+00002c   0837     movf    0x37, 0x0        	MOVF	r0x1020,W
+00002d   00ff     movwf   0x7f             	MOVWF	STK00
+00002e   0838     movf    0x38, 0x0        	MOVF	r0x101F,W
+00002f   118a     bcf     0x0a, 0x3        	PAGESEL	__gptrget1
+000030   120a     bcf     0x0a, 0x4        
+000031   2638     call    0x0638           	CALL	__gptrget1
+000032   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000033   120a     bcf     0x0a, 0x4        
+000034   1283     bcf     0x03, 0x5        	BANKSEL	r0x1023
+000035   1303     bcf     0x03, 0x6        
+000036   00ba     movwf   0x3a             	MOVWF	r0x1023
+000037   0aba     incf    0x3a, 0x1        	INCF	r0x1023,F
+000038   083a     movf    0x3a, 0x0        	MOVF	r0x1023,W
+000039   00fd     movwf   0x7d             	MOVWF	STK02
+00003a   0836     movf    0x36, 0x0        	MOVF	r0x1021,W
+00003b   00fe     movwf   0x7e             	MOVWF	STK01
+00003c   0837     movf    0x37, 0x0        	MOVF	r0x1020,W
+00003d   00ff     movwf   0x7f             	MOVWF	STK00
+00003e   0838     movf    0x38, 0x0        	MOVF	r0x101F,W
+00003f   118a     bcf     0x0a, 0x3        	PAGESEL	__gptrput1
+000040   120a     bcf     0x0a, 0x4        
+000041   260b     call    0x060b           	CALL	__gptrput1
+000042   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000043   120a     bcf     0x0a, 0x4        
+                                           ;	.line	532; "main.c"	if(*dato>limSup) *dato=limInf;  // Controla que no se supere el límite superior.
+000044   1283     bcf     0x03, 0x5        	BANKSEL	r0x1023
+000045   1303     bcf     0x03, 0x6        
+000046   083a     movf    0x3a, 0x0        	MOVF	r0x1023,W
+000047   0232     subwf   0x32, 0x0        	SUBWF	r0x101C,W
+000048   1803     btfsc   0x03, 0x0        	BTFSC	STATUS,0
+000049   2898     goto    0x0098           	GOTO	_00265_DS_
+                                           ;;genSkipc:3257: created from rifx:02795EB4
+00004a   0833     movf    0x33, 0x0        	MOVF	r0x101B,W
+00004b   00fd     movwf   0x7d             	MOVWF	STK02
+00004c   0836     movf    0x36, 0x0        	MOVF	r0x1021,W
+00004d   00fe     movwf   0x7e             	MOVWF	STK01
+00004e   0837     movf    0x37, 0x0        	MOVF	r0x1020,W
+00004f   00ff     movwf   0x7f             	MOVWF	STK00
+000050   0838     movf    0x38, 0x0        	MOVF	r0x101F,W
+000051   118a     bcf     0x0a, 0x3        	PAGESEL	__gptrput1
+000052   120a     bcf     0x0a, 0x4        
+000053   260b     call    0x060b           	CALL	__gptrput1
+000054   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000055   120a     bcf     0x0a, 0x4        
+000056   2898     goto    0x0098           	GOTO	_00265_DS_
+                                           _00264_DS_:
+                                           ;	.line	536; "main.c"	(*dato)--;
+000057   1283     bcf     0x03, 0x5        	BANKSEL	r0x1021
+000058   1303     bcf     0x03, 0x6        
+000059   0836     movf    0x36, 0x0        	MOVF	r0x1021,W
+00005a   00fe     movwf   0x7e             	MOVWF	STK01
+00005b   0837     movf    0x37, 0x0        	MOVF	r0x1020,W
+00005c   00ff     movwf   0x7f             	MOVWF	STK00
+00005d   0838     movf    0x38, 0x0        	MOVF	r0x101F,W
+00005e   118a     bcf     0x0a, 0x3        	PAGESEL	__gptrget1
+00005f   120a     bcf     0x0a, 0x4        
+000060   2638     call    0x0638           	CALL	__gptrget1
+000061   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000062   120a     bcf     0x0a, 0x4        
+000063   1283     bcf     0x03, 0x5        	BANKSEL	r0x1023
+000064   1303     bcf     0x03, 0x6        
+000065   00ba     movwf   0x3a             	MOVWF	r0x1023
+000066   03ba     decf    0x3a, 0x1        	DECF	r0x1023,F
+000067   083a     movf    0x3a, 0x0        	MOVF	r0x1023,W
+000068   00fd     movwf   0x7d             	MOVWF	STK02
+000069   0836     movf    0x36, 0x0        	MOVF	r0x1021,W
+00006a   00fe     movwf   0x7e             	MOVWF	STK01
+00006b   0837     movf    0x37, 0x0        	MOVF	r0x1020,W
+00006c   00ff     movwf   0x7f             	MOVWF	STK00
+00006d   0838     movf    0x38, 0x0        	MOVF	r0x101F,W
+00006e   118a     bcf     0x0a, 0x3        	PAGESEL	__gptrput1
+00006f   120a     bcf     0x0a, 0x4        
+000070   260b     call    0x060b           	CALL	__gptrput1
+000071   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000072   120a     bcf     0x0a, 0x4        
+                                           ;	.line	537; "main.c"	if((*dato<limInf)||(*dato==0xFF)) *dato=limSup; // Si limInf==0 (*Dato)-- puede ser 0xFF.
+000073   1283     bcf     0x03, 0x5        	BANKSEL	r0x1021
+000074   1303     bcf     0x03, 0x6        
+000075   0836     movf    0x36, 0x0        	MOVF	r0x1021,W
+000076   00fe     movwf   0x7e             	MOVWF	STK01
+000077   0837     movf    0x37, 0x0        	MOVF	r0x1020,W
+000078   00ff     movwf   0x7f             	MOVWF	STK00
+000079   0838     movf    0x38, 0x0        	MOVF	r0x101F,W
+00007a   118a     bcf     0x0a, 0x3        	PAGESEL	__gptrget1
+00007b   120a     bcf     0x0a, 0x4        
+00007c   2638     call    0x0638           	CALL	__gptrget1
+00007d   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00007e   120a     bcf     0x0a, 0x4        
+00007f   1283     bcf     0x03, 0x5        	BANKSEL	r0x1024
+000080   1303     bcf     0x03, 0x6        
+000081   00bb     movwf   0x3b             	MOVWF	r0x1024
+000082   0833     movf    0x33, 0x0        	MOVF	r0x101B,W
+000083   023a     subwf   0x3a, 0x0        	SUBWF	r0x1023,W
+000084   1c03     btfss   0x03, 0x0        	BTFSS	STATUS,0
+000085   288a     goto    0x008a           	GOTO	_00260_DS_
+                                           ;;genSkipc:3257: created from rifx:02795EB4
+000086   083b     movf    0x3b, 0x0        	MOVF	r0x1024,W
+000087   3aff     xorlw   0xff             	XORLW	0xff
+000088   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
+000089   2898     goto    0x0098           	GOTO	_00265_DS_
+                                           _00260_DS_:
+00008a   1283     bcf     0x03, 0x5        	BANKSEL	r0x101C
+00008b   1303     bcf     0x03, 0x6        
+00008c   0832     movf    0x32, 0x0        	MOVF	r0x101C,W
+00008d   00fd     movwf   0x7d             	MOVWF	STK02
+00008e   0836     movf    0x36, 0x0        	MOVF	r0x1021,W
+00008f   00fe     movwf   0x7e             	MOVWF	STK01
+000090   0837     movf    0x37, 0x0        	MOVF	r0x1020,W
+000091   00ff     movwf   0x7f             	MOVWF	STK00
+000092   0838     movf    0x38, 0x0        	MOVF	r0x101F,W
+000093   118a     bcf     0x0a, 0x3        	PAGESEL	__gptrput1
+000094   120a     bcf     0x0a, 0x4        
+000095   260b     call    0x060b           	CALL	__gptrput1
+000096   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000097   120a     bcf     0x0a, 0x4        
+                                           _00265_DS_:
+                                           ;	.line	540; "main.c"	LCD_gotoXY(lcdX, lcdY);            // Coloca el cursor en la posición de inicio de impresión del dato editado.
+000098   1283     bcf     0x03, 0x5        	BANKSEL	r0x101E
+000099   1303     bcf     0x03, 0x6        
+00009a   0835     movf    0x35, 0x0        	MOVF	r0x101E,W
+00009b   00ff     movwf   0x7f             	MOVWF	STK00
+00009c   0834     movf    0x34, 0x0        	MOVF	r0x101D,W
+00009d   158a     bsf     0x0a, 0x3        	PAGESEL	_LCD_gotoXY
+00009e   120a     bcf     0x0a, 0x4        
+00009f   2000     call    0x0000           	CALL	_LCD_gotoXY
+0000a0   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0000a1   120a     bcf     0x0a, 0x4        
+                                           ;	.line	541; "main.c"	if(lcdX==12) LCDPrintDiaSemana();  // Si se está editando del día de la semana, se imprime el texto.
+0000a2   1283     bcf     0x03, 0x5        	BANKSEL	r0x1022
+0000a3   1303     bcf     0x03, 0x6        
+0000a4   0839     movf    0x39, 0x0        	MOVF	r0x1022,W
+0000a5   1903     btfsc   0x03, 0x2        	BTFSC	STATUS,2
+0000a6   28ad     goto    0x00ad           	GOTO	_00267_DS_
+0000a7   118a     bcf     0x0a, 0x3        	PAGESEL	_LCDPrintDiaSemana
+0000a8   120a     bcf     0x0a, 0x4        
+0000a9   21fa     call    0x01fa           	CALL	_LCDPrintDiaSemana
+0000aa   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0000ab   120a     bcf     0x0a, 0x4        
+0000ac   28c1     goto    0x00c1           	GOTO	_00268_DS_
+                                           _00267_DS_:
+                                           ;	.line	542; "main.c"	else LCDPrintNumero(*dato);        // El resto son variables numéricas de 2 dígitos.
+0000ad   1283     bcf     0x03, 0x5        	BANKSEL	r0x1021
+0000ae   1303     bcf     0x03, 0x6        
+0000af   0836     movf    0x36, 0x0        	MOVF	r0x1021,W
+0000b0   00fe     movwf   0x7e             	MOVWF	STK01
+0000b1   0837     movf    0x37, 0x0        	MOVF	r0x1020,W
+0000b2   00ff     movwf   0x7f             	MOVWF	STK00
+0000b3   0838     movf    0x38, 0x0        	MOVF	r0x101F,W
+0000b4   118a     bcf     0x0a, 0x3        	PAGESEL	__gptrget1
+0000b5   120a     bcf     0x0a, 0x4        
+0000b6   2638     call    0x0638           	CALL	__gptrget1
+0000b7   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0000b8   120a     bcf     0x0a, 0x4        
+0000b9   1283     bcf     0x03, 0x5        	BANKSEL	r0x1023
+0000ba   1303     bcf     0x03, 0x6        
+0000bb   00ba     movwf   0x3a             	MOVWF	r0x1023
+0000bc   118a     bcf     0x0a, 0x3        	PAGESEL	_LCDPrintNumero
+0000bd   120a     bcf     0x0a, 0x4        
+0000be   2744     call    0x0744           	CALL	_LCDPrintNumero
+0000bf   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0000c0   120a     bcf     0x0a, 0x4        
+                                           _00268_DS_:
+                                           ;	.line	543; "main.c"	delay_ms(TIEMPO_REPETICION);       // Espera el tiempo de autorepetición de la tecla pulsada.
+0000c1   30f4     movlw   0xf4             	MOVLW	0xf4
+0000c2   00ff     movwf   0x7f             	MOVWF	STK00
+0000c3   3001     movlw   0x01             	MOVLW	0x01
+0000c4   118a     bcf     0x0a, 0x3        	PAGESEL	_delay_ms
+0000c5   120a     bcf     0x0a, 0x4        
+0000c6   2798     call    0x0798           	CALL	_delay_ms
+0000c7   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0000c8   120a     bcf     0x0a, 0x4        
+0000c9   2818     goto    0x0018           	GOTO	_00269_DS_
+                                           _00271_DS_:
+                                           ;	.line	546; "main.c"	if(P_SET==LOW_ST)                // Si se pulsa SET.
+0000ca   1283     bcf     0x03, 0x5        	BANKSEL	_PORTAbits
+0000cb   1303     bcf     0x03, 0x6        
+0000cc   1905     btfsc   0x05, 0x2        	BTFSC	_PORTAbits,2
+0000cd   28fc     goto    0x00fc           	GOTO	_00278_DS_
+                                           ;	.line	548; "main.c"	editMenuState++;
+0000ce   1283     bcf     0x03, 0x5        	BANKSEL	_editMenuState
+0000cf   1303     bcf     0x03, 0x6        
+0000d0   0ae0     incf    0x60, 0x1        	INCF	_editMenuState,F
+                                           _00272_DS_:
+                                           ;	.line	549; "main.c"	while(P_SET==LOW_ST) delay_ms(TIEMPO_ANTIREBOTE);  // Espera antirebote mecánico del pulsador.
+0000d1   1283     bcf     0x03, 0x5        	BANKSEL	_PORTAbits
+0000d2   1303     bcf     0x03, 0x6        
+0000d3   1905     btfsc   0x05, 0x2        	BTFSC	_PORTAbits,2
+0000d4   28de     goto    0x00de           	GOTO	_00274_DS_
+0000d5   300a     movlw   0x0a             	MOVLW	0x0a
+0000d6   00ff     movwf   0x7f             	MOVWF	STK00
+0000d7   3000     movlw   0x00             	MOVLW	0x00
+0000d8   118a     bcf     0x0a, 0x3        	PAGESEL	_delay_ms
+0000d9   120a     bcf     0x0a, 0x4        
+0000da   2798     call    0x0798           	CALL	_delay_ms
+0000db   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0000dc   120a     bcf     0x0a, 0x4        
+0000dd   28d1     goto    0x00d1           	GOTO	_00272_DS_
+                                           _00274_DS_:
+                                           ;	.line	550; "main.c"	if(*dato>limSup) *dato=limSup;  // Evita posible bug al modificar el año o el mes, si
+0000de   1283     bcf     0x03, 0x5        	BANKSEL	r0x1021
+0000df   1303     bcf     0x03, 0x6        
+0000e0   0836     movf    0x36, 0x0        	MOVF	r0x1021,W
+0000e1   00fe     movwf   0x7e             	MOVWF	STK01
+0000e2   0837     movf    0x37, 0x0        	MOVF	r0x1020,W
+0000e3   00ff     movwf   0x7f             	MOVWF	STK00
+0000e4   0838     movf    0x38, 0x0        	MOVF	r0x101F,W
+0000e5   118a     bcf     0x0a, 0x3        	PAGESEL	__gptrget1
+0000e6   120a     bcf     0x0a, 0x4        
+0000e7   2638     call    0x0638           	CALL	__gptrget1
+0000e8   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0000e9   120a     bcf     0x0a, 0x4        
+0000ea   1283     bcf     0x03, 0x5        	BANKSEL	r0x101B
+0000eb   1303     bcf     0x03, 0x6        
+0000ec   00b3     movwf   0x33             	MOVWF	r0x101B
+0000ed   0232     subwf   0x32, 0x0        	SUBWF	r0x101C,W
+0000ee   1803     btfsc   0x03, 0x0        	BTFSC	STATUS,0
+0000ef   28fc     goto    0x00fc           	GOTO	_00278_DS_
+                                           ;;genSkipc:3257: created from rifx:02795EB4
+0000f0   0832     movf    0x32, 0x0        	MOVF	r0x101C,W
+0000f1   00fd     movwf   0x7d             	MOVWF	STK02
+0000f2   0836     movf    0x36, 0x0        	MOVF	r0x1021,W
+0000f3   00fe     movwf   0x7e             	MOVWF	STK01
+0000f4   0837     movf    0x37, 0x0        	MOVF	r0x1020,W
+0000f5   00ff     movwf   0x7f             	MOVWF	STK00
+0000f6   0838     movf    0x38, 0x0        	MOVF	r0x101F,W
+0000f7   118a     bcf     0x0a, 0x3        	PAGESEL	__gptrput1
+0000f8   120a     bcf     0x0a, 0x4        
+0000f9   260b     call    0x060b           	CALL	__gptrput1
+0000fa   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0000fb   120a     bcf     0x0a, 0x4        
+                                           _00278_DS_:
+                                           ;	.line	554; "main.c"	if(lcdX==12) lcdX++;       // Si se está editando el día de la semana, se desplaza el cursor
+0000fc   3000     movlw   0x00             	MOVLW	0x00
+                                           ;	.line	557; "main.c"	LCD_gotoXY(++lcdX, lcdY);  // Coloca el cursor en la parte izquierda de la variable editada.
+0000fd   1283     bcf     0x03, 0x5        	BANKSEL	r0x1022
+0000fe   1303     bcf     0x03, 0x6        
+0000ff   0439     iorwf   0x39, 0x0        	IORWF	r0x1022,W
+000100   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
+000101   0ab4     incf    0x34, 0x1        	INCF	r0x101D,F
+000102   0ab4     incf    0x34, 0x1        	INCF	r0x101D,F
+000103   0835     movf    0x35, 0x0        	MOVF	r0x101E,W
+000104   00ff     movwf   0x7f             	MOVWF	STK00
+000105   0834     movf    0x34, 0x0        	MOVF	r0x101D,W
+000106   158a     bsf     0x0a, 0x3        	PAGESEL	_LCD_gotoXY
+000107   120a     bcf     0x0a, 0x4        
+000108   2000     call    0x0000           	CALL	_LCD_gotoXY
+000109   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00010a   120a     bcf     0x0a, 0x4        
+                                           ;	.line	558; "main.c"	LCD_CURSOR_UNDELINE;       // Cursor On
+00010b   300e     movlw   0x0e             	MOVLW	0x0e
+00010c   158a     bsf     0x0a, 0x3        	PAGESEL	_LCD_command
+00010d   120a     bcf     0x0a, 0x4        
+00010e   2057     call    0x0057           	CALL	_LCD_command
+00010f   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000110   120a     bcf     0x0a, 0x4        
+000111   0008     return                   	RETURN	
+                                           ; exit point of _cicloTimeSet
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _LCD_gotoXY
+                                           ;   _LCDPrintNumero
+                                           ;   _LCD_putChar
+                                           ;   _LCDPrintNumero
+                                           ;   _LCD_putChar
+                                           ;   _LCDPrintNumero
+                                           ;   _LCD_print
+                                           ;   _LCDPrintDiaSemana
+                                           ;   _LCD_gotoXY
+                                           ;   _LCDPrintNumero
+                                           ;   _LCD_putChar
+                                           ;   _LCDPrintNumero
+                                           ;   _LCD_putChar
+                                           ;   _LCDPrintNumero
+                                           ;   _LCD_gotoXY
+                                           ;   _LCDPrintNumero
+                                           ;   _LCD_putChar
+                                           ;   _LCDPrintNumero
+                                           ;   _LCD_putChar
+                                           ;   _LCDPrintNumero
+                                           ;   _LCD_print
+                                           ;   _LCDPrintDiaSemana
+                                           ;   _LCD_gotoXY
+                                           ;   _LCDPrintNumero
+                                           ;   _LCD_putChar
+                                           ;   _LCDPrintNumero
+                                           ;   _LCD_putChar
+                                           ;   _LCDPrintNumero
+                                           ;5 compiler assigned registers:
+                                           ;   STK00
+                                           ;   r0x101B
+                                           ;   r0x101C
+                                           ;   r0x101D
+                                           ;   STK01
+                                           ;; Starting pCode block
+                                           S_main__timeShow	code
+                                           _timeShow:
+                                           ; 2 exit points
+                                           ;	.line	496; "main.c"	LCD_gotoXY(1,0);
+00044e   3000     movlw   0x00             	MOVLW	0x00
+00044f   00ff     movwf   0x7f             	MOVWF	STK00
+000450   3001     movlw   0x01             	MOVLW	0x01
+000451   158a     bsf     0x0a, 0x3        	PAGESEL	_LCD_gotoXY
+000452   120a     bcf     0x0a, 0x4        
+000453   2000     call    0x0000           	CALL	_LCD_gotoXY
+000454   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000455   120a     bcf     0x0a, 0x4        
+                                           ;	.line	497; "main.c"	LCDPrintNumero(DS1307_Dia);
+000456   1283     bcf     0x03, 0x5        	BANKSEL	_DS1307_Dia
+000457   1303     bcf     0x03, 0x6        
+000458   085a     movf    0x5a, 0x0        	MOVF	_DS1307_Dia,W
+000459   118a     bcf     0x0a, 0x3        	PAGESEL	_LCDPrintNumero
+00045a   120a     bcf     0x0a, 0x4        
+00045b   2744     call    0x0744           	CALL	_LCDPrintNumero
+00045c   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00045d   120a     bcf     0x0a, 0x4        
+                                           ;	.line	498; "main.c"	LCD_putChar('/');
+00045e   302f     movlw   0x2f             	MOVLW	0x2f
+00045f   158a     bsf     0x0a, 0x3        	PAGESEL	_LCD_putChar
+000460   120a     bcf     0x0a, 0x4        
+000461   2048     call    0x0048           	CALL	_LCD_putChar
+000462   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000463   120a     bcf     0x0a, 0x4        
+                                           ;	.line	499; "main.c"	LCDPrintNumero(DS1307_Mes);
+000464   1283     bcf     0x03, 0x5        	BANKSEL	_DS1307_Mes
+000465   1303     bcf     0x03, 0x6        
+000466   085b     movf    0x5b, 0x0        	MOVF	_DS1307_Mes,W
+000467   118a     bcf     0x0a, 0x3        	PAGESEL	_LCDPrintNumero
+000468   120a     bcf     0x0a, 0x4        
+000469   2744     call    0x0744           	CALL	_LCDPrintNumero
+00046a   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00046b   120a     bcf     0x0a, 0x4        
+                                           ;	.line	500; "main.c"	LCD_putChar('/');
+00046c   302f     movlw   0x2f             	MOVLW	0x2f
+00046d   158a     bsf     0x0a, 0x3        	PAGESEL	_LCD_putChar
+00046e   120a     bcf     0x0a, 0x4        
+00046f   2048     call    0x0048           	CALL	_LCD_putChar
+000470   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000471   120a     bcf     0x0a, 0x4        
+                                           ;	.line	501; "main.c"	LCDPrintNumero(DS1307_Ano);
+000472   1283     bcf     0x03, 0x5        	BANKSEL	_DS1307_Ano
+000473   1303     bcf     0x03, 0x6        
+000474   085c     movf    0x5c, 0x0        	MOVF	_DS1307_Ano,W
+000475   118a     bcf     0x0a, 0x3        	PAGESEL	_LCDPrintNumero
+000476   120a     bcf     0x0a, 0x4        
+000477   2744     call    0x0744           	CALL	_LCDPrintNumero
+000478   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000479   120a     bcf     0x0a, 0x4        
+                                           ;	.line	502; "main.c"	LCD_print("   ");
+00047a   3008     movlw   0x08             	MOVLW	high (___str_7 + 0)
+00047b   1283     bcf     0x03, 0x5        	BANKSEL	r0x101B
+00047c   1303     bcf     0x03, 0x6        
+00047d   00b3     movwf   0x33             	MOVWF	r0x101B
+00047e   30a5     movlw   0xa5             	MOVLW	(___str_7 + 0)
+00047f   00b2     movwf   0x32             	MOVWF	r0x101C
+000480   3080     movlw   0x80             	MOVLW	0x80
+000481   00b4     movwf   0x34             	MOVWF	r0x101D
+000482   0832     movf    0x32, 0x0        	MOVF	r0x101C,W
+000483   00fe     movwf   0x7e             	MOVWF	STK01
+000484   0833     movf    0x33, 0x0        	MOVF	r0x101B,W
+000485   00ff     movwf   0x7f             	MOVWF	STK00
+000486   0834     movf    0x34, 0x0        	MOVF	r0x101D,W
+000487   118a     bcf     0x0a, 0x3        	PAGESEL	_LCD_print
+000488   120a     bcf     0x0a, 0x4        
+000489   2770     call    0x0770           	CALL	_LCD_print
+00048a   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00048b   120a     bcf     0x0a, 0x4        
+                                           ;	.line	503; "main.c"	LCDPrintDiaSemana();
+00048c   118a     bcf     0x0a, 0x3        	PAGESEL	_LCDPrintDiaSemana
+00048d   120a     bcf     0x0a, 0x4        
+00048e   21fa     call    0x01fa           	CALL	_LCDPrintDiaSemana
+00048f   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000490   120a     bcf     0x0a, 0x4        
+                                           ;	.line	504; "main.c"	LCD_gotoXY(1,1);
+000491   3001     movlw   0x01             	MOVLW	0x01
+000492   00ff     movwf   0x7f             	MOVWF	STK00
+000493   3001     movlw   0x01             	MOVLW	0x01
+000494   158a     bsf     0x0a, 0x3        	PAGESEL	_LCD_gotoXY
+000495   120a     bcf     0x0a, 0x4        
+000496   2000     call    0x0000           	CALL	_LCD_gotoXY
+000497   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000498   120a     bcf     0x0a, 0x4        
+                                           ;	.line	505; "main.c"	LCDPrintNumero(DS1307_Hora);
+000499   1283     bcf     0x03, 0x5        	BANKSEL	_DS1307_Hora
+00049a   1303     bcf     0x03, 0x6        
+00049b   085d     movf    0x5d, 0x0        	MOVF	_DS1307_Hora,W
+00049c   118a     bcf     0x0a, 0x3        	PAGESEL	_LCDPrintNumero
+00049d   120a     bcf     0x0a, 0x4        
+00049e   2744     call    0x0744           	CALL	_LCDPrintNumero
+00049f   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0004a0   120a     bcf     0x0a, 0x4        
+                                           ;	.line	506; "main.c"	LCD_putChar(':');
+0004a1   303a     movlw   0x3a             	MOVLW	0x3a
+0004a2   158a     bsf     0x0a, 0x3        	PAGESEL	_LCD_putChar
+0004a3   120a     bcf     0x0a, 0x4        
+0004a4   2048     call    0x0048           	CALL	_LCD_putChar
+0004a5   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0004a6   120a     bcf     0x0a, 0x4        
+                                           ;	.line	507; "main.c"	LCDPrintNumero(DS1307_Minuto);
+0004a7   1283     bcf     0x03, 0x5        	BANKSEL	_DS1307_Minuto
+0004a8   1303     bcf     0x03, 0x6        
+0004a9   085e     movf    0x5e, 0x0        	MOVF	_DS1307_Minuto,W
+0004aa   118a     bcf     0x0a, 0x3        	PAGESEL	_LCDPrintNumero
+0004ab   120a     bcf     0x0a, 0x4        
+0004ac   2744     call    0x0744           	CALL	_LCDPrintNumero
+0004ad   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0004ae   120a     bcf     0x0a, 0x4        
+                                           ;	.line	508; "main.c"	LCD_putChar(':');
+0004af   303a     movlw   0x3a             	MOVLW	0x3a
+0004b0   158a     bsf     0x0a, 0x3        	PAGESEL	_LCD_putChar
+0004b1   120a     bcf     0x0a, 0x4        
+0004b2   2048     call    0x0048           	CALL	_LCD_putChar
+0004b3   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0004b4   120a     bcf     0x0a, 0x4        
+                                           ;	.line	509; "main.c"	LCDPrintNumero(DS1307_Segundo);
+0004b5   1283     bcf     0x03, 0x5        	BANKSEL	_DS1307_Segundo
+0004b6   1303     bcf     0x03, 0x6        
+0004b7   085f     movf    0x5f, 0x0        	MOVF	_DS1307_Segundo,W
+0004b8   118a     bcf     0x0a, 0x3        	PAGESEL	_LCDPrintNumero
+0004b9   120a     bcf     0x0a, 0x4        
+0004ba   2744     call    0x0744           	CALL	_LCDPrintNumero
+0004bb   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0004bc   120a     bcf     0x0a, 0x4        
+0004bd   0008     return                   	RETURN	
+                                           ; exit point of _timeShow
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   __divuchar
+                                           ;   _LCD_putChar
+                                           ;   __moduchar
+                                           ;   _LCD_putChar
+                                           ;   __divuchar
+                                           ;   _LCD_putChar
+                                           ;   __moduchar
+                                           ;   _LCD_putChar
+                                           ;3 compiler assigned registers:
+                                           ;   r0x1014
+                                           ;   STK00
+                                           ;   r0x1015
+                                           ;; Starting pCode block
+                                           S_main__LCDPrintNumero	code
+                                           _LCDPrintNumero:
+                                           ; 2 exit points
+                                           ;	.line	482; "main.c"	void LCDPrintNumero(uint8_t numero)
+000744   1283     bcf     0x03, 0x5        	BANKSEL	r0x1014
+000745   1303     bcf     0x03, 0x6        
+000746   00ab     movwf   0x2b             	MOVWF	r0x1014
+                                           ;	.line	484; "main.c"	LCD_putChar((numero/10)+48);   // Imprime dígito decena.
+000747   300a     movlw   0x0a             	MOVLW	0x0a
+000748   00ff     movwf   0x7f             	MOVWF	STK00
+000749   082b     movf    0x2b, 0x0        	MOVF	r0x1014,W
+00074a   118a     bcf     0x0a, 0x3        	PAGESEL	__divuchar
+00074b   120a     bcf     0x0a, 0x4        
+00074c   26b5     call    0x06b5           	CALL	__divuchar
+00074d   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00074e   120a     bcf     0x0a, 0x4        
+00074f   1283     bcf     0x03, 0x5        	BANKSEL	r0x1015
+000750   1303     bcf     0x03, 0x6        
+000751   00ac     movwf   0x2c             	MOVWF	r0x1015
+000752   3030     movlw   0x30             	MOVLW	0x30
+000753   07ac     addwf   0x2c, 0x1        	ADDWF	r0x1015,F
+000754   082c     movf    0x2c, 0x0        	MOVF	r0x1015,W
+000755   158a     bsf     0x0a, 0x3        	PAGESEL	_LCD_putChar
+000756   120a     bcf     0x0a, 0x4        
+000757   2048     call    0x0048           	CALL	_LCD_putChar
+000758   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000759   120a     bcf     0x0a, 0x4        
+                                           ;	.line	485; "main.c"	LCD_putChar((numero%10)+48);   // Imprime dígito unidad.
+00075a   300a     movlw   0x0a             	MOVLW	0x0a
+00075b   00ff     movwf   0x7f             	MOVWF	STK00
+00075c   1283     bcf     0x03, 0x5        	BANKSEL	r0x1014
+00075d   1303     bcf     0x03, 0x6        
+00075e   082b     movf    0x2b, 0x0        	MOVF	r0x1014,W
+00075f   118a     bcf     0x0a, 0x3        	PAGESEL	__moduchar
+000760   120a     bcf     0x0a, 0x4        
+000761   2716     call    0x0716           	CALL	__moduchar
+000762   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000763   120a     bcf     0x0a, 0x4        
+000764   1283     bcf     0x03, 0x5        	BANKSEL	r0x1015
+000765   1303     bcf     0x03, 0x6        
+000766   00ac     movwf   0x2c             	MOVWF	r0x1015
+000767   3030     movlw   0x30             	MOVLW	0x30
+000768   072c     addwf   0x2c, 0x0        	ADDWF	r0x1015,W
+000769   00ab     movwf   0x2b             	MOVWF	r0x1014
+00076a   158a     bsf     0x0a, 0x3        	PAGESEL	_LCD_putChar
+00076b   120a     bcf     0x0a, 0x4        
+00076c   2048     call    0x0048           	CALL	_LCD_putChar
+00076d   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00076e   120a     bcf     0x0a, 0x4        
+00076f   0008     return                   	RETURN	
+                                           ; exit point of _LCDPrintNumero
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _bisiesto
+                                           ;   _bisiesto
+                                           ;1 compiler assigned register :
+                                           ;   r0x100A
+                                           ;; Starting pCode block
+                                           S_main__diasDelMes	code
+                                           _diasDelMes:
+                                           ; 2 exit points
+                                           ;	.line	464; "main.c"	if(DS1307_Mes==2)                 // Mes = febrero
+000683   1283     bcf     0x03, 0x5        	BANKSEL	_DS1307_Mes
+000684   1303     bcf     0x03, 0x6        
+000685   085b     movf    0x5b, 0x0        	MOVF	_DS1307_Mes,W
+000686   3a02     xorlw   0x02             	XORLW	0x02
+000687   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
+000688   2e9f     goto    0x069f           	GOTO	_00218_DS_
+                                           ;	.line	466; "main.c"	return bisiesto() ? 29 : 28;  // Bisiesto: 29 días / No bisiesto: 28 días.
+000689   158a     bsf     0x0a, 0x3        	PAGESEL	_bisiesto
+00068a   120a     bcf     0x0a, 0x4        
+00068b   2073     call    0x0073           	CALL	_bisiesto
+00068c   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00068d   120a     bcf     0x0a, 0x4        
+00068e   1283     bcf     0x03, 0x5        	BANKSEL	r0x100A
+00068f   1303     bcf     0x03, 0x6        
+000690   00a2     movwf   0x22             	MOVWF	r0x100A
+000691   0822     movf    0x22, 0x0        	MOVF	r0x100A,W
+000692   1903     btfsc   0x03, 0x2        	BTFSC	STATUS,2
+000693   2e97     goto    0x0697           	GOTO	_00226_DS_
+000694   301d     movlw   0x1d             	MOVLW	0x1d
+000695   00a2     movwf   0x22             	MOVWF	r0x100A
+000696   2e9b     goto    0x069b           	GOTO	_00227_DS_
+                                           _00226_DS_:
+000697   301c     movlw   0x1c             	MOVLW	0x1c
+000698   1283     bcf     0x03, 0x5        	BANKSEL	r0x100A
+000699   1303     bcf     0x03, 0x6        
+00069a   00a2     movwf   0x22             	MOVWF	r0x100A
+                                           _00227_DS_:
+00069b   1283     bcf     0x03, 0x5        	BANKSEL	r0x100A
+00069c   1303     bcf     0x03, 0x6        
+00069d   0822     movf    0x22, 0x0        	MOVF	r0x100A,W
+00069e   2eb4     goto    0x06b4           	GOTO	_00224_DS_
+                                           _00218_DS_:
+                                           ;	.line	468; "main.c"	if((DS1307_Mes==4) || (DS1307_Mes==6) || (DS1307_Mes==9) || (DS1307_Mes==11))
+00069f   1283     bcf     0x03, 0x5        	BANKSEL	_DS1307_Mes
+0006a0   1303     bcf     0x03, 0x6        
+0006a1   085b     movf    0x5b, 0x0        	MOVF	_DS1307_Mes,W
+0006a2   3a04     xorlw   0x04             	XORLW	0x04
+0006a3   1903     btfsc   0x03, 0x2        	BTFSC	STATUS,2
+0006a4   2eb1     goto    0x06b1           	GOTO	_00219_DS_
+0006a5   085b     movf    0x5b, 0x0        	MOVF	_DS1307_Mes,W
+0006a6   3a06     xorlw   0x06             	XORLW	0x06
+0006a7   1903     btfsc   0x03, 0x2        	BTFSC	STATUS,2
+0006a8   2eb1     goto    0x06b1           	GOTO	_00219_DS_
+0006a9   085b     movf    0x5b, 0x0        	MOVF	_DS1307_Mes,W
+0006aa   3a09     xorlw   0x09             	XORLW	0x09
+0006ab   1903     btfsc   0x03, 0x2        	BTFSC	STATUS,2
+0006ac   2eb1     goto    0x06b1           	GOTO	_00219_DS_
+0006ad   085b     movf    0x5b, 0x0        	MOVF	_DS1307_Mes,W
+0006ae   3a0b     xorlw   0x0b             	XORLW	0x0b
+0006af   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
+0006b0   2eb3     goto    0x06b3           	GOTO	_00220_DS_
+                                           _00219_DS_:
+                                           ;	.line	470; "main.c"	return 30;                    // Meses de 30 días.
+0006b1   301e     movlw   0x1e             	MOVLW	0x1e
+0006b2   2eb4     goto    0x06b4           	GOTO	_00224_DS_
+                                           _00220_DS_:
+                                           ;	.line	472; "main.c"	return 31;                        // Meses de 31 días.
+0006b3   301f     movlw   0x1f             	MOVLW	0x1f
+                                           _00224_DS_:
+0006b4   0008     return                   	RETURN	
+                                           ; exit point of _diasDelMes
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;2 compiler assigned registers:
+                                           ;   r0x1008
+                                           ;   r0x1009
+                                           ;; Starting pCode block
+                                           S_main__bisiesto	code
+                                           _bisiesto:
+                                           ; 2 exit points
+                                           ;	.line	452; "main.c"	return !(DS1307_Ano%4);
+000873   3003     movlw   0x03             	MOVLW	0x03
+000874   1283     bcf     0x03, 0x5        	BANKSEL	_DS1307_Ano
+000875   1303     bcf     0x03, 0x6        
+000876   055c     andwf   0x5c, 0x0        	ANDWF	_DS1307_Ano,W
+000877   1283     bcf     0x03, 0x5        	BANKSEL	r0x1008
+000878   1303     bcf     0x03, 0x6        
+000879   00a1     movwf   0x21             	MOVWF	r0x1008
+00087a   0821     movf    0x21, 0x0        	MOVF	r0x1008,W
+00087b   3000     movlw   0x00             	MOVLW	0x00
+00087c   1903     btfsc   0x03, 0x2        	BTFSC	STATUS,2
+00087d   3001     movlw   0x01             	MOVLW	0x01
+                                           ;;1	MOVWF	r0x1009
+00087e   0008     return                   	RETURN	
+                                           ; exit point of _bisiesto
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _LCD_print
+                                           ;   _LCD_print
+                                           ;   _LCD_print
+                                           ;   _LCD_print
+                                           ;   _LCD_print
+                                           ;   _LCD_print
+                                           ;   _LCD_print
+                                           ;   _LCD_print
+                                           ;   _LCD_print
+                                           ;   _LCD_print
+                                           ;   _LCD_print
+                                           ;   _LCD_print
+                                           ;   _LCD_print
+                                           ;   _LCD_print
+                                           ;5 compiler assigned registers:
+                                           ;   r0x1018
+                                           ;   r0x1019
+                                           ;   r0x101A
+                                           ;   STK01
+                                           ;   STK00
+                                           ;; Starting pCode block
+                                           S_main__LCDPrintDiaSemana	code
+                                           _LCDPrintDiaSemana:
+                                           ; 2 exit points
+                                           ;;unsigned compare: left < lit(0x1=1), size=1
+                                           ;	.line	407; "main.c"	switch (DS1307_DiaSemana)
+0001fa   3001     movlw   0x01             	MOVLW	0x01
+0001fb   1283     bcf     0x03, 0x5        	BANKSEL	_DS1307_DiaSemana
+0001fc   1303     bcf     0x03, 0x6        
+0001fd   0259     subwf   0x59, 0x0        	SUBWF	_DS1307_DiaSemana,W
+0001fe   1c03     btfss   0x03, 0x0        	BTFSS	STATUS,0
+0001ff   2aa1     goto    0x02a1           	GOTO	_00198_DS_
+                                           ;;genSkipc:3257: created from rifx:02795EB4
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x8=8), size=1
+000200   3008     movlw   0x08             	MOVLW	0x08
+000201   0259     subwf   0x59, 0x0        	SUBWF	_DS1307_DiaSemana,W
+000202   1803     btfsc   0x03, 0x0        	BTFSC	STATUS,0
+000203   2aa1     goto    0x02a1           	GOTO	_00198_DS_
+                                           ;;genSkipc:3257: created from rifx:02795EB4
+000204   0359     decf    0x59, 0x0        	DECF	_DS1307_DiaSemana,W
+000205   1283     bcf     0x03, 0x5        	BANKSEL	r0x1018
+000206   1303     bcf     0x03, 0x6        
+000207   00af     movwf   0x2f             	MOVWF	r0x1018
+000208   3002     movlw   0x02             	MOVLW	HIGH(_00208_DS_)
+000209   1283     bcf     0x03, 0x5        	BANKSEL	PCLATH
+00020a   1303     bcf     0x03, 0x6        
+00020b   008a     movwf   0x0a             	MOVWF	PCLATH
+00020c   3016     movlw   0x16             	MOVLW	_00208_DS_
+00020d   1283     bcf     0x03, 0x5        	BANKSEL	r0x1018
+00020e   1303     bcf     0x03, 0x6        
+00020f   072f     addwf   0x2f, 0x0        	ADDWF	r0x1018,W
+000210   1c03     btfss   0x03, 0x0        	BTFSS	STATUS,0
+000211   2a15     goto    0x0215           	GOTO	_00001_DS_
+000212   1283     bcf     0x03, 0x5        	BANKSEL	PCLATH
+000213   1303     bcf     0x03, 0x6        
+000214   0a8a     incf    0x0a, 0x1        	INCF	PCLATH,F
+                                           _00001_DS_:
+000215   0082     movwf   0x02             	MOVWF	PCL
+                                           _00208_DS_:
+000216   2a1d     goto    0x021d           	GOTO	_00190_DS_
+000217   2a30     goto    0x0230           	GOTO	_00191_DS_
+000218   2a43     goto    0x0243           	GOTO	_00192_DS_
+000219   2a56     goto    0x0256           	GOTO	_00193_DS_
+00021a   2a69     goto    0x0269           	GOTO	_00194_DS_
+00021b   2a7c     goto    0x027c           	GOTO	_00195_DS_
+00021c   2a8f     goto    0x028f           	GOTO	_00196_DS_
+                                           _00190_DS_:
+                                           ;	.line	410; "main.c"	LCD_print("DOM");
+00021d   3007     movlw   0x07             	MOVLW	high (___str_0 + 0)
+00021e   1283     bcf     0x03, 0x5        	BANKSEL	r0x1019
+00021f   1303     bcf     0x03, 0x6        
+000220   00b0     movwf   0x30             	MOVWF	r0x1019
+000221   30fb     movlw   0xfb             	MOVLW	(___str_0 + 0)
+000222   00af     movwf   0x2f             	MOVWF	r0x1018
+000223   3080     movlw   0x80             	MOVLW	0x80
+000224   00b1     movwf   0x31             	MOVWF	r0x101A
+000225   082f     movf    0x2f, 0x0        	MOVF	r0x1018,W
+000226   00fe     movwf   0x7e             	MOVWF	STK01
+000227   0830     movf    0x30, 0x0        	MOVF	r0x1019,W
+000228   00ff     movwf   0x7f             	MOVWF	STK00
+000229   0831     movf    0x31, 0x0        	MOVF	r0x101A,W
+00022a   118a     bcf     0x0a, 0x3        	PAGESEL	_LCD_print
+00022b   120a     bcf     0x0a, 0x4        
+00022c   2770     call    0x0770           	CALL	_LCD_print
+00022d   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00022e   120a     bcf     0x0a, 0x4        
+                                           ;	.line	411; "main.c"	break;
+00022f   2aa1     goto    0x02a1           	GOTO	_00198_DS_
+                                           _00191_DS_:
+                                           ;	.line	413; "main.c"	LCD_print("LUN");
+000230   3008     movlw   0x08             	MOVLW	high (___str_1 + 0)
+000231   1283     bcf     0x03, 0x5        	BANKSEL	r0x1019
+000232   1303     bcf     0x03, 0x6        
+000233   00b0     movwf   0x30             	MOVWF	r0x1019
+000234   308d     movlw   0x8d             	MOVLW	(___str_1 + 0)
+000235   00af     movwf   0x2f             	MOVWF	r0x1018
+000236   3080     movlw   0x80             	MOVLW	0x80
+000237   00b1     movwf   0x31             	MOVWF	r0x101A
+000238   082f     movf    0x2f, 0x0        	MOVF	r0x1018,W
+000239   00fe     movwf   0x7e             	MOVWF	STK01
+00023a   0830     movf    0x30, 0x0        	MOVF	r0x1019,W
+00023b   00ff     movwf   0x7f             	MOVWF	STK00
+00023c   0831     movf    0x31, 0x0        	MOVF	r0x101A,W
+00023d   118a     bcf     0x0a, 0x3        	PAGESEL	_LCD_print
+00023e   120a     bcf     0x0a, 0x4        
+00023f   2770     call    0x0770           	CALL	_LCD_print
+000240   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000241   120a     bcf     0x0a, 0x4        
+                                           ;	.line	414; "main.c"	break;
+000242   2aa1     goto    0x02a1           	GOTO	_00198_DS_
+                                           _00192_DS_:
+                                           ;	.line	416; "main.c"	LCD_print("MAR");
+000243   3008     movlw   0x08             	MOVLW	high (___str_2 + 0)
+000244   1283     bcf     0x03, 0x5        	BANKSEL	r0x1019
+000245   1303     bcf     0x03, 0x6        
+000246   00b0     movwf   0x30             	MOVWF	r0x1019
+000247   3091     movlw   0x91             	MOVLW	(___str_2 + 0)
+000248   00af     movwf   0x2f             	MOVWF	r0x1018
+000249   3080     movlw   0x80             	MOVLW	0x80
+00024a   00b1     movwf   0x31             	MOVWF	r0x101A
+00024b   082f     movf    0x2f, 0x0        	MOVF	r0x1018,W
+00024c   00fe     movwf   0x7e             	MOVWF	STK01
+00024d   0830     movf    0x30, 0x0        	MOVF	r0x1019,W
+00024e   00ff     movwf   0x7f             	MOVWF	STK00
+00024f   0831     movf    0x31, 0x0        	MOVF	r0x101A,W
+000250   118a     bcf     0x0a, 0x3        	PAGESEL	_LCD_print
+000251   120a     bcf     0x0a, 0x4        
+000252   2770     call    0x0770           	CALL	_LCD_print
+000253   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000254   120a     bcf     0x0a, 0x4        
+                                           ;	.line	417; "main.c"	break;
+000255   2aa1     goto    0x02a1           	GOTO	_00198_DS_
+                                           _00193_DS_:
+                                           ;	.line	419; "main.c"	LCD_print("MIE");
+000256   3008     movlw   0x08             	MOVLW	high (___str_3 + 0)
+000257   1283     bcf     0x03, 0x5        	BANKSEL	r0x1019
+000258   1303     bcf     0x03, 0x6        
+000259   00b0     movwf   0x30             	MOVWF	r0x1019
+00025a   3095     movlw   0x95             	MOVLW	(___str_3 + 0)
+00025b   00af     movwf   0x2f             	MOVWF	r0x1018
+00025c   3080     movlw   0x80             	MOVLW	0x80
+00025d   00b1     movwf   0x31             	MOVWF	r0x101A
+00025e   082f     movf    0x2f, 0x0        	MOVF	r0x1018,W
+00025f   00fe     movwf   0x7e             	MOVWF	STK01
+000260   0830     movf    0x30, 0x0        	MOVF	r0x1019,W
+000261   00ff     movwf   0x7f             	MOVWF	STK00
+000262   0831     movf    0x31, 0x0        	MOVF	r0x101A,W
+000263   118a     bcf     0x0a, 0x3        	PAGESEL	_LCD_print
+000264   120a     bcf     0x0a, 0x4        
+000265   2770     call    0x0770           	CALL	_LCD_print
+000266   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000267   120a     bcf     0x0a, 0x4        
+                                           ;	.line	420; "main.c"	break;
+000268   2aa1     goto    0x02a1           	GOTO	_00198_DS_
+                                           _00194_DS_:
+                                           ;	.line	422; "main.c"	LCD_print("JUE");
+000269   3008     movlw   0x08             	MOVLW	high (___str_4 + 0)
+00026a   1283     bcf     0x03, 0x5        	BANKSEL	r0x1019
+00026b   1303     bcf     0x03, 0x6        
+00026c   00b0     movwf   0x30             	MOVWF	r0x1019
+00026d   3099     movlw   0x99             	MOVLW	(___str_4 + 0)
+00026e   00af     movwf   0x2f             	MOVWF	r0x1018
+00026f   3080     movlw   0x80             	MOVLW	0x80
+000270   00b1     movwf   0x31             	MOVWF	r0x101A
+000271   082f     movf    0x2f, 0x0        	MOVF	r0x1018,W
+000272   00fe     movwf   0x7e             	MOVWF	STK01
+000273   0830     movf    0x30, 0x0        	MOVF	r0x1019,W
+000274   00ff     movwf   0x7f             	MOVWF	STK00
+000275   0831     movf    0x31, 0x0        	MOVF	r0x101A,W
+000276   118a     bcf     0x0a, 0x3        	PAGESEL	_LCD_print
+000277   120a     bcf     0x0a, 0x4        
+000278   2770     call    0x0770           	CALL	_LCD_print
+000279   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00027a   120a     bcf     0x0a, 0x4        
+                                           ;	.line	423; "main.c"	break;
+00027b   2aa1     goto    0x02a1           	GOTO	_00198_DS_
+                                           _00195_DS_:
+                                           ;	.line	425; "main.c"	LCD_print("VIE");
+00027c   3008     movlw   0x08             	MOVLW	high (___str_5 + 0)
+00027d   1283     bcf     0x03, 0x5        	BANKSEL	r0x1019
+00027e   1303     bcf     0x03, 0x6        
+00027f   00b0     movwf   0x30             	MOVWF	r0x1019
+000280   309d     movlw   0x9d             	MOVLW	(___str_5 + 0)
+000281   00af     movwf   0x2f             	MOVWF	r0x1018
+000282   3080     movlw   0x80             	MOVLW	0x80
+000283   00b1     movwf   0x31             	MOVWF	r0x101A
+000284   082f     movf    0x2f, 0x0        	MOVF	r0x1018,W
+000285   00fe     movwf   0x7e             	MOVWF	STK01
+000286   0830     movf    0x30, 0x0        	MOVF	r0x1019,W
+000287   00ff     movwf   0x7f             	MOVWF	STK00
+000288   0831     movf    0x31, 0x0        	MOVF	r0x101A,W
+000289   118a     bcf     0x0a, 0x3        	PAGESEL	_LCD_print
+00028a   120a     bcf     0x0a, 0x4        
+00028b   2770     call    0x0770           	CALL	_LCD_print
+00028c   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00028d   120a     bcf     0x0a, 0x4        
+                                           ;	.line	426; "main.c"	break;
+00028e   2aa1     goto    0x02a1           	GOTO	_00198_DS_
+                                           _00196_DS_:
+                                           ;	.line	428; "main.c"	LCD_print("SAB");
+00028f   3008     movlw   0x08             	MOVLW	high (___str_6 + 0)
+000290   1283     bcf     0x03, 0x5        	BANKSEL	r0x1019
+000291   1303     bcf     0x03, 0x6        
+000292   00b0     movwf   0x30             	MOVWF	r0x1019
+000293   30a1     movlw   0xa1             	MOVLW	(___str_6 + 0)
+000294   00af     movwf   0x2f             	MOVWF	r0x1018
+000295   3080     movlw   0x80             	MOVLW	0x80
+000296   00b1     movwf   0x31             	MOVWF	r0x101A
+000297   082f     movf    0x2f, 0x0        	MOVF	r0x1018,W
+000298   00fe     movwf   0x7e             	MOVWF	STK01
+000299   0830     movf    0x30, 0x0        	MOVF	r0x1019,W
+00029a   00ff     movwf   0x7f             	MOVWF	STK00
+00029b   0831     movf    0x31, 0x0        	MOVF	r0x101A,W
+00029c   118a     bcf     0x0a, 0x3        	PAGESEL	_LCD_print
+00029d   120a     bcf     0x0a, 0x4        
+00029e   2770     call    0x0770           	CALL	_LCD_print
+00029f   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0002a0   120a     bcf     0x0a, 0x4        
+                                           _00198_DS_:
+                                           ;	.line	430; "main.c"	}
+0002a1   0008     return                   	RETURN	
+                                           ; exit point of _LCDPrintDiaSemana
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _I2C_start
+                                           ;   _I2C_send
+                                           ;   _I2C_send
+                                           ;   _decimalToBCD
+                                           ;   _I2C_send
+                                           ;   _decimalToBCD
+                                           ;   _I2C_send
+                                           ;   _decimalToBCD
+                                           ;   _I2C_send
+                                           ;   _I2C_send
+                                           ;   _decimalToBCD
+                                           ;   _I2C_send
+                                           ;   _decimalToBCD
+                                           ;   _I2C_send
+                                           ;   _decimalToBCD
+                                           ;   _I2C_send
+                                           ;   _I2C_stop
+                                           ;   _I2C_start
+                                           ;   _I2C_send
+                                           ;   _I2C_send
+                                           ;   _decimalToBCD
+                                           ;   _I2C_send
+                                           ;   _decimalToBCD
+                                           ;   _I2C_send
+                                           ;   _decimalToBCD
+                                           ;   _I2C_send
+                                           ;   _I2C_send
+                                           ;   _decimalToBCD
+                                           ;   _I2C_send
+                                           ;   _decimalToBCD
+                                           ;   _I2C_send
+                                           ;   _decimalToBCD
+                                           ;   _I2C_send
+                                           ;   _I2C_stop
+                                           ;1 compiler assigned register :
+                                           ;   r0x100C
+                                           ;; Starting pCode block
+                                           S_main__DS1307_timeWrite	code
+                                           _DS1307_timeWrite:
+                                           ; 2 exit points
+                                           ;	.line	384; "main.c"	I2C_start();     // Inicia comunicación I2C
+0003cf   158a     bsf     0x0a, 0x3        	PAGESEL	_I2C_start
+0003d0   120a     bcf     0x0a, 0x4        
+0003d1   2066     call    0x0066           	CALL	_I2C_start
+0003d2   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0003d3   120a     bcf     0x0a, 0x4        
+                                           ;	.line	385; "main.c"	I2C_send(0xD0);  // Dirección I2C del DS1307.
+0003d4   30d0     movlw   0xd0             	MOVLW	0xd0
+0003d5   118a     bcf     0x0a, 0x3        	PAGESEL	_I2C_send
+0003d6   120a     bcf     0x0a, 0x4        
+0003d7   2584     call    0x0584           	CALL	_I2C_send
+0003d8   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0003d9   120a     bcf     0x0a, 0x4        
+                                           ;	.line	386; "main.c"	I2C_send(0x00);  // Primera dirección a leer/escribir.
+0003da   3000     movlw   0x00             	MOVLW	0x00
+0003db   118a     bcf     0x0a, 0x3        	PAGESEL	_I2C_send
+0003dc   120a     bcf     0x0a, 0x4        
+0003dd   2584     call    0x0584           	CALL	_I2C_send
+0003de   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0003df   120a     bcf     0x0a, 0x4        
+                                           ;	.line	387; "main.c"	I2C_send(decimalToBCD(DS1307_Segundo));
+0003e0   1283     bcf     0x03, 0x5        	BANKSEL	_DS1307_Segundo
+0003e1   1303     bcf     0x03, 0x6        
+0003e2   085f     movf    0x5f, 0x0        	MOVF	_DS1307_Segundo,W
+0003e3   118a     bcf     0x0a, 0x3        	PAGESEL	_decimalToBCD
+0003e4   120a     bcf     0x0a, 0x4        
+0003e5   27be     call    0x07be           	CALL	_decimalToBCD
+0003e6   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0003e7   120a     bcf     0x0a, 0x4        
+0003e8   1283     bcf     0x03, 0x5        	BANKSEL	r0x100C
+0003e9   1303     bcf     0x03, 0x6        
+0003ea   00a4     movwf   0x24             	MOVWF	r0x100C
+0003eb   118a     bcf     0x0a, 0x3        	PAGESEL	_I2C_send
+0003ec   120a     bcf     0x0a, 0x4        
+0003ed   2584     call    0x0584           	CALL	_I2C_send
+0003ee   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0003ef   120a     bcf     0x0a, 0x4        
+                                           ;	.line	388; "main.c"	I2C_send(decimalToBCD(DS1307_Minuto));
+0003f0   1283     bcf     0x03, 0x5        	BANKSEL	_DS1307_Minuto
+0003f1   1303     bcf     0x03, 0x6        
+0003f2   085e     movf    0x5e, 0x0        	MOVF	_DS1307_Minuto,W
+0003f3   118a     bcf     0x0a, 0x3        	PAGESEL	_decimalToBCD
+0003f4   120a     bcf     0x0a, 0x4        
+0003f5   27be     call    0x07be           	CALL	_decimalToBCD
+0003f6   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0003f7   120a     bcf     0x0a, 0x4        
+0003f8   1283     bcf     0x03, 0x5        	BANKSEL	r0x100C
+0003f9   1303     bcf     0x03, 0x6        
+0003fa   00a4     movwf   0x24             	MOVWF	r0x100C
+0003fb   118a     bcf     0x0a, 0x3        	PAGESEL	_I2C_send
+0003fc   120a     bcf     0x0a, 0x4        
+0003fd   2584     call    0x0584           	CALL	_I2C_send
+0003fe   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0003ff   120a     bcf     0x0a, 0x4        
+                                           ;	.line	389; "main.c"	I2C_send(decimalToBCD(DS1307_Hora));
+000400   1283     bcf     0x03, 0x5        	BANKSEL	_DS1307_Hora
+000401   1303     bcf     0x03, 0x6        
+000402   085d     movf    0x5d, 0x0        	MOVF	_DS1307_Hora,W
+000403   118a     bcf     0x0a, 0x3        	PAGESEL	_decimalToBCD
+000404   120a     bcf     0x0a, 0x4        
+000405   27be     call    0x07be           	CALL	_decimalToBCD
+000406   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000407   120a     bcf     0x0a, 0x4        
+000408   1283     bcf     0x03, 0x5        	BANKSEL	r0x100C
+000409   1303     bcf     0x03, 0x6        
+00040a   00a4     movwf   0x24             	MOVWF	r0x100C
+00040b   118a     bcf     0x0a, 0x3        	PAGESEL	_I2C_send
+00040c   120a     bcf     0x0a, 0x4        
+00040d   2584     call    0x0584           	CALL	_I2C_send
+00040e   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00040f   120a     bcf     0x0a, 0x4        
+                                           ;	.line	390; "main.c"	I2C_send(DS1307_DiaSemana);  // Valor 1...7 (igual en decimal que en BCD)
+000410   1283     bcf     0x03, 0x5        	BANKSEL	_DS1307_DiaSemana
+000411   1303     bcf     0x03, 0x6        
+000412   0859     movf    0x59, 0x0        	MOVF	_DS1307_DiaSemana,W
+000413   118a     bcf     0x0a, 0x3        	PAGESEL	_I2C_send
+000414   120a     bcf     0x0a, 0x4        
+000415   2584     call    0x0584           	CALL	_I2C_send
+000416   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000417   120a     bcf     0x0a, 0x4        
+                                           ;	.line	391; "main.c"	I2C_send(decimalToBCD(DS1307_Dia));
+000418   1283     bcf     0x03, 0x5        	BANKSEL	_DS1307_Dia
+000419   1303     bcf     0x03, 0x6        
+00041a   085a     movf    0x5a, 0x0        	MOVF	_DS1307_Dia,W
+00041b   118a     bcf     0x0a, 0x3        	PAGESEL	_decimalToBCD
+00041c   120a     bcf     0x0a, 0x4        
+00041d   27be     call    0x07be           	CALL	_decimalToBCD
+00041e   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00041f   120a     bcf     0x0a, 0x4        
+000420   1283     bcf     0x03, 0x5        	BANKSEL	r0x100C
+000421   1303     bcf     0x03, 0x6        
+000422   00a4     movwf   0x24             	MOVWF	r0x100C
+000423   118a     bcf     0x0a, 0x3        	PAGESEL	_I2C_send
+000424   120a     bcf     0x0a, 0x4        
+000425   2584     call    0x0584           	CALL	_I2C_send
+000426   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000427   120a     bcf     0x0a, 0x4        
+                                           ;	.line	392; "main.c"	I2C_send(decimalToBCD(DS1307_Mes));
+000428   1283     bcf     0x03, 0x5        	BANKSEL	_DS1307_Mes
+000429   1303     bcf     0x03, 0x6        
+00042a   085b     movf    0x5b, 0x0        	MOVF	_DS1307_Mes,W
+00042b   118a     bcf     0x0a, 0x3        	PAGESEL	_decimalToBCD
+00042c   120a     bcf     0x0a, 0x4        
+00042d   27be     call    0x07be           	CALL	_decimalToBCD
+00042e   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00042f   120a     bcf     0x0a, 0x4        
+000430   1283     bcf     0x03, 0x5        	BANKSEL	r0x100C
+000431   1303     bcf     0x03, 0x6        
+000432   00a4     movwf   0x24             	MOVWF	r0x100C
+000433   118a     bcf     0x0a, 0x3        	PAGESEL	_I2C_send
+000434   120a     bcf     0x0a, 0x4        
+000435   2584     call    0x0584           	CALL	_I2C_send
+000436   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000437   120a     bcf     0x0a, 0x4        
+                                           ;	.line	393; "main.c"	I2C_send(decimalToBCD(DS1307_Ano));
+000438   1283     bcf     0x03, 0x5        	BANKSEL	_DS1307_Ano
+000439   1303     bcf     0x03, 0x6        
+00043a   085c     movf    0x5c, 0x0        	MOVF	_DS1307_Ano,W
+00043b   118a     bcf     0x0a, 0x3        	PAGESEL	_decimalToBCD
+00043c   120a     bcf     0x0a, 0x4        
+00043d   27be     call    0x07be           	CALL	_decimalToBCD
+00043e   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00043f   120a     bcf     0x0a, 0x4        
+000440   1283     bcf     0x03, 0x5        	BANKSEL	r0x100C
+000441   1303     bcf     0x03, 0x6        
+000442   00a4     movwf   0x24             	MOVWF	r0x100C
+000443   118a     bcf     0x0a, 0x3        	PAGESEL	_I2C_send
+000444   120a     bcf     0x0a, 0x4        
+000445   2584     call    0x0584           	CALL	_I2C_send
+000446   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000447   120a     bcf     0x0a, 0x4        
+                                           ;	.line	394; "main.c"	I2C_stop();
+000448   158a     bsf     0x0a, 0x3        	PAGESEL	_I2C_stop
+000449   120a     bcf     0x0a, 0x4        
+00044a   2087     call    0x0087           	CALL	_I2C_stop
+00044b   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00044c   120a     bcf     0x0a, 0x4        
+00044d   0008     return                   	RETURN	
+                                           ; exit point of _DS1307_timeWrite
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _I2C_start
+                                           ;   _I2C_send
+                                           ;   _I2C_send
+                                           ;   _I2C_start
+                                           ;   _I2C_send
+                                           ;   _I2C_read
+                                           ;   _BCDToDecimal
+                                           ;   _I2C_read
+                                           ;   _BCDToDecimal
+                                           ;   _I2C_read
+                                           ;   _BCDToDecimal
+                                           ;   _I2C_read
+                                           ;   _I2C_read
+                                           ;   _BCDToDecimal
+                                           ;   _I2C_read
+                                           ;   _BCDToDecimal
+                                           ;   _I2C_read
+                                           ;   _BCDToDecimal
+                                           ;   _I2C_stop
+                                           ;   _I2C_start
+                                           ;   _I2C_send
+                                           ;   _I2C_send
+                                           ;   _I2C_start
+                                           ;   _I2C_send
+                                           ;   _I2C_read
+                                           ;   _BCDToDecimal
+                                           ;   _I2C_read
+                                           ;   _BCDToDecimal
+                                           ;   _I2C_read
+                                           ;   _BCDToDecimal
+                                           ;   _I2C_read
+                                           ;   _I2C_read
+                                           ;   _BCDToDecimal
+                                           ;   _I2C_read
+                                           ;   _BCDToDecimal
+                                           ;   _I2C_read
+                                           ;   _BCDToDecimal
+                                           ;   _I2C_stop
+                                           ;1 compiler assigned register :
+                                           ;   r0x100C
+                                           ;; Starting pCode block
+                                           S_main__DS1307_timeRead	code
+                                           _DS1307_timeRead:
+                                           ; 2 exit points
+                                           ;	.line	360; "main.c"	I2C_start();     // Inicia comunicación I2C.
+00033e   158a     bsf     0x0a, 0x3        	PAGESEL	_I2C_start
+00033f   120a     bcf     0x0a, 0x4        
+000340   2066     call    0x0066           	CALL	_I2C_start
+000341   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000342   120a     bcf     0x0a, 0x4        
+                                           ;	.line	361; "main.c"	I2C_send(0xD0);  // Dirección I2C del DS1307.
+000343   30d0     movlw   0xd0             	MOVLW	0xd0
+000344   118a     bcf     0x0a, 0x3        	PAGESEL	_I2C_send
+000345   120a     bcf     0x0a, 0x4        
+000346   2584     call    0x0584           	CALL	_I2C_send
+000347   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000348   120a     bcf     0x0a, 0x4        
+                                           ;	.line	362; "main.c"	I2C_send(0x00);  // Primera dirección a leer/escribir.
+000349   3000     movlw   0x00             	MOVLW	0x00
+00034a   118a     bcf     0x0a, 0x3        	PAGESEL	_I2C_send
+00034b   120a     bcf     0x0a, 0x4        
+00034c   2584     call    0x0584           	CALL	_I2C_send
+00034d   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00034e   120a     bcf     0x0a, 0x4        
+                                           ;	.line	363; "main.c"	I2C_start();     // Reinicia comunicación I2C.
+00034f   158a     bsf     0x0a, 0x3        	PAGESEL	_I2C_start
+000350   120a     bcf     0x0a, 0x4        
+000351   2066     call    0x0066           	CALL	_I2C_start
+000352   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000353   120a     bcf     0x0a, 0x4        
+                                           ;	.line	364; "main.c"	I2C_send(0xD1);  // DS1307 en Modo Escritura.
+000354   30d1     movlw   0xd1             	MOVLW	0xd1
+000355   118a     bcf     0x0a, 0x3        	PAGESEL	_I2C_send
+000356   120a     bcf     0x0a, 0x4        
+000357   2584     call    0x0584           	CALL	_I2C_send
+000358   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000359   120a     bcf     0x0a, 0x4        
+                                           ;	.line	365; "main.c"	DS1307_Segundo   = BCDToDecimal(I2C_read(true)); // ASK = 1
+00035a   3001     movlw   0x01             	MOVLW	0x01
+00035b   118a     bcf     0x0a, 0x3        	PAGESEL	_I2C_read
+00035c   120a     bcf     0x0a, 0x4        
+00035d   25cb     call    0x05cb           	CALL	_I2C_read
+00035e   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00035f   120a     bcf     0x0a, 0x4        
+000360   1283     bcf     0x03, 0x5        	BANKSEL	r0x100C
+000361   1303     bcf     0x03, 0x6        
+000362   00a4     movwf   0x24             	MOVWF	r0x100C
+000363   158a     bsf     0x0a, 0x3        	PAGESEL	_BCDToDecimal
+000364   120a     bcf     0x0a, 0x4        
+000365   201c     call    0x001c           	CALL	_BCDToDecimal
+000366   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000367   120a     bcf     0x0a, 0x4        
+000368   1283     bcf     0x03, 0x5        	BANKSEL	_DS1307_Segundo
+000369   1303     bcf     0x03, 0x6        
+00036a   00df     movwf   0x5f             	MOVWF	_DS1307_Segundo
+                                           ;	.line	366; "main.c"	DS1307_Minuto    = BCDToDecimal(I2C_read(true));
+00036b   3001     movlw   0x01             	MOVLW	0x01
+00036c   118a     bcf     0x0a, 0x3        	PAGESEL	_I2C_read
+00036d   120a     bcf     0x0a, 0x4        
+00036e   25cb     call    0x05cb           	CALL	_I2C_read
+00036f   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000370   120a     bcf     0x0a, 0x4        
+000371   1283     bcf     0x03, 0x5        	BANKSEL	r0x100C
+000372   1303     bcf     0x03, 0x6        
+000373   00a4     movwf   0x24             	MOVWF	r0x100C
+000374   158a     bsf     0x0a, 0x3        	PAGESEL	_BCDToDecimal
+000375   120a     bcf     0x0a, 0x4        
+000376   201c     call    0x001c           	CALL	_BCDToDecimal
+000377   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000378   120a     bcf     0x0a, 0x4        
+000379   1283     bcf     0x03, 0x5        	BANKSEL	_DS1307_Minuto
+00037a   1303     bcf     0x03, 0x6        
+00037b   00de     movwf   0x5e             	MOVWF	_DS1307_Minuto
+                                           ;	.line	367; "main.c"	DS1307_Hora      = BCDToDecimal(I2C_read(true));
+00037c   3001     movlw   0x01             	MOVLW	0x01
+00037d   118a     bcf     0x0a, 0x3        	PAGESEL	_I2C_read
+00037e   120a     bcf     0x0a, 0x4        
+00037f   25cb     call    0x05cb           	CALL	_I2C_read
+000380   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000381   120a     bcf     0x0a, 0x4        
+000382   1283     bcf     0x03, 0x5        	BANKSEL	r0x100C
+000383   1303     bcf     0x03, 0x6        
+000384   00a4     movwf   0x24             	MOVWF	r0x100C
+000385   158a     bsf     0x0a, 0x3        	PAGESEL	_BCDToDecimal
+000386   120a     bcf     0x0a, 0x4        
+000387   201c     call    0x001c           	CALL	_BCDToDecimal
+000388   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000389   120a     bcf     0x0a, 0x4        
+00038a   1283     bcf     0x03, 0x5        	BANKSEL	_DS1307_Hora
+00038b   1303     bcf     0x03, 0x6        
+00038c   00dd     movwf   0x5d             	MOVWF	_DS1307_Hora
+                                           ;	.line	368; "main.c"	DS1307_DiaSemana = I2C_read(true);  // Valor 1...7 (igual en decimal que en BCD)
+00038d   3001     movlw   0x01             	MOVLW	0x01
+00038e   118a     bcf     0x0a, 0x3        	PAGESEL	_I2C_read
+00038f   120a     bcf     0x0a, 0x4        
+000390   25cb     call    0x05cb           	CALL	_I2C_read
+000391   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000392   120a     bcf     0x0a, 0x4        
+000393   1283     bcf     0x03, 0x5        	BANKSEL	_DS1307_DiaSemana
+000394   1303     bcf     0x03, 0x6        
+000395   00d9     movwf   0x59             	MOVWF	_DS1307_DiaSemana
+                                           ;	.line	369; "main.c"	DS1307_Dia       = BCDToDecimal(I2C_read(true));
+000396   3001     movlw   0x01             	MOVLW	0x01
+000397   118a     bcf     0x0a, 0x3        	PAGESEL	_I2C_read
+000398   120a     bcf     0x0a, 0x4        
+000399   25cb     call    0x05cb           	CALL	_I2C_read
+00039a   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00039b   120a     bcf     0x0a, 0x4        
+00039c   1283     bcf     0x03, 0x5        	BANKSEL	r0x100C
+00039d   1303     bcf     0x03, 0x6        
+00039e   00a4     movwf   0x24             	MOVWF	r0x100C
+00039f   158a     bsf     0x0a, 0x3        	PAGESEL	_BCDToDecimal
+0003a0   120a     bcf     0x0a, 0x4        
+0003a1   201c     call    0x001c           	CALL	_BCDToDecimal
+0003a2   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0003a3   120a     bcf     0x0a, 0x4        
+0003a4   1283     bcf     0x03, 0x5        	BANKSEL	_DS1307_Dia
+0003a5   1303     bcf     0x03, 0x6        
+0003a6   00da     movwf   0x5a             	MOVWF	_DS1307_Dia
+                                           ;	.line	370; "main.c"	DS1307_Mes       = BCDToDecimal(I2C_read(true));
+0003a7   3001     movlw   0x01             	MOVLW	0x01
+0003a8   118a     bcf     0x0a, 0x3        	PAGESEL	_I2C_read
+0003a9   120a     bcf     0x0a, 0x4        
+0003aa   25cb     call    0x05cb           	CALL	_I2C_read
+0003ab   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0003ac   120a     bcf     0x0a, 0x4        
+0003ad   1283     bcf     0x03, 0x5        	BANKSEL	r0x100C
+0003ae   1303     bcf     0x03, 0x6        
+0003af   00a4     movwf   0x24             	MOVWF	r0x100C
+0003b0   158a     bsf     0x0a, 0x3        	PAGESEL	_BCDToDecimal
+0003b1   120a     bcf     0x0a, 0x4        
+0003b2   201c     call    0x001c           	CALL	_BCDToDecimal
+0003b3   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0003b4   120a     bcf     0x0a, 0x4        
+0003b5   1283     bcf     0x03, 0x5        	BANKSEL	_DS1307_Mes
+0003b6   1303     bcf     0x03, 0x6        
+0003b7   00db     movwf   0x5b             	MOVWF	_DS1307_Mes
+                                           ;	.line	371; "main.c"	DS1307_Ano       = BCDToDecimal(I2C_read(false)); // ASK = 0
+0003b8   3000     movlw   0x00             	MOVLW	0x00
+0003b9   118a     bcf     0x0a, 0x3        	PAGESEL	_I2C_read
+0003ba   120a     bcf     0x0a, 0x4        
+0003bb   25cb     call    0x05cb           	CALL	_I2C_read
+0003bc   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0003bd   120a     bcf     0x0a, 0x4        
+0003be   1283     bcf     0x03, 0x5        	BANKSEL	r0x100C
+0003bf   1303     bcf     0x03, 0x6        
+0003c0   00a4     movwf   0x24             	MOVWF	r0x100C
+0003c1   158a     bsf     0x0a, 0x3        	PAGESEL	_BCDToDecimal
+0003c2   120a     bcf     0x0a, 0x4        
+0003c3   201c     call    0x001c           	CALL	_BCDToDecimal
+0003c4   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0003c5   120a     bcf     0x0a, 0x4        
+0003c6   1283     bcf     0x03, 0x5        	BANKSEL	_DS1307_Ano
+0003c7   1303     bcf     0x03, 0x6        
+0003c8   00dc     movwf   0x5c             	MOVWF	_DS1307_Ano
+                                           ;	.line	373; "main.c"	I2C_stop();
+0003c9   158a     bsf     0x0a, 0x3        	PAGESEL	_I2C_stop
+0003ca   120a     bcf     0x0a, 0x4        
+0003cb   2087     call    0x0087           	CALL	_I2C_stop
+0003cc   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0003cd   120a     bcf     0x0a, 0x4        
+0003ce   0008     return                   	RETURN	
+                                           ; exit point of _DS1307_timeRead
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   __divuchar
+                                           ;   __moduchar
+                                           ;   __divuchar
+                                           ;   __moduchar
+                                           ;4 compiler assigned registers:
+                                           ;   r0x1008
+                                           ;   STK00
+                                           ;   r0x1009
+                                           ;   r0x100A
+                                           ;; Starting pCode block
+                                           S_main__decimalToBCD	code
+                                           _decimalToBCD:
+                                           ; 2 exit points
+                                           ;	.line	343; "main.c"	uint8_t decimalToBCD (uint8_t decimalByte)
+0007be   1283     bcf     0x03, 0x5        	BANKSEL	r0x1008
+0007bf   1303     bcf     0x03, 0x6        
+0007c0   00a1     movwf   0x21             	MOVWF	r0x1008
+                                           ;	.line	346; "main.c"	a=((decimalByte / 10) << 4);
+0007c1   300a     movlw   0x0a             	MOVLW	0x0a
+0007c2   00ff     movwf   0x7f             	MOVWF	STK00
+0007c3   0821     movf    0x21, 0x0        	MOVF	r0x1008,W
+0007c4   118a     bcf     0x0a, 0x3        	PAGESEL	__divuchar
+0007c5   120a     bcf     0x0a, 0x4        
+0007c6   26b5     call    0x06b5           	CALL	__divuchar
+0007c7   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0007c8   120a     bcf     0x0a, 0x4        
+0007c9   1283     bcf     0x03, 0x5        	BANKSEL	r0x1009
+0007ca   1303     bcf     0x03, 0x6        
+0007cb   00a0     movwf   0x20             	MOVWF	r0x1009
+0007cc   0e20     swapf   0x20, 0x0        	SWAPF	r0x1009,W
+0007cd   39f0     andlw   0xf0             	ANDLW	0xf0
+0007ce   00a2     movwf   0x22             	MOVWF	r0x100A
+                                           ;	.line	347; "main.c"	b= (decimalByte % 10);
+0007cf   300a     movlw   0x0a             	MOVLW	0x0a
+0007d0   00ff     movwf   0x7f             	MOVWF	STK00
+0007d1   0821     movf    0x21, 0x0        	MOVF	r0x1008,W
+0007d2   118a     bcf     0x0a, 0x3        	PAGESEL	__moduchar
+0007d3   120a     bcf     0x0a, 0x4        
+0007d4   2716     call    0x0716           	CALL	__moduchar
+0007d5   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0007d6   120a     bcf     0x0a, 0x4        
+                                           ;	.line	348; "main.c"	bcd=a|b;
+0007d7   1283     bcf     0x03, 0x5        	BANKSEL	r0x1009
+0007d8   1303     bcf     0x03, 0x6        
+0007d9   00a0     movwf   0x20             	MOVWF	r0x1009
+0007da   0422     iorwf   0x22, 0x0        	IORWF	r0x100A,W
+                                           ;	.line	349; "main.c"	return bcd;
+0007db   00a1     movwf   0x21             	MOVWF	r0x1008
+0007dc   0008     return                   	RETURN	
+                                           ; exit point of _decimalToBCD
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   __mulchar
+                                           ;   __mulchar
+                                           ;4 compiler assigned registers:
+                                           ;   r0x1008
+                                           ;   r0x1009
+                                           ;   r0x100A
+                                           ;   STK00
+                                           ;; Starting pCode block
+                                           S_main__BCDToDecimal	code
+                                           _BCDToDecimal:
+                                           ; 2 exit points
+                                           ;	.line	327; "main.c"	uint8_t BCDToDecimal(uint8_t bcdByte)
+00081c   1283     bcf     0x03, 0x5        	BANKSEL	r0x1008
+00081d   1303     bcf     0x03, 0x6        
+00081e   00a1     movwf   0x21             	MOVWF	r0x1008
+                                           ;	.line	330; "main.c"	a=(((bcdByte & 0xF0) >> 4) * 10);
+00081f   30f0     movlw   0xf0             	MOVLW	0xf0
+000820   0521     andwf   0x21, 0x0        	ANDWF	r0x1008,W
+000821   00a0     movwf   0x20             	MOVWF	r0x1009
+000822   0e20     swapf   0x20, 0x0        	SWAPF	r0x1009,W
+000823   390f     andlw   0x0f             	ANDLW	0x0f
+000824   00a2     movwf   0x22             	MOVWF	r0x100A
+000825   300a     movlw   0x0a             	MOVLW	0x0a
+000826   00ff     movwf   0x7f             	MOVWF	STK00
+000827   0822     movf    0x22, 0x0        	MOVF	r0x100A,W
+000828   118a     bcf     0x0a, 0x3        	PAGESEL	__mulchar
+000829   120a     bcf     0x0a, 0x4        
+00082a   27dd     call    0x07dd           	CALL	__mulchar
+00082b   158a     bsf     0x0a, 0x3        	PAGESEL	$
+00082c   120a     bcf     0x0a, 0x4        
+00082d   1283     bcf     0x03, 0x5        	BANKSEL	r0x1009
+00082e   1303     bcf     0x03, 0x6        
+00082f   00a0     movwf   0x20             	MOVWF	r0x1009
+                                           ;	.line	331; "main.c"	b=(bcdByte & 0x0F);
+000830   300f     movlw   0x0f             	MOVLW	0x0f
+000831   05a1     andwf   0x21, 0x1        	ANDWF	r0x1008,F
+                                           ;	.line	332; "main.c"	dec=a+b;
+000832   0821     movf    0x21, 0x0        	MOVF	r0x1008,W
+000833   07a0     addwf   0x20, 0x1        	ADDWF	r0x1009,F
+                                           ;	.line	333; "main.c"	return dec;
+000834   0820     movf    0x20, 0x0        	MOVF	r0x1009,W
+000835   0008     return                   	RETURN	
+                                           ; exit point of _BCDToDecimal
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;3 compiler assigned registers:
+                                           ;   r0x1008
+                                           ;   r0x1009
+                                           ;   r0x100A
+                                           ;; Starting pCode block
+                                           S_main__I2C_read	code
+                                           _I2C_read:
+                                           ; 2 exit points
+                                           ;	.line	301; "main.c"	uint8_t I2C_read(bool ACKBit)   // Receive data from I2C
+0005cb   1283     bcf     0x03, 0x5        	BANKSEL	r0x1008
+0005cc   1303     bcf     0x03, 0x6        
+0005cd   00a1     movwf   0x21             	MOVWF	r0x1008
+                                           ;	.line	304; "main.c"	uint8_t dato=0;
+0005ce   01a0     clrf    0x20             	CLRF	r0x1009
+                                           ;	.line	305; "main.c"	TRIS_SDA=INPUT_PIN;
+0005cf   1683     bsf     0x03, 0x5        	BANKSEL	_TRISBbits
+0005d0   1303     bcf     0x03, 0x6        
+0005d1   1406     bsf     0x06, 0x0        	BSF	_TRISBbits,0
+                                           ;	.line	306; "main.c"	for(i=0; i<8; i++)
+0005d2   1283     bcf     0x03, 0x5        	BANKSEL	r0x100A
+0005d3   1303     bcf     0x03, 0x6        
+0005d4   01a2     clrf    0x22             	CLRF	r0x100A
+                                           _00169_DS_:
+                                           ;	.line	308; "main.c"	SCL=HIGH_ST;
+0005d5   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+0005d6   1303     bcf     0x03, 0x6        
+0005d7   1486     bsf     0x06, 0x1        	BSF	_PORTBbits,1
+                                           ;	.line	309; "main.c"	dato<<=1;
+0005d8   1003     bcf     0x03, 0x0        	BCF	STATUS,0
+                                           ;	.line	310; "main.c"	if(SDA) dato|=1;
+0005d9   1283     bcf     0x03, 0x5        	BANKSEL	r0x1009
+0005da   1303     bcf     0x03, 0x6        
+0005db   0da0     rlf     0x20, 0x1        	RLF	r0x1009,F
+                                           ;	.line	311; "main.c"	SCL=LOW_ST;
+0005dc   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+0005dd   1303     bcf     0x03, 0x6        
+0005de   1c06     btfss   0x06, 0x0        	BTFSS	_PORTBbits,0
+0005df   2de3     goto    0x05e3           	GOTO	_00002_DS_
+0005e0   1283     bcf     0x03, 0x5        	BANKSEL	r0x1009
+0005e1   1303     bcf     0x03, 0x6        
+0005e2   1420     bsf     0x20, 0x0        	BSF	r0x1009,0
+                                           _00002_DS_:
+0005e3   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+0005e4   1303     bcf     0x03, 0x6        
+0005e5   1086     bcf     0x06, 0x1        	BCF	_PORTBbits,1
+                                           ;	.line	306; "main.c"	for(i=0; i<8; i++)
+0005e6   1283     bcf     0x03, 0x5        	BANKSEL	r0x100A
+0005e7   1303     bcf     0x03, 0x6        
+0005e8   0aa2     incf    0x22, 0x1        	INCF	r0x100A,F
+                                           ;;unsigned compare: left < lit(0x8=8), size=1
+0005e9   3008     movlw   0x08             	MOVLW	0x08
+0005ea   0222     subwf   0x22, 0x0        	SUBWF	r0x100A,W
+0005eb   1c03     btfss   0x03, 0x0        	BTFSS	STATUS,0
+0005ec   2dd5     goto    0x05d5           	GOTO	_00169_DS_
+                                           ;;genSkipc:3257: created from rifx:02795EB4
+                                           ;	.line	313; "main.c"	TRIS_SDA=OUTPUT_PIN;
+0005ed   1683     bsf     0x03, 0x5        	BANKSEL	_TRISBbits
+0005ee   1303     bcf     0x03, 0x6        
+0005ef   1006     bcf     0x06, 0x0        	BCF	_TRISBbits,0
+                                           ;	.line	314; "main.c"	SDA=!ACKBit;
+0005f0   1283     bcf     0x03, 0x5        	BANKSEL	r0x1008
+0005f1   1303     bcf     0x03, 0x6        
+0005f2   0821     movf    0x21, 0x0        	MOVF	r0x1008,W
+0005f3   3000     movlw   0x00             	MOVLW	0x00
+0005f4   1903     btfsc   0x03, 0x2        	BTFSC	STATUS,2
+0005f5   3001     movlw   0x01             	MOVLW	0x01
+0005f6   00a2     movwf   0x22             	MOVWF	r0x100A
+0005f7   00a1     movwf   0x21             	MOVWF	r0x1008
+0005f8   0c21     rrf     0x21, 0x0        	RRF	r0x1008,W
+0005f9   1803     btfsc   0x03, 0x0        	BTFSC	STATUS,0
+0005fa   2dfe     goto    0x05fe           	GOTO	_00003_DS_
+0005fb   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+0005fc   1303     bcf     0x03, 0x6        
+0005fd   1006     bcf     0x06, 0x0        	BCF	_PORTBbits,0
+                                           _00003_DS_:
+0005fe   1c03     btfss   0x03, 0x0        	BTFSS	STATUS,0
+0005ff   2e03     goto    0x0603           	GOTO	_00004_DS_
+000600   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+000601   1303     bcf     0x03, 0x6        
+000602   1406     bsf     0x06, 0x0        	BSF	_PORTBbits,0
+                                           _00004_DS_:
+                                           ;	.line	315; "main.c"	SCL=HIGH_ST;
+000603   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+000604   1303     bcf     0x03, 0x6        
+000605   1486     bsf     0x06, 0x1        	BSF	_PORTBbits,1
+                                           ;	.line	316; "main.c"	SCL=LOW_ST;
+000606   1086     bcf     0x06, 0x1        	BCF	_PORTBbits,1
+                                           ;	.line	317; "main.c"	return dato;
+000607   1283     bcf     0x03, 0x5        	BANKSEL	r0x1009
+000608   1303     bcf     0x03, 0x6        
+000609   0820     movf    0x20, 0x0        	MOVF	r0x1009,W
+00060a   0008     return                   	RETURN	
+                                           ; exit point of _I2C_read
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;4 compiler assigned registers:
+                                           ;   r0x1008
+                                           ;   r0x1009
+                                           ;   r0x100A
+                                           ;   r0x100B
+                                           ;; Starting pCode block
+                                           S_main__I2C_send	code
+                                           _I2C_send:
+                                           ; 2 exit points
+                                           ;	.line	283; "main.c"	bool I2C_send(uint8_t dato)     // Send data to I2C
+000584   1283     bcf     0x03, 0x5        	BANKSEL	r0x1008
+000585   1303     bcf     0x03, 0x6        
+000586   00a1     movwf   0x21             	MOVWF	r0x1008
+                                           ;	.line	287; "main.c"	for(i=0; i<8; i++)
+000587   01a0     clrf    0x20             	CLRF	r0x1009
+                                           _00161_DS_:
+                                           ;	.line	289; "main.c"	SDA = (dato & 0x80);    // SDA = bit de más peso del valor dato.
+000588   1283     bcf     0x03, 0x5        	BANKSEL	r0x1008
+000589   1303     bcf     0x03, 0x6        
+00058a   0821     movf    0x21, 0x0        	MOVF	r0x1008,W
+00058b   3980     andlw   0x80             	ANDLW	0x80
+00058c   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
+00058d   3001     movlw   0x01             	MOVLW	0x01
+                                           ;;1	MOVWF	r0x100A
+00058e   00a3     movwf   0x23             	MOVWF	r0x100B
+00058f   0c23     rrf     0x23, 0x0        	RRF	r0x100B,W
+000590   1803     btfsc   0x03, 0x0        	BTFSC	STATUS,0
+000591   2d95     goto    0x0595           	GOTO	_00005_DS_
+000592   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+000593   1303     bcf     0x03, 0x6        
+000594   1006     bcf     0x06, 0x0        	BCF	_PORTBbits,0
+                                           _00005_DS_:
+000595   1c03     btfss   0x03, 0x0        	BTFSS	STATUS,0
+000596   2d9a     goto    0x059a           	GOTO	_00006_DS_
+000597   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+000598   1303     bcf     0x03, 0x6        
+000599   1406     bsf     0x06, 0x0        	BSF	_PORTBbits,0
+                                           _00006_DS_:
+                                           ;	.line	290; "main.c"	SCL=HIGH_ST;
+00059a   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+00059b   1303     bcf     0x03, 0x6        
+00059c   1486     bsf     0x06, 0x1        	BSF	_PORTBbits,1
+                                           ;	.line	291; "main.c"	dato<<=1;
+00059d   1003     bcf     0x03, 0x0        	BCF	STATUS,0
+00059e   1283     bcf     0x03, 0x5        	BANKSEL	r0x1008
+00059f   1303     bcf     0x03, 0x6        
+0005a0   0da1     rlf     0x21, 0x1        	RLF	r0x1008,F
+                                           ;	.line	292; "main.c"	SCL=LOW_ST;
+0005a1   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+0005a2   1303     bcf     0x03, 0x6        
+0005a3   1086     bcf     0x06, 0x1        	BCF	_PORTBbits,1
+                                           ;	.line	287; "main.c"	for(i=0; i<8; i++)
+0005a4   1283     bcf     0x03, 0x5        	BANKSEL	r0x1009
+0005a5   1303     bcf     0x03, 0x6        
+0005a6   0aa0     incf    0x20, 0x1        	INCF	r0x1009,F
+                                           ;;unsigned compare: left < lit(0x8=8), size=1
+0005a7   3008     movlw   0x08             	MOVLW	0x08
+0005a8   0220     subwf   0x20, 0x0        	SUBWF	r0x1009,W
+0005a9   1c03     btfss   0x03, 0x0        	BTFSS	STATUS,0
+0005aa   2d88     goto    0x0588           	GOTO	_00161_DS_
+                                           ;;genSkipc:3257: created from rifx:02795EB4
+                                           ;	.line	294; "main.c"	TRIS_SDA=INPUT_PIN;
+0005ab   1683     bsf     0x03, 0x5        	BANKSEL	_TRISBbits
+0005ac   1303     bcf     0x03, 0x6        
+0005ad   1406     bsf     0x06, 0x0        	BSF	_TRISBbits,0
+                                           ;	.line	295; "main.c"	SCL=HIGH_ST;
+0005ae   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+0005af   1303     bcf     0x03, 0x6        
+0005b0   1486     bsf     0x06, 0x1        	BSF	_PORTBbits,1
+                                           ;	.line	296; "main.c"	ACKbit=SDA;
+0005b1   1283     bcf     0x03, 0x5        	BANKSEL	r0x1008
+0005b2   1303     bcf     0x03, 0x6        
+0005b3   01a1     clrf    0x21             	CLRF	r0x1008
+0005b4   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+0005b5   1303     bcf     0x03, 0x6        
+0005b6   1c06     btfss   0x06, 0x0        	BTFSS	_PORTBbits,0
+0005b7   2dbb     goto    0x05bb           	GOTO	_00007_DS_
+0005b8   1283     bcf     0x03, 0x5        	BANKSEL	r0x1008
+0005b9   1303     bcf     0x03, 0x6        
+0005ba   0aa1     incf    0x21, 0x1        	INCF	r0x1008,F
+                                           _00007_DS_:
+0005bb   1283     bcf     0x03, 0x5        	BANKSEL	r0x1008
+0005bc   1303     bcf     0x03, 0x6        
+0005bd   0821     movf    0x21, 0x0        	MOVF	r0x1008,W
+0005be   1903     btfsc   0x03, 0x2        	BTFSC	STATUS,2
+0005bf   3001     movlw   0x01             	MOVLW	0x01
+0005c0   00a0     movwf   0x20             	MOVWF	r0x1009
+                                           ;	.line	297; "main.c"	SCL=LOW_ST;
+0005c1   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+0005c2   1303     bcf     0x03, 0x6        
+0005c3   1086     bcf     0x06, 0x1        	BCF	_PORTBbits,1
+                                           ;	.line	298; "main.c"	TRIS_SDA=OUTPUT_PIN;
+0005c4   1683     bsf     0x03, 0x5        	BANKSEL	_TRISBbits
+0005c5   1303     bcf     0x03, 0x6        
+0005c6   1006     bcf     0x06, 0x0        	BCF	_TRISBbits,0
+                                           ;	.line	299; "main.c"	return ACKbit;
+0005c7   1283     bcf     0x03, 0x5        	BANKSEL	r0x1009
+0005c8   1303     bcf     0x03, 0x6        
+0005c9   0820     movf    0x20, 0x0        	MOVF	r0x1009,W
+0005ca   0008     return                   	RETURN	
+                                           ; exit point of _I2C_send
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           S_main__I2C_stop	code
+                                           _I2C_stop:
+                                           ; 2 exit points
+                                           ;	.line	279; "main.c"	SDA=LOW_ST;
+000887   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+000888   1303     bcf     0x03, 0x6        
+000889   1006     bcf     0x06, 0x0        	BCF	_PORTBbits,0
+                                           ;	.line	280; "main.c"	SCL=HIGH_ST;            // STOP function for communicate I2C
+00088a   1486     bsf     0x06, 0x1        	BSF	_PORTBbits,1
+                                           ;	.line	281; "main.c"	SDA=HIGH_ST;
+00088b   1406     bsf     0x06, 0x0        	BSF	_PORTBbits,0
+00088c   0008     return                   	RETURN	
+                                           ; exit point of _I2C_stop
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           S_main__I2C_start	code
+                                           _I2C_start:
+                                           ; 2 exit points
+                                           ;	.line	270; "main.c"	SDA=HIGH_ST;
+000866   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+000867   1303     bcf     0x03, 0x6        
+000868   1406     bsf     0x06, 0x0        	BSF	_PORTBbits,0
+                                           ;	.line	271; "main.c"	SCL=HIGH_ST;
+000869   1486     bsf     0x06, 0x1        	BSF	_PORTBbits,1
+                                           ;	.line	272; "main.c"	TRIS_SCL=OUTPUT_PIN;    // Configura pines I2C como Salidas.
+00086a   1683     bsf     0x03, 0x5        	BANKSEL	_TRISBbits
+00086b   1303     bcf     0x03, 0x6        
+00086c   1086     bcf     0x06, 0x1        	BCF	_TRISBbits,1
+                                           ;	.line	273; "main.c"	TRIS_SDA=OUTPUT_PIN;
+00086d   1006     bcf     0x06, 0x0        	BCF	_TRISBbits,0
+                                           ;	.line	274; "main.c"	SDA=LOW_ST;             // START function for communicate I2C
+00086e   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+00086f   1303     bcf     0x03, 0x6        
+000870   1006     bcf     0x06, 0x0        	BCF	_PORTBbits,0
+                                           ;	.line	275; "main.c"	SCL=LOW_ST;
+000871   1086     bcf     0x06, 0x1        	BCF	_PORTBbits,1
+000872   0008     return                   	RETURN	
+                                           ; exit point of _I2C_start
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _delay_ms
+                                           ;   _delay_ms
+                                           ;   _LCD_send4Bits
+                                           ;   _delay_ms
+                                           ;   _LCD_send4Bits
+                                           ;   _delay_ms
+                                           ;   _LCD_send4Bits
+                                           ;   _LCD_send4Bits
+                                           ;   _LCD_command
+                                           ;   _LCD_command
+                                           ;   _LCD_command
+                                           ;   _LCD_command
+                                           ;   _LCD_command
+                                           ;   _delay_ms
+                                           ;   _delay_ms
+                                           ;   _LCD_send4Bits
+                                           ;   _delay_ms
+                                           ;   _LCD_send4Bits
+                                           ;   _delay_ms
+                                           ;   _LCD_send4Bits
+                                           ;   _LCD_send4Bits
+                                           ;   _LCD_command
+                                           ;   _LCD_command
+                                           ;   _LCD_command
+                                           ;   _LCD_command
+                                           ;   _LCD_command
+                                           ;1 compiler assigned register :
+                                           ;   STK00
+                                           ;; Starting pCode block
+                                           S_main__LCD_init	code
+                                           _LCD_init:
+                                           ; 2 exit points
+                                           ;	.line	233; "main.c"	TRIS_LCD_DATA_4 = OUTPUT_PIN;   // Pines iniciados como Salidas.
+0004be   1683     bsf     0x03, 0x5        	BANKSEL	_TRISBbits
+0004bf   1303     bcf     0x03, 0x6        
+0004c0   1206     bcf     0x06, 0x4        	BCF	_TRISBbits,4
+                                           ;	.line	234; "main.c"	TRIS_LCD_DATA_5 = OUTPUT_PIN;
+0004c1   1286     bcf     0x06, 0x5        	BCF	_TRISBbits,5
+                                           ;	.line	235; "main.c"	TRIS_LCD_DATA_6 = OUTPUT_PIN;
+0004c2   1306     bcf     0x06, 0x6        	BCF	_TRISBbits,6
+                                           ;	.line	236; "main.c"	TRIS_LCD_DATA_7 = OUTPUT_PIN;
+0004c3   1386     bcf     0x06, 0x7        	BCF	_TRISBbits,7
+                                           ;	.line	237; "main.c"	TRIS_LCD_RS     = OUTPUT_PIN;
+0004c4   1106     bcf     0x06, 0x2        	BCF	_TRISBbits,2
+                                           ;	.line	238; "main.c"	TRIS_LCD_EN     = OUTPUT_PIN;
+0004c5   1186     bcf     0x06, 0x3        	BCF	_TRISBbits,3
+                                           ;	.line	240; "main.c"	delay_ms(200);   // Espera para asegurar tensión estable tras inicio.
+0004c6   30c8     movlw   0xc8             	MOVLW	0xc8
+0004c7   00ff     movwf   0x7f             	MOVWF	STK00
+0004c8   3000     movlw   0x00             	MOVLW	0x00
+0004c9   118a     bcf     0x0a, 0x3        	PAGESEL	_delay_ms
+0004ca   120a     bcf     0x0a, 0x4        
+0004cb   2798     call    0x0798           	CALL	_delay_ms
+0004cc   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0004cd   120a     bcf     0x0a, 0x4        
+                                           ;	.line	241; "main.c"	LCD_RS = LOW_ST;
+0004ce   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+0004cf   1303     bcf     0x03, 0x6        
+0004d0   1106     bcf     0x06, 0x2        	BCF	_PORTBbits,2
+                                           ;	.line	242; "main.c"	LCD_EN = LOW_ST;
+0004d1   1186     bcf     0x06, 0x3        	BCF	_PORTBbits,3
+                                           ;	.line	247; "main.c"	delay_ms(30);    // Espera >= 15 ms
+0004d2   301e     movlw   0x1e             	MOVLW	0x1e
+0004d3   00ff     movwf   0x7f             	MOVWF	STK00
+0004d4   3000     movlw   0x00             	MOVLW	0x00
+0004d5   118a     bcf     0x0a, 0x3        	PAGESEL	_delay_ms
+0004d6   120a     bcf     0x0a, 0x4        
+0004d7   2798     call    0x0798           	CALL	_delay_ms
+0004d8   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0004d9   120a     bcf     0x0a, 0x4        
+                                           ;	.line	249; "main.c"	LCD_send4Bits(0b00110000);
+0004da   3030     movlw   0x30             	MOVLW	0x30
+0004db   118a     bcf     0x0a, 0x3        	PAGESEL	_LCD_send4Bits
+0004dc   120a     bcf     0x0a, 0x4        
+0004dd   2521     call    0x0521           	CALL	_LCD_send4Bits
+0004de   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0004df   120a     bcf     0x0a, 0x4        
+                                           ;	.line	250; "main.c"	delay_ms(5);    // Espera >= 4.1 ms
+0004e0   3005     movlw   0x05             	MOVLW	0x05
+0004e1   00ff     movwf   0x7f             	MOVWF	STK00
+0004e2   3000     movlw   0x00             	MOVLW	0x00
+0004e3   118a     bcf     0x0a, 0x3        	PAGESEL	_delay_ms
+0004e4   120a     bcf     0x0a, 0x4        
+0004e5   2798     call    0x0798           	CALL	_delay_ms
+0004e6   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0004e7   120a     bcf     0x0a, 0x4        
+                                           ;	.line	251; "main.c"	LCD_send4Bits(0b00110000);
+0004e8   3030     movlw   0x30             	MOVLW	0x30
+0004e9   118a     bcf     0x0a, 0x3        	PAGESEL	_LCD_send4Bits
+0004ea   120a     bcf     0x0a, 0x4        
+0004eb   2521     call    0x0521           	CALL	_LCD_send4Bits
+0004ec   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0004ed   120a     bcf     0x0a, 0x4        
+                                           ;	.line	252; "main.c"	delay_ms(1);    // Espera >= 100 us
+0004ee   3001     movlw   0x01             	MOVLW	0x01
+0004ef   00ff     movwf   0x7f             	MOVWF	STK00
+0004f0   3000     movlw   0x00             	MOVLW	0x00
+0004f1   118a     bcf     0x0a, 0x3        	PAGESEL	_delay_ms
+0004f2   120a     bcf     0x0a, 0x4        
+0004f3   2798     call    0x0798           	CALL	_delay_ms
+0004f4   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0004f5   120a     bcf     0x0a, 0x4        
+                                           ;	.line	253; "main.c"	LCD_send4Bits(0b00110000);
+0004f6   3030     movlw   0x30             	MOVLW	0x30
+0004f7   118a     bcf     0x0a, 0x3        	PAGESEL	_LCD_send4Bits
+0004f8   120a     bcf     0x0a, 0x4        
+0004f9   2521     call    0x0521           	CALL	_LCD_send4Bits
+0004fa   118a     bcf     0x0a, 0x3        	PAGESEL	$
+0004fb   120a     bcf     0x0a, 0x4        
+                                           ;	.line	254; "main.c"	LCD_send4Bits(0b00100000);
+0004fc   3020     movlw   0x20             	MOVLW	0x20
+0004fd   118a     bcf     0x0a, 0x3        	PAGESEL	_LCD_send4Bits
+0004fe   120a     bcf     0x0a, 0x4        
+0004ff   2521     call    0x0521           	CALL	_LCD_send4Bits
+000500   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000501   120a     bcf     0x0a, 0x4        
+                                           ;	.line	255; "main.c"	LCD_command(LCD_CMD_FUNCTION_SET + LCD_CMD_4BIT_INTERFACE + LCD_CMD_2LINES + LCD_CMD_F_FONT_5_8);
+000502   3028     movlw   0x28             	MOVLW	0x28
+000503   158a     bsf     0x0a, 0x3        	PAGESEL	_LCD_command
+000504   120a     bcf     0x0a, 0x4        
+000505   2057     call    0x0057           	CALL	_LCD_command
+000506   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000507   120a     bcf     0x0a, 0x4        
+                                           ;	.line	259; "main.c"	LCD_OFF;
+000508   3008     movlw   0x08             	MOVLW	0x08
+000509   158a     bsf     0x0a, 0x3        	PAGESEL	_LCD_command
+00050a   120a     bcf     0x0a, 0x4        
+00050b   2057     call    0x0057           	CALL	_LCD_command
+00050c   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00050d   120a     bcf     0x0a, 0x4        
+                                           ;	.line	260; "main.c"	LCD_command(LCD_CMD_CHARACTER_ENTRY_MODE + LCD_CMD_INCREMENT + LCD_CMD_DISPLAY_SHIFT_OFF);
+00050e   3006     movlw   0x06             	MOVLW	0x06
+00050f   158a     bsf     0x0a, 0x3        	PAGESEL	_LCD_command
+000510   120a     bcf     0x0a, 0x4        
+000511   2057     call    0x0057           	CALL	_LCD_command
+000512   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000513   120a     bcf     0x0a, 0x4        
+                                           ;	.line	261; "main.c"	LCD_ON;
+000514   300c     movlw   0x0c             	MOVLW	0x0c
+000515   158a     bsf     0x0a, 0x3        	PAGESEL	_LCD_command
+000516   120a     bcf     0x0a, 0x4        
+000517   2057     call    0x0057           	CALL	_LCD_command
+000518   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000519   120a     bcf     0x0a, 0x4        
+                                           ;	.line	262; "main.c"	LCD_CLEAR;
+00051a   3001     movlw   0x01             	MOVLW	0x01
+00051b   158a     bsf     0x0a, 0x3        	PAGESEL	_LCD_command
+00051c   120a     bcf     0x0a, 0x4        
+00051d   2057     call    0x0057           	CALL	_LCD_command
+00051e   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00051f   120a     bcf     0x0a, 0x4        
+000520   0008     return                   	RETURN	
+                                           ; exit point of _LCD_init
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   __gptrget1
+                                           ;   _LCD_putChar
+                                           ;   __gptrget1
+                                           ;   _LCD_putChar
+                                           ;6 compiler assigned registers:
+                                           ;   r0x1014
+                                           ;   STK00
+                                           ;   r0x1015
+                                           ;   STK01
+                                           ;   r0x1016
+                                           ;   r0x1017
+                                           ;; Starting pCode block
+                                           S_main__LCD_print	code
+                                           _LCD_print:
+                                           ; 2 exit points
+                                           ;	.line	223; "main.c"	void LCD_print(uint8_t *str)
+000770   1283     bcf     0x03, 0x5        	BANKSEL	r0x1014
+000771   1303     bcf     0x03, 0x6        
+000772   00ab     movwf   0x2b             	MOVWF	r0x1014
+000773   087f     movf    0x7f, 0x0        	MOVF	STK00,W
+000774   00ac     movwf   0x2c             	MOVWF	r0x1015
+000775   087e     movf    0x7e, 0x0        	MOVF	STK01,W
+000776   00ad     movwf   0x2d             	MOVWF	r0x1016
+                                           _00140_DS_:
+                                           ;	.line	225; "main.c"	while(*str)
+000777   1283     bcf     0x03, 0x5        	BANKSEL	r0x1016
+000778   1303     bcf     0x03, 0x6        
+000779   082d     movf    0x2d, 0x0        	MOVF	r0x1016,W
+00077a   00fe     movwf   0x7e             	MOVWF	STK01
+00077b   082c     movf    0x2c, 0x0        	MOVF	r0x1015,W
+00077c   00ff     movwf   0x7f             	MOVWF	STK00
+00077d   082b     movf    0x2b, 0x0        	MOVF	r0x1014,W
+00077e   118a     bcf     0x0a, 0x3        	PAGESEL	__gptrget1
+00077f   120a     bcf     0x0a, 0x4        
+000780   2638     call    0x0638           	CALL	__gptrget1
+000781   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000782   120a     bcf     0x0a, 0x4        
+000783   1283     bcf     0x03, 0x5        	BANKSEL	r0x1017
+000784   1303     bcf     0x03, 0x6        
+000785   00ae     movwf   0x2e             	MOVWF	r0x1017
+000786   082e     movf    0x2e, 0x0        	MOVF	r0x1017,W
+000787   1903     btfsc   0x03, 0x2        	BTFSC	STATUS,2
+000788   2f97     goto    0x0797           	GOTO	_00143_DS_
+                                           ;	.line	227; "main.c"	LCD_putChar(*str);
+000789   082e     movf    0x2e, 0x0        	MOVF	r0x1017,W
+00078a   158a     bsf     0x0a, 0x3        	PAGESEL	_LCD_putChar
+00078b   120a     bcf     0x0a, 0x4        
+00078c   2048     call    0x0048           	CALL	_LCD_putChar
+00078d   118a     bcf     0x0a, 0x3        	PAGESEL	$
+00078e   120a     bcf     0x0a, 0x4        
+                                           ;	.line	228; "main.c"	str++;
+00078f   1283     bcf     0x03, 0x5        	BANKSEL	r0x1016
+000790   1303     bcf     0x03, 0x6        
+000791   0aad     incf    0x2d, 0x1        	INCF	r0x1016,F
+000792   1903     btfsc   0x03, 0x2        	BTFSC	STATUS,2
+000793   0aac     incf    0x2c, 0x1        	INCF	r0x1015,F
+000794   1903     btfsc   0x03, 0x2        	BTFSC	STATUS,2
+000795   0aab     incf    0x2b, 0x1        	INCF	r0x1014,F
+000796   2f77     goto    0x0777           	GOTO	_00140_DS_
+                                           _00143_DS_:
+000797   0008     return                   	RETURN	
+                                           ; exit point of _LCD_print
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _LCD_command
+                                           ;   _LCD_command
+                                           ;   _LCD_command
+                                           ;   _LCD_command
+                                           ;3 compiler assigned registers:
+                                           ;   r0x1014
+                                           ;   STK00
+                                           ;   r0x1015
+                                           ;; Starting pCode block
+                                           S_main__LCD_gotoXY	code
+                                           _LCD_gotoXY:
+                                           ; 2 exit points
+                                           ;	.line	216; "main.c"	void LCD_gotoXY(uint8_t columna, uint8_t fila)
+000800   1283     bcf     0x03, 0x5        	BANKSEL	r0x1014
+000801   1303     bcf     0x03, 0x6        
+000802   00ab     movwf   0x2b             	MOVWF	r0x1014
+000803   087f     movf    0x7f, 0x0        	MOVF	STK00,W
+000804   00ac     movwf   0x2c             	MOVWF	r0x1015
+                                           ;	.line	218; "main.c"	if(fila == 0)
+000805   082c     movf    0x2c, 0x0        	MOVF	r0x1015,W
+000806   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
+000807   2811     goto    0x0011           	GOTO	_00133_DS_
+                                           ;	.line	219; "main.c"	LCD_command(LCD_CMD_SET_DISPLAY_ADDRESS + columna + LCD_CMD_ROW_0);
+000808   3080     movlw   0x80             	MOVLW	0x80
+000809   072b     addwf   0x2b, 0x0        	ADDWF	r0x1014,W
+00080a   00ac     movwf   0x2c             	MOVWF	r0x1015
+00080b   158a     bsf     0x0a, 0x3        	PAGESEL	_LCD_command
+00080c   120a     bcf     0x0a, 0x4        
+00080d   2057     call    0x0057           	CALL	_LCD_command
+00080e   158a     bsf     0x0a, 0x3        	PAGESEL	$
+00080f   120a     bcf     0x0a, 0x4        
+000810   281b     goto    0x001b           	GOTO	_00135_DS_
+                                           _00133_DS_:
+                                           ;	.line	221; "main.c"	LCD_command(LCD_CMD_SET_DISPLAY_ADDRESS + columna + LCD_CMD_ROW_1);
+000811   30c0     movlw   0xc0             	MOVLW	0xc0
+000812   1283     bcf     0x03, 0x5        	BANKSEL	r0x1014
+000813   1303     bcf     0x03, 0x6        
+000814   07ab     addwf   0x2b, 0x1        	ADDWF	r0x1014,F
+000815   082b     movf    0x2b, 0x0        	MOVF	r0x1014,W
+000816   158a     bsf     0x0a, 0x3        	PAGESEL	_LCD_command
+000817   120a     bcf     0x0a, 0x4        
+000818   2057     call    0x0057           	CALL	_LCD_command
+000819   158a     bsf     0x0a, 0x3        	PAGESEL	$
+00081a   120a     bcf     0x0a, 0x4        
+                                           _00135_DS_:
+00081b   0008     return                   	RETURN	
+                                           ; exit point of _LCD_gotoXY
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _LCD_send
+                                           ;   _LCD_send
+                                           ;1 compiler assigned register :
+                                           ;   r0x1013
+                                           ;; Starting pCode block
+                                           S_main__LCD_putChar	code
+                                           _LCD_putChar:
+                                           ; 2 exit points
+                                           ;	.line	211; "main.c"	void LCD_putChar(uint8_t chr)
+000848   1283     bcf     0x03, 0x5        	BANKSEL	r0x1013
+000849   1303     bcf     0x03, 0x6        
+00084a   00aa     movwf   0x2a             	MOVWF	r0x1013
+                                           ;	.line	213; "main.c"	LCD_RS = LCD_CharMode;
+00084b   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+00084c   1303     bcf     0x03, 0x6        
+00084d   1506     bsf     0x06, 0x2        	BSF	_PORTBbits,2
+                                           ;	.line	214; "main.c"	LCD_send(chr);
+00084e   1283     bcf     0x03, 0x5        	BANKSEL	r0x1013
+00084f   1303     bcf     0x03, 0x6        
+000850   082a     movf    0x2a, 0x0        	MOVF	r0x1013,W
+000851   158a     bsf     0x0a, 0x3        	PAGESEL	_LCD_send
+000852   120a     bcf     0x0a, 0x4        
+000853   2036     call    0x0036           	CALL	_LCD_send
+000854   158a     bsf     0x0a, 0x3        	PAGESEL	$
+000855   120a     bcf     0x0a, 0x4        
+000856   0008     return                   	RETURN	
+                                           ; exit point of _LCD_putChar
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _LCD_send
+                                           ;   _LCD_send
+                                           ;1 compiler assigned register :
+                                           ;   r0x1013
+                                           ;; Starting pCode block
+                                           S_main__LCD_command	code
+                                           _LCD_command:
+                                           ; 2 exit points
+                                           ;	.line	206; "main.c"	void LCD_command(uint8_t comm)
+000857   1283     bcf     0x03, 0x5        	BANKSEL	r0x1013
+000858   1303     bcf     0x03, 0x6        
+000859   00aa     movwf   0x2a             	MOVWF	r0x1013
+                                           ;	.line	208; "main.c"	LCD_RS = LCD_CmdMode;
+00085a   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+00085b   1303     bcf     0x03, 0x6        
+00085c   1106     bcf     0x06, 0x2        	BCF	_PORTBbits,2
+                                           ;	.line	209; "main.c"	LCD_send(comm);
+00085d   1283     bcf     0x03, 0x5        	BANKSEL	r0x1013
+00085e   1303     bcf     0x03, 0x6        
+00085f   082a     movf    0x2a, 0x0        	MOVF	r0x1013,W
+000860   158a     bsf     0x0a, 0x3        	PAGESEL	_LCD_send
+000861   120a     bcf     0x0a, 0x4        
+000862   2036     call    0x0036           	CALL	_LCD_send
+000863   158a     bsf     0x0a, 0x3        	PAGESEL	$
+000864   120a     bcf     0x0a, 0x4        
+000865   0008     return                   	RETURN	
+                                           ; exit point of _LCD_command
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _LCD_send4Bits
+                                           ;   _LCD_send4Bits
+                                           ;   _LCD_send4Bits
+                                           ;   _LCD_send4Bits
+                                           ;2 compiler assigned registers:
+                                           ;   r0x1011
+                                           ;   r0x1012
+                                           ;; Starting pCode block
+                                           S_main__LCD_send	code
+                                           _LCD_send:
+                                           ; 2 exit points
+                                           ;	.line	201; "main.c"	void LCD_send(uint8_t date)
+000836   1283     bcf     0x03, 0x5        	BANKSEL	r0x1011
+000837   1303     bcf     0x03, 0x6        
+000838   00a9     movwf   0x29             	MOVWF	r0x1011
+                                           ;	.line	203; "main.c"	LCD_send4Bits(date);
+000839   118a     bcf     0x0a, 0x3        	PAGESEL	_LCD_send4Bits
+00083a   120a     bcf     0x0a, 0x4        
+00083b   2521     call    0x0521           	CALL	_LCD_send4Bits
+00083c   158a     bsf     0x0a, 0x3        	PAGESEL	$
+00083d   120a     bcf     0x0a, 0x4        
+                                           ;	.line	204; "main.c"	LCD_send4Bits(date<<4);
+00083e   1283     bcf     0x03, 0x5        	BANKSEL	r0x1011
+00083f   1303     bcf     0x03, 0x6        
+000840   0e29     swapf   0x29, 0x0        	SWAPF	r0x1011,W
+000841   39f0     andlw   0xf0             	ANDLW	0xf0
+                                           ;;1	MOVWF	r0x1012
+000842   118a     bcf     0x0a, 0x3        	PAGESEL	_LCD_send4Bits
+000843   120a     bcf     0x0a, 0x4        
+000844   2521     call    0x0521           	CALL	_LCD_send4Bits
+000845   158a     bsf     0x0a, 0x3        	PAGESEL	$
+000846   120a     bcf     0x0a, 0x4        
+000847   0008     return                   	RETURN	
+                                           ; exit point of _LCD_send
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _delay_ms
+                                           ;   _delay_ms
+                                           ;   _delay_ms
+                                           ;   _delay_ms
+                                           ;4 compiler assigned registers:
+                                           ;   r0x100E
+                                           ;   r0x100F
+                                           ;   r0x1010
+                                           ;   STK00
+                                           ;; Starting pCode block
+                                           S_main__LCD_send4Bits	code
+                                           _LCD_send4Bits:
+                                           ; 2 exit points
+                                           ;	.line	190; "main.c"	void LCD_send4Bits(uint8_t date)
+000521   1283     bcf     0x03, 0x5        	BANKSEL	r0x100E
+000522   1303     bcf     0x03, 0x6        
+000523   00a6     movwf   0x26             	MOVWF	r0x100E
+                                           ;	.line	192; "main.c"	LCD_DATA_4 = (date & 0x10);
+000524   3910     andlw   0x10             	ANDLW	0x10
+000525   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
+000526   3001     movlw   0x01             	MOVLW	0x01
+000527   00a7     movwf   0x27             	MOVWF	r0x100F
+000528   00a8     movwf   0x28             	MOVWF	r0x1010
+000529   0c28     rrf     0x28, 0x0        	RRF	r0x1010,W
+00052a   1803     btfsc   0x03, 0x0        	BTFSC	STATUS,0
+00052b   2d2f     goto    0x052f           	GOTO	_00008_DS_
+00052c   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+00052d   1303     bcf     0x03, 0x6        
+00052e   1206     bcf     0x06, 0x4        	BCF	_PORTBbits,4
+                                           _00008_DS_:
+00052f   1c03     btfss   0x03, 0x0        	BTFSS	STATUS,0
+000530   2d34     goto    0x0534           	GOTO	_00009_DS_
+000531   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+000532   1303     bcf     0x03, 0x6        
+000533   1606     bsf     0x06, 0x4        	BSF	_PORTBbits,4
+                                           _00009_DS_:
+                                           ;	.line	193; "main.c"	LCD_DATA_5 = (date & 0x20);
+000534   1283     bcf     0x03, 0x5        	BANKSEL	r0x100E
+000535   1303     bcf     0x03, 0x6        
+000536   0826     movf    0x26, 0x0        	MOVF	r0x100E,W
+000537   3920     andlw   0x20             	ANDLW	0x20
+000538   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
+000539   3001     movlw   0x01             	MOVLW	0x01
+00053a   00a7     movwf   0x27             	MOVWF	r0x100F
+00053b   00a8     movwf   0x28             	MOVWF	r0x1010
+00053c   0c28     rrf     0x28, 0x0        	RRF	r0x1010,W
+00053d   1803     btfsc   0x03, 0x0        	BTFSC	STATUS,0
+00053e   2d42     goto    0x0542           	GOTO	_00010_DS_
+00053f   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+000540   1303     bcf     0x03, 0x6        
+000541   1286     bcf     0x06, 0x5        	BCF	_PORTBbits,5
+                                           _00010_DS_:
+000542   1c03     btfss   0x03, 0x0        	BTFSS	STATUS,0
+000543   2d47     goto    0x0547           	GOTO	_00011_DS_
+000544   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+000545   1303     bcf     0x03, 0x6        
+000546   1686     bsf     0x06, 0x5        	BSF	_PORTBbits,5
+                                           _00011_DS_:
+                                           ;	.line	194; "main.c"	LCD_DATA_6 = (date & 0x40);
+000547   1283     bcf     0x03, 0x5        	BANKSEL	r0x100E
+000548   1303     bcf     0x03, 0x6        
+000549   0826     movf    0x26, 0x0        	MOVF	r0x100E,W
+00054a   3940     andlw   0x40             	ANDLW	0x40
+00054b   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
+00054c   3001     movlw   0x01             	MOVLW	0x01
+00054d   00a7     movwf   0x27             	MOVWF	r0x100F
+00054e   00a8     movwf   0x28             	MOVWF	r0x1010
+00054f   0c28     rrf     0x28, 0x0        	RRF	r0x1010,W
+000550   1803     btfsc   0x03, 0x0        	BTFSC	STATUS,0
+000551   2d55     goto    0x0555           	GOTO	_00012_DS_
+000552   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+000553   1303     bcf     0x03, 0x6        
+000554   1306     bcf     0x06, 0x6        	BCF	_PORTBbits,6
+                                           _00012_DS_:
+000555   1c03     btfss   0x03, 0x0        	BTFSS	STATUS,0
+000556   2d5a     goto    0x055a           	GOTO	_00013_DS_
+000557   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+000558   1303     bcf     0x03, 0x6        
+000559   1706     bsf     0x06, 0x6        	BSF	_PORTBbits,6
+                                           _00013_DS_:
+                                           ;	.line	195; "main.c"	LCD_DATA_7 = (date & 0x80);
+00055a   1283     bcf     0x03, 0x5        	BANKSEL	r0x100E
+00055b   1303     bcf     0x03, 0x6        
+00055c   0826     movf    0x26, 0x0        	MOVF	r0x100E,W
+00055d   3980     andlw   0x80             	ANDLW	0x80
+00055e   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
+00055f   3001     movlw   0x01             	MOVLW	0x01
+000560   00a7     movwf   0x27             	MOVWF	r0x100F
+000561   00a6     movwf   0x26             	MOVWF	r0x100E
+000562   0c26     rrf     0x26, 0x0        	RRF	r0x100E,W
+000563   1803     btfsc   0x03, 0x0        	BTFSC	STATUS,0
+000564   2d68     goto    0x0568           	GOTO	_00014_DS_
+000565   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+000566   1303     bcf     0x03, 0x6        
+000567   1386     bcf     0x06, 0x7        	BCF	_PORTBbits,7
+                                           _00014_DS_:
+000568   1c03     btfss   0x03, 0x0        	BTFSS	STATUS,0
+000569   2d6d     goto    0x056d           	GOTO	_00015_DS_
+00056a   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+00056b   1303     bcf     0x03, 0x6        
+00056c   1786     bsf     0x06, 0x7        	BSF	_PORTBbits,7
+                                           _00015_DS_:
+                                           ;	.line	196; "main.c"	LCD_EN     = HIGH_ST;
+00056d   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+00056e   1303     bcf     0x03, 0x6        
+00056f   1586     bsf     0x06, 0x3        	BSF	_PORTBbits,3
+                                           ;	.line	197; "main.c"	delay_ms(1);
+000570   3001     movlw   0x01             	MOVLW	0x01
+000571   00ff     movwf   0x7f             	MOVWF	STK00
+000572   3000     movlw   0x00             	MOVLW	0x00
+000573   118a     bcf     0x0a, 0x3        	PAGESEL	_delay_ms
+000574   120a     bcf     0x0a, 0x4        
+000575   2798     call    0x0798           	CALL	_delay_ms
+000576   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000577   120a     bcf     0x0a, 0x4        
+                                           ;	.line	198; "main.c"	LCD_EN     = LOW_ST;
+000578   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+000579   1303     bcf     0x03, 0x6        
+00057a   1186     bcf     0x06, 0x3        	BCF	_PORTBbits,3
+                                           ;	.line	199; "main.c"	delay_ms(1);
+00057b   3001     movlw   0x01             	MOVLW	0x01
+00057c   00ff     movwf   0x7f             	MOVWF	STK00
+00057d   3000     movlw   0x00             	MOVLW	0x00
+00057e   118a     bcf     0x0a, 0x3        	PAGESEL	_delay_ms
+00057f   120a     bcf     0x0a, 0x4        
+000580   2798     call    0x0798           	CALL	_delay_ms
+000581   118a     bcf     0x0a, 0x3        	PAGESEL	$
+000582   120a     bcf     0x0a, 0x4        
+000583   0008     return                   	RETURN	
+                                           ; exit point of _LCD_send4Bits
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;7 compiler assigned registers:
+                                           ;   r0x1008
+                                           ;   STK00
+                                           ;   r0x1009
+                                           ;   r0x100A
+                                           ;   r0x100B
+                                           ;   r0x100C
+                                           ;   r0x100D
+                                           ;; Starting pCode block
+                                           S_main__delay_ms	code
+                                           _delay_ms:
+                                           ; 2 exit points
+                                           ;	.line	170; "main.c"	void delay_ms(uint16_t ms)
+000798   1283     bcf     0x03, 0x5        	BANKSEL	r0x1008
+000799   1303     bcf     0x03, 0x6        
+00079a   00a1     movwf   0x21             	MOVWF	r0x1008
+00079b   087f     movf    0x7f, 0x0        	MOVF	STK00,W
+00079c   00a0     movwf   0x20             	MOVWF	r0x1009
+                                           _00108_DS_:
+                                           ;	.line	180; "main.c"	while(ms--)
+00079d   1283     bcf     0x03, 0x5        	BANKSEL	r0x1009
+00079e   1303     bcf     0x03, 0x6        
+00079f   0820     movf    0x20, 0x0        	MOVF	r0x1009,W
+0007a0   00a2     movwf   0x22             	MOVWF	r0x100A
+0007a1   0821     movf    0x21, 0x0        	MOVF	r0x1008,W
+0007a2   00a3     movwf   0x23             	MOVWF	r0x100B
+0007a3   30ff     movlw   0xff             	MOVLW	0xff
+0007a4   07a0     addwf   0x20, 0x1        	ADDWF	r0x1009,F
+0007a5   1c03     btfss   0x03, 0x0        	BTFSS	STATUS,0
+0007a6   03a1     decf    0x21, 0x1        	DECF	r0x1008,F
+0007a7   0822     movf    0x22, 0x0        	MOVF	r0x100A,W
+0007a8   0423     iorwf   0x23, 0x0        	IORWF	r0x100B,W
+0007a9   1903     btfsc   0x03, 0x2        	BTFSC	STATUS,2
+0007aa   2fbd     goto    0x07bd           	GOTO	_00111_DS_
+                                           ;	.line	183; "main.c"	while(aux--);
+0007ab   303d     movlw   0x3d             	MOVLW	0x3d
+0007ac   00a2     movwf   0x22             	MOVWF	r0x100A
+0007ad   01a3     clrf    0x23             	CLRF	r0x100B
+                                           _00105_DS_:
+0007ae   1283     bcf     0x03, 0x5        	BANKSEL	r0x100A
+0007af   1303     bcf     0x03, 0x6        
+0007b0   0822     movf    0x22, 0x0        	MOVF	r0x100A,W
+0007b1   00a4     movwf   0x24             	MOVWF	r0x100C
+0007b2   0823     movf    0x23, 0x0        	MOVF	r0x100B,W
+0007b3   00a5     movwf   0x25             	MOVWF	r0x100D
+0007b4   30ff     movlw   0xff             	MOVLW	0xff
+0007b5   07a2     addwf   0x22, 0x1        	ADDWF	r0x100A,F
+0007b6   1c03     btfss   0x03, 0x0        	BTFSS	STATUS,0
+0007b7   03a3     decf    0x23, 0x1        	DECF	r0x100B,F
+0007b8   0824     movf    0x24, 0x0        	MOVF	r0x100C,W
+0007b9   0425     iorwf   0x25, 0x0        	IORWF	r0x100D,W
+0007ba   1903     btfsc   0x03, 0x2        	BTFSC	STATUS,2
+0007bb   2f9d     goto    0x079d           	GOTO	_00108_DS_
+0007bc   2fae     goto    0x07ae           	GOTO	_00105_DS_
+                                           _00111_DS_:
+0007bd   0008     return                   	RETURN	
+                                           ; exit point of _delay_ms
+
+
+                                           ;	code size estimation:
+                                           ;	  965+  431 =  1396 instructions ( 3654 byte)
+
+                                           	end

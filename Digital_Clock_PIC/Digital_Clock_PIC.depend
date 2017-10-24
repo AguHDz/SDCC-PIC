@@ -1,0 +1,21 @@
+# depslib dependency file v1.0
+1508757844 source:o:\github\sdcc-pic\digital_clock_pic\main.c
+	<pic14/pic16f877a.h>
+	<stdint.h>
+	<stdbool.h>
+
+1508504578 o:\github\sdcc-pic\libs\delay.c
+
+1508545914 o:\github\sdcc-pic\libs\i2c.c
+	<stdint.h>
+
+1508536250 o:\github\sdcc-pic\libs\ds1307.c
+	<stdint.h>
+	"math.c"
+	"I2C.c"
+
+1508148262 o:\github\sdcc-pic\libs\math.c
+
+1508541336 o:\github\sdcc-pic\libs\lcd.c
+	"delay.c"
+

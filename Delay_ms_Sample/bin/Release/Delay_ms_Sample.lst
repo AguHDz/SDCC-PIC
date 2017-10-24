@@ -1,0 +1,245 @@
+gplink-1.5.0 #1285 (Sep 12 2016)
+Copyright (c) 1998-2016 gputils project
+Listing File Generated: 10-21-2017  22:08:16
+
+
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           ;--------------------------------------------------------
+                                           ; File Created by SDCC : free open source ANSI-C Compiler
+                                           ; Version 3.6.0 #9615 (MINGW64)
+                                           ;--------------------------------------------------------
+                                           ; PIC port for the 14-bit core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"delay_sample.c"
+                                           	list	p=16f84a
+                                           	radix dec
+                                           	include "p16f84a.inc"
+                                                   LIST
+
+                                           ;==========================================================================
+                                           ; Build date : Oct 21 2015
+                                           ;  MPASM PIC16F84A processor include
+                                           ; 
+                                           ;  (c) Copyright 1999-2015 Microchip Technology, All rights reserved
+                                           ;==========================================================================
+
+                                                   NOLIST
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_STATUSbits
+                                           	extern	_PORTAbits
+                                           	extern	_PORTBbits
+                                           	extern	_INTCONbits
+                                           	extern	_OPTION_REGbits
+                                           	extern	_TRISAbits
+                                           	extern	_TRISBbits
+                                           	extern	_EECON1bits
+                                           	extern	_INDF
+                                           	extern	_TMR0
+                                           	extern	_PCL
+                                           	extern	_STATUS
+                                           	extern	_FSR
+                                           	extern	_PORTA
+                                           	extern	_PORTB
+                                           	extern	_EEDATA
+                                           	extern	_EEADR
+                                           	extern	_PCLATH
+                                           	extern	_INTCON
+                                           	extern	_OPTION_REG
+                                           	extern	_TRISA
+                                           	extern	_TRISB
+                                           	extern	_EECON1
+                                           	extern	_EECON2
+                                           	extern	__sdcc_gsinit_startup
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_delay_ms
+                                           	global	_main
+
+                                           	global PSAVE
+                                           	global SSAVE
+                                           	global WSAVE
+                                           	global STK12
+                                           	global STK11
+                                           	global STK10
+                                           	global STK09
+                                           	global STK08
+                                           	global STK07
+                                           	global STK06
+                                           	global STK05
+                                           	global STK04
+                                           	global STK03
+                                           	global STK02
+                                           	global STK01
+                                           	global STK00
+
+                                           sharebank udata_ovr 0x000C
+                                           PSAVE	res 1
+                                           SSAVE	res 1
+                                           WSAVE	res 1
+                                           STK12	res 1
+                                           STK11	res 1
+                                           STK10	res 1
+                                           STK09	res 1
+                                           STK08	res 1
+                                           STK07	res 1
+                                           STK06	res 1
+                                           STK05	res 1
+                                           STK04	res 1
+                                           STK03	res 1
+                                           STK02	res 1
+                                           STK01	res 1
+                                           STK00	res 1
+
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           UDL_delay_sample_0	udata
+                                           r0x1001	res	1
+                                           r0x1000	res	1
+                                           r0x1002	res	1
+                                           r0x1003	res	1
+                                           r0x1004	res	1
+                                           r0x1005	res	1
+                                           r0x1006	res	1
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; reset vector 
+                                           ;--------------------------------------------------------
+                                           STARTUP	code 0x0000
+000000   0000     nop                      	nop
+                                           	pagesel __sdcc_gsinit_startup
+000001   2802     goto    0x0002           	goto	__sdcc_gsinit_startup
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_delay_sample	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = M
+                                           ;***
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _delay_ms
+                                           ;   _delay_ms
+                                           ;3 compiler assigned registers:
+                                           ;   r0x1006
+                                           ;   r0x1007
+                                           ;   STK00
+                                           ;; Starting pCode block
+                                           S_delay_sample__main	code
+                                           _main:
+                                           ; 2 exit points
+                                           ;	.line	11; "delay_sample.c"	TRISB = 0xF0;                 //porta como salida menos RA4(desactivado)
+0000f3   30f0     movlw   0xf0             	MOVLW	0xf0
+0000f4   1683     bsf     0x03, 0x5        	BANKSEL	_TRISB
+0000f5   0086     movwf   0x06             	MOVWF	_TRISB
+                                           ;	.line	12; "delay_sample.c"	PORTB = 0x00;
+0000f6   1283     bcf     0x03, 0x5        	BANKSEL	_PORTB
+0000f7   0186     clrf    0x06             	CLRF	_PORTB
+                                           ;	.line	13; "delay_sample.c"	GIE   = 0;                    //todas las interrupciones desactivadas
+0000f8   138b     bcf     0x0b, 0x7        	BCF	_INTCONbits,7
+                                           _00117_DS_:
+                                           ;	.line	16; "delay_sample.c"	RB0 = !RB0;
+0000f9   01ae     clrf    0x2e             	CLRF	r0x1006
+0000fa   1283     bcf     0x03, 0x5        	BANKSEL	_PORTBbits
+0000fb   1806     btfsc   0x06, 0x0        	BTFSC	_PORTBbits,0
+0000fc   0aae     incf    0x2e, 0x1        	INCF	r0x1006,F
+0000fd   082e     movf    0x2e, 0x0        	MOVF	r0x1006,W
+0000fe   3000     movlw   0x00             	MOVLW	0x00
+0000ff   1903     btfsc   0x03, 0x2        	BTFSC	STATUS,2
+000100   3001     movlw   0x01             	MOVLW	0x01
+                                           ;;1	MOVWF	r0x1007
+000101   00ae     movwf   0x2e             	MOVWF	r0x1006
+000102   0c2e     rrf     0x2e, 0x0        	RRF	r0x1006,W
+000103   1c03     btfss   0x03, 0x0        	BTFSS	STATUS,0
+000104   1006     bcf     0x06, 0x0        	BCF	_PORTBbits,0
+000105   1803     btfsc   0x03, 0x0        	BTFSC	STATUS,0
+000106   1406     bsf     0x06, 0x0        	BSF	_PORTBbits,0
+                                           ;	.line	17; "delay_sample.c"	delay_ms(1);
+000107   3001     movlw   0x01             	MOVLW	0x01
+000108   009b     movwf   0x1b             	MOVWF	STK00
+000109   3000     movlw   0x00             	MOVLW	0x00
+                                           	PAGESEL	_delay_ms
+00010a   20d2     call    0x00d2           	CALL	_delay_ms
+                                           	PAGESEL	$
+00010b   28f9     goto    0x00f9           	GOTO	_00117_DS_
+00010c   0008     return                   	RETURN	
+                                           ; exit point of _main
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;7 compiler assigned registers:
+                                           ;   r0x1000
+                                           ;   STK00
+                                           ;   r0x1001
+                                           ;   r0x1002
+                                           ;   r0x1003
+                                           ;   r0x1004
+                                           ;   r0x1005
+                                           ;; Starting pCode block
+                                           S_delay_sample__delay_ms	code
+                                           _delay_ms:
+                                           ; 2 exit points
+                                           ;	.line	22; "../Libs/delay.c"	void delay_ms(unsigned int ms)
+0000d2   00a9     movwf   0x29             	MOVWF	r0x1000
+0000d3   081b     movf    0x1b, 0x0        	MOVF	STK00,W
+0000d4   00a8     movwf   0x28             	MOVWF	r0x1001
+                                           _00108_DS_:
+                                           ;	.line	26; "../Libs/delay.c"	while(ms--)
+0000d5   0828     movf    0x28, 0x0        	MOVF	r0x1001,W
+0000d6   00aa     movwf   0x2a             	MOVWF	r0x1002
+0000d7   0829     movf    0x29, 0x0        	MOVF	r0x1000,W
+0000d8   00ab     movwf   0x2b             	MOVWF	r0x1003
+0000d9   30ff     movlw   0xff             	MOVLW	0xff
+0000da   07a8     addwf   0x28, 0x1        	ADDWF	r0x1001,F
+0000db   1c03     btfss   0x03, 0x0        	BTFSS	STATUS,0
+0000dc   03a9     decf    0x29, 0x1        	DECF	r0x1000,F
+0000dd   082a     movf    0x2a, 0x0        	MOVF	r0x1002,W
+0000de   042b     iorwf   0x2b, 0x0        	IORWF	r0x1003,W
+0000df   1903     btfsc   0x03, 0x2        	BTFSC	STATUS,2
+0000e0   28f2     goto    0x00f2           	GOTO	_00111_DS_
+                                           ;	.line	29; "../Libs/delay.c"	while(aux--);
+0000e1   3059     movlw   0x59             	MOVLW	0x59
+0000e2   00aa     movwf   0x2a             	MOVWF	r0x1002
+0000e3   3001     movlw   0x01             	MOVLW	0x01
+0000e4   00ab     movwf   0x2b             	MOVWF	r0x1003
+                                           _00105_DS_:
+0000e5   082a     movf    0x2a, 0x0        	MOVF	r0x1002,W
+0000e6   00ac     movwf   0x2c             	MOVWF	r0x1004
+0000e7   082b     movf    0x2b, 0x0        	MOVF	r0x1003,W
+0000e8   00ad     movwf   0x2d             	MOVWF	r0x1005
+0000e9   30ff     movlw   0xff             	MOVLW	0xff
+0000ea   07aa     addwf   0x2a, 0x1        	ADDWF	r0x1002,F
+0000eb   1c03     btfss   0x03, 0x0        	BTFSS	STATUS,0
+0000ec   03ab     decf    0x2b, 0x1        	DECF	r0x1003,F
+0000ed   082c     movf    0x2c, 0x0        	MOVF	r0x1004,W
+0000ee   042d     iorwf   0x2d, 0x0        	IORWF	r0x1005,W
+0000ef   1903     btfsc   0x03, 0x2        	BTFSC	STATUS,2
+0000f0   28d5     goto    0x00d5           	GOTO	_00108_DS_
+0000f1   28e5     goto    0x00e5           	GOTO	_00105_DS_
+                                           _00111_DS_:
+0000f2   0008     return                   	RETURN	
+                                           ; exit point of _delay_ms
+
+
+                                           ;	code size estimation:
+                                           ;	   56+    5 =    61 instructions (  132 byte)
+
+                                           	end

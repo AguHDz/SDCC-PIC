@@ -1,0 +1,499 @@
+gpasm-1.5.0 #1285 (Sep 12 2016) obj\Release\d   10-21-2017  22:08:15        PAGE  1
+
+
+LOC    OBJECT CODE    LINE  SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SDCC : free open source ANSI-C Compiler
+                      00003 ; Version 3.6.0 #9615 (MINGW64)
+                      00004 ;--------------------------------------------------------
+                      00005 ; PIC port for the 14-bit core
+                      00006 ;--------------------------------------------------------
+                      00007 ;       .file   "delay_sample.c"
+                      00008         list    p=16f84a
+                      00009         radix dec
+                      00010         include "p16f84a.inc"
+                      00001         LIST
+                      00002 
+                      00003 ;==========================================================================
+                      00004 ; Build date : Oct 21 2015
+                      00005 ;  MPASM PIC16F84A processor include
+                      00006 ; 
+                      00007 ;  (c) Copyright 1999-2015 Microchip Technology, All rights reserved
+                      00008 ;==========================================================================
+                      00009 
+                      00209         LIST
+                      00011 ;--------------------------------------------------------
+                      00012 ; external declarations
+                      00013 ;--------------------------------------------------------
+  0000                00014         extern  _STATUSbits
+  0000                00015         extern  _PORTAbits
+  0000                00016         extern  _PORTBbits
+  0000                00017         extern  _INTCONbits
+  0000                00018         extern  _OPTION_REGbits
+  0000                00019         extern  _TRISAbits
+  0000                00020         extern  _TRISBbits
+  0000                00021         extern  _EECON1bits
+  0000                00022         extern  _INDF
+  0000                00023         extern  _TMR0
+  0000                00024         extern  _PCL
+  0000                00025         extern  _STATUS
+  0000                00026         extern  _FSR
+  0000                00027         extern  _PORTA
+  0000                00028         extern  _PORTB
+  0000                00029         extern  _EEDATA
+  0000                00030         extern  _EEADR
+  0000                00031         extern  _PCLATH
+  0000                00032         extern  _INTCON
+  0000                00033         extern  _OPTION_REG
+  0000                00034         extern  _TRISA
+  0000                00035         extern  _TRISB
+  0000                00036         extern  _EECON1
+  0000                00037         extern  _EECON2
+  0000                00038         extern  __sdcc_gsinit_startup
+                      00039 ;--------------------------------------------------------
+                      00040 ; global declarations
+                      00041 ;--------------------------------------------------------
+  0000                00042         global  _delay_ms
+  0000                00043         global  _main
+gpasm-1.5.0 #1285 (Sep 12 2016) obj\Release\d   10-21-2017  22:08:15        PAGE  2
+
+
+LOC    OBJECT CODE    LINE  SOURCE TEXT
+  VALUE
+
+                      00044 
+  0000                00045         global PSAVE
+  0000                00046         global SSAVE
+  0000                00047         global WSAVE
+  0000                00048         global STK12
+  0000                00049         global STK11
+  0000                00050         global STK10
+  0000                00051         global STK09
+  0000                00052         global STK08
+  0000                00053         global STK07
+  0000                00054         global STK06
+  0000                00055         global STK05
+  0000                00056         global STK04
+  0000                00057         global STK03
+  0000                00058         global STK02
+  0000                00059         global STK01
+  0000                00060         global STK00
+                      00061 
+                      00062 sharebank udata_ovr 0x000C
+000C                  00063 PSAVE   res 1
+000D                  00064 SSAVE   res 1
+000E                  00065 WSAVE   res 1
+000F                  00066 STK12   res 1
+0010                  00067 STK11   res 1
+0011                  00068 STK10   res 1
+0012                  00069 STK09   res 1
+0013                  00070 STK08   res 1
+0014                  00071 STK07   res 1
+0015                  00072 STK06   res 1
+0016                  00073 STK05   res 1
+0017                  00074 STK04   res 1
+0018                  00075 STK03   res 1
+0019                  00076 STK02   res 1
+001A                  00077 STK01   res 1
+001B                  00078 STK00   res 1
+                      00079 
+                      00080 ;--------------------------------------------------------
+                      00081 ; global definitions
+                      00082 ;--------------------------------------------------------
+                      00083 ;--------------------------------------------------------
+                      00084 ; absolute symbol definitions
+                      00085 ;--------------------------------------------------------
+                      00086 ;--------------------------------------------------------
+                      00087 ; compiler-defined variables
+                      00088 ;--------------------------------------------------------
+                      00089 UDL_delay_sample_0      udata
+0000                  00090 r0x1001 res     1
+0001                  00091 r0x1000 res     1
+0002                  00092 r0x1002 res     1
+0003                  00093 r0x1003 res     1
+0004                  00094 r0x1004 res     1
+0005                  00095 r0x1005 res     1
+0006                  00096 r0x1006 res     1
+gpasm-1.5.0 #1285 (Sep 12 2016) obj\Release\d   10-21-2017  22:08:15        PAGE  3
+
+
+LOC    OBJECT CODE    LINE  SOURCE TEXT
+  VALUE
+
+                      00097 ;--------------------------------------------------------
+                      00098 ; initialized data
+                      00099 ;--------------------------------------------------------
+                      00100 ;--------------------------------------------------------
+                      00101 ; overlayable items in internal ram 
+                      00102 ;--------------------------------------------------------
+                      00103 ;       udata_ovr
+                      00104 ;--------------------------------------------------------
+                      00105 ; reset vector 
+                      00106 ;--------------------------------------------------------
+                      00107 STARTUP code 0x0000
+0000   0000           00108         nop
+Message[1304]: Page selection not needed for this device. No code generated.
+                      00109         pagesel __sdcc_gsinit_startup
+0001   2???           00110         goto    __sdcc_gsinit_startup
+                      00111 ;--------------------------------------------------------
+                      00112 ; code
+                      00113 ;--------------------------------------------------------
+                      00114 code_delay_sample       code
+                      00115 ;***
+                      00116 ;  pBlock Stats: dbName = M
+                      00117 ;***
+                      00118 ;has an exit
+                      00119 ;functions called:
+                      00120 ;   _delay_ms
+                      00121 ;   _delay_ms
+                      00122 ;3 compiler assigned registers:
+                      00123 ;   r0x1006
+                      00124 ;   r0x1007
+                      00125 ;   STK00
+                      00126 ;; Starting pCode block
+                      00127 S_delay_sample__main    code
+0000                  00128 _main:
+                      00129 ; 2 exit points
+                      00130 ;       .line   11; "delay_sample.c"    TRISB = 0xF0;                 //porta como salida menos RA4(desa
+                            ctivado)
+0000   30F0           00131         MOVLW   0xf0
+0001   0???           00132         BANKSEL _TRISB
+0002   00??           00133         MOVWF   _TRISB
+                      00134 ;       .line   12; "delay_sample.c"    PORTB = 0x00;
+0003   0???           00135         BANKSEL _PORTB
+0004   01??           00136         CLRF    _PORTB
+                      00137 ;       .line   13; "delay_sample.c"    GIE   = 0;                    //todas las interrupciones desacti
+                            vadas
+0005   13??           00138         BCF     _INTCONbits,7
+0006                  00139 _00117_DS_:
+                      00140 ;       .line   16; "delay_sample.c"    RB0 = !RB0;
+0006   01??           00141         CLRF    r0x1006
+0007   0???           00142         BANKSEL _PORTBbits
+0008   18??           00143         BTFSC   _PORTBbits,0
+0009   0A??           00144         INCF    r0x1006,F
+000A   08??           00145         MOVF    r0x1006,W
+000B   3000           00146         MOVLW   0x00
+gpasm-1.5.0 #1285 (Sep 12 2016) obj\Release\d   10-21-2017  22:08:15        PAGE  4
+
+
+LOC    OBJECT CODE    LINE  SOURCE TEXT
+  VALUE
+
+000C   1903           00147         BTFSC   STATUS,2
+000D   3001           00148         MOVLW   0x01
+                      00149 ;;1     MOVWF   r0x1007
+000E   00??           00150         MOVWF   r0x1006
+000F   0C??           00151         RRF     r0x1006,W
+0010   1C03           00152         BTFSS   STATUS,0
+0011   10??           00153         BCF     _PORTBbits,0
+0012   1803           00154         BTFSC   STATUS,0
+0013   14??           00155         BSF     _PORTBbits,0
+                      00156 ;       .line   17; "delay_sample.c"    delay_ms(1);
+0014   3001           00157         MOVLW   0x01
+0015   00??           00158         MOVWF   STK00
+0016   3000           00159         MOVLW   0x00
+Message[1304]: Page selection not needed for this device. No code generated.
+                      00160         PAGESEL _delay_ms
+0017   2???           00161         CALL    _delay_ms
+Message[1304]: Page selection not needed for this device. No code generated.
+                      00162         PAGESEL $
+0018   2???           00163         GOTO    _00117_DS_
+0019   0008           00164         RETURN  
+                      00165 ; exit point of _main
+                      00166 
+                      00167 ;***
+                      00168 ;  pBlock Stats: dbName = C
+                      00169 ;***
+                      00170 ;has an exit
+                      00171 ;7 compiler assigned registers:
+                      00172 ;   r0x1000
+                      00173 ;   STK00
+                      00174 ;   r0x1001
+                      00175 ;   r0x1002
+                      00176 ;   r0x1003
+                      00177 ;   r0x1004
+                      00178 ;   r0x1005
+                      00179 ;; Starting pCode block
+                      00180 S_delay_sample__delay_ms        code
+0000                  00181 _delay_ms:
+                      00182 ; 2 exit points
+                      00183 ;       .line   22; "../Libs/delay.c"   void delay_ms(unsigned int ms)
+0000   00??           00184         MOVWF   r0x1000
+0001   08??           00185         MOVF    STK00,W
+0002   00??           00186         MOVWF   r0x1001
+0003                  00187 _00108_DS_:
+                      00188 ;       .line   26; "../Libs/delay.c"   while(ms--)
+0003   08??           00189         MOVF    r0x1001,W
+0004   00??           00190         MOVWF   r0x1002
+0005   08??           00191         MOVF    r0x1000,W
+0006   00??           00192         MOVWF   r0x1003
+0007   30FF           00193         MOVLW   0xff
+0008   07??           00194         ADDWF   r0x1001,F
+0009   1C03           00195         BTFSS   STATUS,0
+000A   03??           00196         DECF    r0x1000,F
+000B   08??           00197         MOVF    r0x1002,W
+gpasm-1.5.0 #1285 (Sep 12 2016) obj\Release\d   10-21-2017  22:08:15        PAGE  5
+
+
+LOC    OBJECT CODE    LINE  SOURCE TEXT
+  VALUE
+
+000C   04??           00198         IORWF   r0x1003,W
+000D   1903           00199         BTFSC   STATUS,2
+000E   2???           00200         GOTO    _00111_DS_
+                      00201 ;       .line   29; "../Libs/delay.c"   while(aux--);
+000F   3059           00202         MOVLW   0x59
+0010   00??           00203         MOVWF   r0x1002
+0011   3001           00204         MOVLW   0x01
+0012   00??           00205         MOVWF   r0x1003
+0013                  00206 _00105_DS_:
+0013   08??           00207         MOVF    r0x1002,W
+0014   00??           00208         MOVWF   r0x1004
+0015   08??           00209         MOVF    r0x1003,W
+0016   00??           00210         MOVWF   r0x1005
+0017   30FF           00211         MOVLW   0xff
+0018   07??           00212         ADDWF   r0x1002,F
+0019   1C03           00213         BTFSS   STATUS,0
+001A   03??           00214         DECF    r0x1003,F
+001B   08??           00215         MOVF    r0x1004,W
+001C   04??           00216         IORWF   r0x1005,W
+001D   1903           00217         BTFSC   STATUS,2
+001E   2???           00218         GOTO    _00108_DS_
+001F   2???           00219         GOTO    _00105_DS_
+0020                  00220 _00111_DS_:
+0020   0008           00221         RETURN  
+                      00222 ; exit point of _delay_ms
+                      00223 
+                      00224 
+                      00225 ;       code size estimation:
+                      00226 ;          56+    5 =    61 instructions (  132 byte)
+                      00227 
+                      00228         end
+gpasm-1.5.0 #1285 (Sep 12 2016) obj\Release\d   10-21-2017  22:08:15        PAGE  6
+
+
+SYMBOL TABLE
+  LABEL                              TYPE        VALUE         VALUE          VALUE
+                                                 (hex)         (dec)          (text)
+
+C                                 CONSTANT      00000000              0
+DC                                CONSTANT      00000001              1
+EEADR                             CONSTANT      00000009              9
+EECON1                            CONSTANT      00000088            136
+EECON2                            CONSTANT      00000089            137
+EEDATA                            CONSTANT      00000008              8
+EEIE                              CONSTANT      00000006              6
+EEIF                              CONSTANT      00000004              4
+F                                 CONSTANT      00000001              1
+FSR                               CONSTANT      00000004              4
+GIE                               CONSTANT      00000007              7
+INDF                              CONSTANT      00000000              0
+INTCON                            CONSTANT      0000000B             11
+INTE                              CONSTANT      00000004              4
+INTEDG                            CONSTANT      00000006              6
+INTF                              CONSTANT      00000001              1
+IRP                               CONSTANT      00000007              7
+NOT_PD                            CONSTANT      00000003              3
+NOT_RBPU                          CONSTANT      00000007              7
+NOT_TO                            CONSTANT      00000004              4
+OPTION_REG                        CONSTANT      00000081            129
+PCL                               CONSTANT      00000002              2
+PCLATH                            CONSTANT      0000000A             10
+PORTA                             CONSTANT      00000005              5
+PORTB                             CONSTANT      00000006              6
+PS0                               CONSTANT      00000000              0
+PS1                               CONSTANT      00000001              1
+PS2                               CONSTANT      00000002              2
+PSA                               CONSTANT      00000003              3
+PSAVE                             GLOBAL        0000000C             12
+RA0                               CONSTANT      00000000              0
+RA1                               CONSTANT      00000001              1
+RA2                               CONSTANT      00000002              2
+RA3                               CONSTANT      00000003              3
+RA4                               CONSTANT      00000004              4
+RB0                               CONSTANT      00000000              0
+RB1                               CONSTANT      00000001              1
+RB2                               CONSTANT      00000002              2
+RB3                               CONSTANT      00000003              3
+RB4                               CONSTANT      00000004              4
+RB5                               CONSTANT      00000005              5
+RB6                               CONSTANT      00000006              6
+RB7                               CONSTANT      00000007              7
+RBIE                              CONSTANT      00000003              3
+RBIF                              CONSTANT      00000000              0
+RD                                CONSTANT      00000000              0
+RP0                               CONSTANT      00000005              5
+RP1                               CONSTANT      00000006              6
+SSAVE                             GLOBAL        0000000D             13
+STATUS                            CONSTANT      00000003              3
+STK00                             GLOBAL        0000001B             27
+STK01                             GLOBAL        0000001A             26
+gpasm-1.5.0 #1285 (Sep 12 2016) obj\Release\d   10-21-2017  22:08:15        PAGE  7
+
+
+SYMBOL TABLE
+  LABEL                              TYPE        VALUE         VALUE          VALUE
+                                                 (hex)         (dec)          (text)
+
+STK02                             GLOBAL        00000019             25
+STK03                             GLOBAL        00000018             24
+STK04                             GLOBAL        00000017             23
+STK05                             GLOBAL        00000016             22
+STK06                             GLOBAL        00000015             21
+STK07                             GLOBAL        00000014             20
+STK08                             GLOBAL        00000013             19
+STK09                             GLOBAL        00000012             18
+STK10                             GLOBAL        00000011             17
+STK11                             GLOBAL        00000010             16
+STK12                             GLOBAL        0000000F             15
+T0CS                              CONSTANT      00000005              5
+T0IE                              CONSTANT      00000005              5
+T0IF                              CONSTANT      00000002              2
+T0SE                              CONSTANT      00000004              4
+TMR0                              CONSTANT      00000001              1
+TMR0IE                            CONSTANT      00000005              5
+TMR0IF                            CONSTANT      00000002              2
+TRISA                             CONSTANT      00000085            133
+TRISA0                            CONSTANT      00000000              0
+TRISA1                            CONSTANT      00000001              1
+TRISA2                            CONSTANT      00000002              2
+TRISA3                            CONSTANT      00000003              3
+TRISA4                            CONSTANT      00000004              4
+TRISB                             CONSTANT      00000086            134
+TRISB0                            CONSTANT      00000000              0
+TRISB1                            CONSTANT      00000001              1
+TRISB2                            CONSTANT      00000002              2
+TRISB3                            CONSTANT      00000003              3
+TRISB4                            CONSTANT      00000004              4
+TRISB5                            CONSTANT      00000005              5
+TRISB6                            CONSTANT      00000006              6
+TRISB7                            CONSTANT      00000007              7
+W                                 CONSTANT      00000000              0
+WR                                CONSTANT      00000001              1
+WREN                              CONSTANT      00000002              2
+WRERR                             CONSTANT      00000003              3
+WSAVE                             GLOBAL        0000000E             14
+Z                                 CONSTANT      00000002              2
+_00105_DS_                        ADDRESS       00000013             19
+_00108_DS_                        ADDRESS       00000003              3
+_00111_DS_                        ADDRESS       00000020             32
+_00117_DS_                        ADDRESS       00000006              6
+_CONFIG                           CONSTANT      00002007           8199
+_CP_OFF                           CONSTANT      00003FFF          16383
+_CP_ON                            CONSTANT      0000000F             15
+_DEVID1                           CONSTANT      00002006           8198
+_EEADR                            EXTERNAL      00000000              0
+_EECON1                           EXTERNAL      00000000              0
+_EECON1bits                       EXTERNAL      00000000              0
+_EECON2                           EXTERNAL      00000000              0
+_EEDATA                           EXTERNAL      00000000              0
+gpasm-1.5.0 #1285 (Sep 12 2016) obj\Release\d   10-21-2017  22:08:15        PAGE  8
+
+
+SYMBOL TABLE
+  LABEL                              TYPE        VALUE         VALUE          VALUE
+                                                 (hex)         (dec)          (text)
+
+_FOSC_EXTRC                       CONSTANT      00003FFF          16383
+_FOSC_HS                          CONSTANT      00003FFE          16382
+_FOSC_LP                          CONSTANT      00003FFC          16380
+_FOSC_XT                          CONSTANT      00003FFD          16381
+_FSR                              EXTERNAL      00000000              0
+_HS_OSC                           CONSTANT      00003FFE          16382
+_IDLOC0                           CONSTANT      00002000           8192
+_IDLOC1                           CONSTANT      00002001           8193
+_IDLOC2                           CONSTANT      00002002           8194
+_IDLOC3                           CONSTANT      00002003           8195
+_INDF                             EXTERNAL      00000000              0
+_INTCON                           EXTERNAL      00000000              0
+_INTCONbits                       EXTERNAL      00000000              0
+_LP_OSC                           CONSTANT      00003FFC          16380
+_OPTION_REG                       EXTERNAL      00000000              0
+_OPTION_REGbits                   EXTERNAL      00000000              0
+_PCL                              EXTERNAL      00000000              0
+_PCLATH                           EXTERNAL      00000000              0
+_PORTA                            EXTERNAL      00000000              0
+_PORTAbits                        EXTERNAL      00000000              0
+_PORTB                            EXTERNAL      00000000              0
+_PORTBbits                        EXTERNAL      00000000              0
+_PWRTE_OFF                        CONSTANT      00003FFF          16383
+_PWRTE_ON                         CONSTANT      00003FF7          16375
+_RC_OSC                           CONSTANT      00003FFF          16383
+_STATUS                           EXTERNAL      00000000              0
+_STATUSbits                       EXTERNAL      00000000              0
+_TMR0                             EXTERNAL      00000000              0
+_TRISA                            EXTERNAL      00000000              0
+_TRISAbits                        EXTERNAL      00000000              0
+_TRISB                            EXTERNAL      00000000              0
+_TRISBbits                        EXTERNAL      00000000              0
+_WDTE_OFF                         CONSTANT      00003FFB          16379
+_WDTE_ON                          CONSTANT      00003FFF          16383
+_WDT_OFF                          CONSTANT      00003FFB          16379
+_WDT_ON                           CONSTANT      00003FFF          16383
+_XT_OSC                           CONSTANT      00003FFD          16381
+__14_BIT                          CONSTANT      00000001              1
+__16F84A                          CONSTANT      00000001              1
+__ACTIVE_BANK_ADDR                VARIABLE      FFFFFFFF             -1
+__ACTIVE_PAGE_ADDR                VARIABLE      FFFFFFFF             -1
+__ASSUMED_BANK_ADDR               VARIABLE      FFFFFFFF             -1
+__BANK_0                          CONSTANT      00000000              0
+__BANK_1                          CONSTANT      00000080            128
+__BANK_BITS                       CONSTANT      00000080            128
+__BANK_FIRST                      CONSTANT      00000000              0
+__BANK_INV                        CONSTANT      FFFFFFFF             -1
+__BANK_LAST                       CONSTANT      00000080            128
+__BANK_MASK                       CONSTANT      0000007F            127
+__BANK_SHIFT                      CONSTANT      00000007              7
+__BANK_SIZE                       CONSTANT      00000080            128
+__CODE_END                        CONSTANT      000003FF           1023
+gpasm-1.5.0 #1285 (Sep 12 2016) obj\Release\d   10-21-2017  22:08:15        PAGE  9
+
+
+SYMBOL TABLE
+  LABEL                              TYPE        VALUE         VALUE          VALUE
+                                                 (hex)         (dec)          (text)
+
+__CODE_START                      CONSTANT      00000000              0
+__COMMON_RAM_END                  CONSTANT      0000004F             79
+__COMMON_RAM_START                CONSTANT      0000000C             12
+__CONFIG_END                      CONSTANT      00002007           8199
+__CONFIG_START                    CONSTANT      00002007           8199
+__EEPROM_END                      CONSTANT      0000213F           8511
+__EEPROM_START                    CONSTANT      00002100           8448
+__GPUTILS_SVN_VERSION             CONSTANT      00000505           1285
+__GPUTILS_VERSION_MAJOR           CONSTANT      00000001              1
+__GPUTILS_VERSION_MICRO           CONSTANT      00000000              0
+__GPUTILS_VERSION_MINOR           CONSTANT      00000005              5
+__IDLOCS_END                      CONSTANT      00002003           8195
+__IDLOCS_START                    CONSTANT      00002000           8192
+__NUM_BANKS                       CONSTANT      00000002              2
+__NUM_PAGES                       CONSTANT      00000001              1
+__PAGE_0                          CONSTANT      00000000              0
+__PAGE_BITS                       CONSTANT      00001800           6144
+__PAGE_FIRST                      CONSTANT      00000000              0
+__PAGE_INV                        CONSTANT      FFFFFFFF             -1
+__PAGE_LAST                       CONSTANT      00000000              0
+__PAGE_MASK                       CONSTANT      000007FF           2047
+__PAGE_SHIFT                      CONSTANT      0000000B             11
+__PAGE_SIZE                       CONSTANT      00000800           2048
+__VECTOR_INT                      CONSTANT      00000004              4
+__VECTOR_RESET                    CONSTANT      00000000              0
+__WHILE_LOOP_COUNT_MAX            CONSTANT      000000FF            255
+__sdcc_gsinit_startup             EXTERNAL      00000000              0
+_delay_ms                         GLOBAL        00000000              0
+_main                             GLOBAL        00000000              0
+r0x1000                           STATIC        00000001              1
+r0x1001                           STATIC        00000000              0
+r0x1002                           STATIC        00000002              2
+r0x1003                           STATIC        00000003              3
+r0x1004                           STATIC        00000004              4
+r0x1005                           STATIC        00000005              5
+r0x1006                           STATIC        00000006              6
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     3 reported,     0 suppressed
+
+

@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1508619646 source:o:\github\sdcc-pic\delay_ms_sample\delay_sample.c
+	<pic14/pic16f84a.h>
+	"../Libs/delay.c"
+
+1508619872 o:\github\sdcc-pic\libs\delay.c
+
