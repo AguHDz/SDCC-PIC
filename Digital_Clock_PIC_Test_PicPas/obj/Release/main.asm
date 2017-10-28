@@ -124,7 +124,6 @@
 	global	_LCD_gotoXY
 	global	_LCD_print
 	global	_LCD_init
-	global	_I2C_anchoPulso
 	global	_I2C_start
 	global	_I2C_stop
 	global	_I2C_writeByte
@@ -348,60 +347,60 @@ code_main	code
 S_main__main	code
 _main:
 ; 2 exit points
-;	.line	730; "main.c"	setup();
+;	.line	703; "main.c"	setup();
 	PAGESEL	_setup
 	CALL	_setup
 	PAGESEL	$
-_00368_DS_:
-;	.line	734; "main.c"	if(P_SET==LOW_ST)   // Comprueba si se ha pulsado SET
+_00363_DS_:
+;	.line	707; "main.c"	if(P_SET==LOW_ST)   // Comprueba si se ha pulsado SET
 	BANKSEL	_PORTAbits
 	BTFSC	_PORTAbits,2
-	GOTO	_00360_DS_
-;	.line	736; "main.c"	editMenuState=1;
+	GOTO	_00355_DS_
+;	.line	709; "main.c"	editMenuState=1;
 	MOVLW	0x01
 	BANKSEL	_editMenuState
 	MOVWF	_editMenuState
-_00356_DS_:
-;	.line	738; "main.c"	while(P_SET==LOW_ST) delay_ms(TIEMPO_ANTIREBOTE);
+_00351_DS_:
+;	.line	711; "main.c"	while(P_SET==LOW_ST) delay_ms(TIEMPO_ANTIREBOTE);
 	BANKSEL	_PORTAbits
 	BTFSC	_PORTAbits,2
-	GOTO	_00358_DS_
+	GOTO	_00353_DS_
 	MOVLW	0x0a
 	MOVWF	STK00
 	MOVLW	0x00
 	PAGESEL	_delay_ms
 	CALL	_delay_ms
 	PAGESEL	$
-	GOTO	_00356_DS_
-_00358_DS_:
-;	.line	739; "main.c"	timeSet();
+	GOTO	_00351_DS_
+_00353_DS_:
+;	.line	712; "main.c"	timeSet();
 	PAGESEL	_timeSet
 	CALL	_timeSet
 	PAGESEL	$
-;	.line	740; "main.c"	DS1307_timeWrite();
+;	.line	713; "main.c"	DS1307_timeWrite();
 	PAGESEL	_DS1307_timeWrite
 	CALL	_DS1307_timeWrite
 	PAGESEL	$
-_00360_DS_:
-;	.line	743; "main.c"	DS1307_timeRead();
+_00355_DS_:
+;	.line	716; "main.c"	DS1307_timeRead();
 	PAGESEL	_DS1307_timeRead
 	CALL	_DS1307_timeRead
 	PAGESEL	$
-;	.line	745; "main.c"	timeShow();         // Actualiza display LCD con fecha y hora.
+;	.line	718; "main.c"	timeShow();         // Actualiza display LCD con fecha y hora.
 	PAGESEL	_timeShow
 	CALL	_timeShow
 	PAGESEL	$
-_00361_DS_:
-;	.line	748; "main.c"	while(SOUT);        // Espera durante pulso alto.
+_00356_DS_:
+;	.line	721; "main.c"	while(SOUT);        // Espera durante pulso alto.
 	BANKSEL	_PORTAbits
 	BTFSC	_PORTAbits,3
-	GOTO	_00361_DS_
-_00364_DS_:
-;	.line	749; "main.c"	while(!SOUT);       // Espera durante pulso bajo.
+	GOTO	_00356_DS_
+_00359_DS_:
+;	.line	722; "main.c"	while(!SOUT);       // Espera durante pulso bajo.
 	BANKSEL	_PORTAbits
 	BTFSC	_PORTAbits,3
-	GOTO	_00368_DS_
-	GOTO	_00364_DS_
+	GOTO	_00363_DS_
+	GOTO	_00359_DS_
 	RETURN	
 ; exit point of _main
 
@@ -426,48 +425,51 @@ _00364_DS_:
 S_main__setup	code
 _setup:
 ; 2 exit points
-;	.line	704; "main.c"	ADCON1 = 0x07;          // Todos los pines configurados como digitales.
+;	.line	676; "main.c"	CMCON  = 0x07;          // Deshabilita comparadores.
 	MOVLW	0x07
-	BANKSEL	_ADCON1
+	BANKSEL	_CMCON
+	MOVWF	_CMCON
+;	.line	677; "main.c"	ADCON1 = 0x06;          // Todos los pines configurados como digitales.
+	MOVLW	0x06
 	MOVWF	_ADCON1
-;	.line	705; "main.c"	ADCON0 = 0x00;          // Desactiva conversor A/D.
+;	.line	678; "main.c"	ADCON0 = 0x00;          // Desactiva conversor A/D.
 	BANKSEL	_ADCON0
 	CLRF	_ADCON0
-;	.line	706; "main.c"	GIE    = false;         // Todas las interrupciones desactivadas.
+;	.line	679; "main.c"	GIE    = false;         // Todas las interrupciones desactivadas.
 	BCF	_INTCONbits,7
-;	.line	708; "main.c"	P_INC_DIR = INPUT_PIN;  // Configura Pulsadores como Entradas.
+;	.line	681; "main.c"	P_INC_DIR = INPUT_PIN;  // Configura Pulsadores como Entradas.
 	BANKSEL	_TRISAbits
 	BSF	_TRISAbits,0
-;	.line	709; "main.c"	P_DEC_DIR = INPUT_PIN;
+;	.line	682; "main.c"	P_DEC_DIR = INPUT_PIN;
 	BSF	_TRISAbits,1
-;	.line	710; "main.c"	P_SET_DIR = INPUT_PIN;
+;	.line	683; "main.c"	P_SET_DIR = INPUT_PIN;
 	BSF	_TRISAbits,2
-;	.line	711; "main.c"	SOUT_DIR  = INPUT_PIN;
+;	.line	684; "main.c"	SOUT_DIR  = INPUT_PIN;
 	BSF	_TRISAbits,3
-;	.line	713; "main.c"	I2C_start();            // Inicia comunicación I2C
+;	.line	686; "main.c"	I2C_start();            // Inicia comunicación I2C
 	PAGESEL	_I2C_start
 	CALL	_I2C_start
 	PAGESEL	$
-;	.line	714; "main.c"	I2C_writeByte(0xD0);         // Dirección I2C del DS1307.
+;	.line	687; "main.c"	I2C_writeByte(0xD0);         // Dirección I2C del DS1307.
 	MOVLW	0xd0
 	PAGESEL	_I2C_writeByte
 	CALL	_I2C_writeByte
 	PAGESEL	$
-;	.line	715; "main.c"	I2C_writeByte(0x07);         // Escribe en la dirección 07h.
+;	.line	688; "main.c"	I2C_writeByte(0x07);         // Escribe en la dirección 07h.
 	MOVLW	0x07
 	PAGESEL	_I2C_writeByte
 	CALL	_I2C_writeByte
 	PAGESEL	$
-;	.line	716; "main.c"	I2C_writeByte(DS1307_CONF);  // Configura 1 Hz en salida SOUT del DS1307
+;	.line	689; "main.c"	I2C_writeByte(DS1307_CONF);  // Configura 1 Hz en salida SOUT del DS1307
 	MOVLW	0x90
 	PAGESEL	_I2C_writeByte
 	CALL	_I2C_writeByte
 	PAGESEL	$
-;	.line	717; "main.c"	I2C_stop();
+;	.line	690; "main.c"	I2C_stop();
 	PAGESEL	_I2C_stop
 	CALL	_I2C_stop
 	PAGESEL	$
-;	.line	719; "main.c"	LCD_init();             // Inicializa display LCD.
+;	.line	692; "main.c"	LCD_init();             // Inicializa display LCD.
 	PAGESEL	_LCD_init
 	CALL	_LCD_init
 	PAGESEL	$
@@ -516,39 +518,39 @@ _setup:
 S_main__timeSet	code
 _timeSet:
 ; 2 exit points
-;	.line	680; "main.c"	LCD_gotoXY(7,1);           // Goto posición de Segundos en display.
+;	.line	652; "main.c"	LCD_gotoXY(7,1);           // Goto posición de Segundos en display.
 	MOVLW	0x01
 	MOVWF	STK00
 	MOVLW	0x07
 	PAGESEL	_LCD_gotoXY
 	CALL	_LCD_gotoXY
 	PAGESEL	$
-;	.line	681; "main.c"	LCDPrintNumero(0);         // 00 en posición de Segundos del display.
+;	.line	653; "main.c"	LCDPrintNumero(0);         // 00 en posición de Segundos del display.
 	MOVLW	0x00
 	PAGESEL	_LCDPrintNumero
 	CALL	_LCDPrintNumero
 	PAGESEL	$
-;	.line	682; "main.c"	LCD_CURSOR_UNDELINE;       // Cursor On
+;	.line	654; "main.c"	LCD_CURSOR_UNDELINE;       // Cursor On
 	MOVLW	0x0e
 	PAGESEL	_LCD_command
 	CALL	_LCD_command
 	PAGESEL	$
 ;;unsigned compare: left < lit(0x7=7), size=1
-_00345_DS_:
-;	.line	683; "main.c"	while(editMenuState<SALIR_SET_TIME)
+_00340_DS_:
+;	.line	655; "main.c"	while(editMenuState<SALIR_SET_TIME)
 	MOVLW	0x07
 	BANKSEL	_editMenuState
 	SUBWF	_editMenuState,W
 	BTFSC	STATUS,0
-	GOTO	_00347_DS_
+	GOTO	_00342_DS_
 ;;genSkipc:3257: created from rifx:00000000047658D0
-_00327_DS_:
-;	.line	685; "main.c"	while(editMenuState==SET_ANO)     cicloTimeSet(0,99,7,0,&DS1307_Ano);            // Set año.
+_00322_DS_:
+;	.line	657; "main.c"	while(editMenuState==SET_ANO)     cicloTimeSet(0,99,7,0,&DS1307_Ano);            // Set año.
 	BANKSEL	_editMenuState
 	MOVF	_editMenuState,W
 	XORLW	0x01
 	BTFSS	STATUS,2
-	GOTO	_00330_DS_
+	GOTO	_00325_DS_
 	MOVLW	high (_DS1307_Ano + 0)
 	BANKSEL	r0x1025
 	MOVWF	r0x1025
@@ -571,14 +573,14 @@ _00327_DS_:
 	PAGESEL	_cicloTimeSet
 	CALL	_cicloTimeSet
 	PAGESEL	$
-	GOTO	_00327_DS_
-_00330_DS_:
-;	.line	686; "main.c"	while(editMenuState==SET_MES)     cicloTimeSet(1,12,4,0,&DS1307_Mes);            // Set mes.
+	GOTO	_00322_DS_
+_00325_DS_:
+;	.line	658; "main.c"	while(editMenuState==SET_MES)     cicloTimeSet(1,12,4,0,&DS1307_Mes);            // Set mes.
 	BANKSEL	_editMenuState
 	MOVF	_editMenuState,W
 	XORLW	0x02
 	BTFSS	STATUS,2
-	GOTO	_00333_DS_
+	GOTO	_00328_DS_
 	MOVLW	high (_DS1307_Mes + 0)
 	BANKSEL	r0x1025
 	MOVWF	r0x1025
@@ -601,14 +603,14 @@ _00330_DS_:
 	PAGESEL	_cicloTimeSet
 	CALL	_cicloTimeSet
 	PAGESEL	$
-	GOTO	_00330_DS_
-_00333_DS_:
-;	.line	687; "main.c"	while(editMenuState==SET_DIA)     cicloTimeSet(1,diasDelMes(),1,0,&DS1307_Dia);  // Set día.
+	GOTO	_00325_DS_
+_00328_DS_:
+;	.line	659; "main.c"	while(editMenuState==SET_DIA)     cicloTimeSet(1,diasDelMes(),1,0,&DS1307_Dia);  // Set día.
 	BANKSEL	_editMenuState
 	MOVF	_editMenuState,W
 	XORLW	0x03
 	BTFSS	STATUS,2
-	GOTO	_00336_DS_
+	GOTO	_00331_DS_
 	PAGESEL	_diasDelMes
 	CALL	_diasDelMes
 	PAGESEL	$
@@ -633,14 +635,14 @@ _00333_DS_:
 	PAGESEL	_cicloTimeSet
 	CALL	_cicloTimeSet
 	PAGESEL	$
-	GOTO	_00333_DS_
-_00336_DS_:
-;	.line	688; "main.c"	while(editMenuState==SET_HORA)    cicloTimeSet(0,23,1,1,&DS1307_Hora);           // Set hora.
+	GOTO	_00328_DS_
+_00331_DS_:
+;	.line	660; "main.c"	while(editMenuState==SET_HORA)    cicloTimeSet(0,23,1,1,&DS1307_Hora);           // Set hora.
 	BANKSEL	_editMenuState
 	MOVF	_editMenuState,W
 	XORLW	0x04
 	BTFSS	STATUS,2
-	GOTO	_00339_DS_
+	GOTO	_00334_DS_
 	MOVLW	high (_DS1307_Hora + 0)
 	BANKSEL	r0x1025
 	MOVWF	r0x1025
@@ -663,14 +665,14 @@ _00336_DS_:
 	PAGESEL	_cicloTimeSet
 	CALL	_cicloTimeSet
 	PAGESEL	$
-	GOTO	_00336_DS_
-_00339_DS_:
-;	.line	689; "main.c"	while(editMenuState==SET_MINUTO)  cicloTimeSet(0,59,4,1,&DS1307_Minuto);         // Set minutos.
+	GOTO	_00331_DS_
+_00334_DS_:
+;	.line	661; "main.c"	while(editMenuState==SET_MINUTO)  cicloTimeSet(0,59,4,1,&DS1307_Minuto);         // Set minutos.
 	BANKSEL	_editMenuState
 	MOVF	_editMenuState,W
 	XORLW	0x05
 	BTFSS	STATUS,2
-	GOTO	_00342_DS_
+	GOTO	_00337_DS_
 	MOVLW	high (_DS1307_Minuto + 0)
 	BANKSEL	r0x1025
 	MOVWF	r0x1025
@@ -693,14 +695,14 @@ _00339_DS_:
 	PAGESEL	_cicloTimeSet
 	CALL	_cicloTimeSet
 	PAGESEL	$
-	GOTO	_00339_DS_
-_00342_DS_:
-;	.line	690; "main.c"	while(editMenuState==SET_DIA_SEM) cicloTimeSet(1,7,12,0,&DS1307_DiaSemana);      // Set día de la semana.
+	GOTO	_00334_DS_
+_00337_DS_:
+;	.line	662; "main.c"	while(editMenuState==SET_DIA_SEM) cicloTimeSet(1,7,12,0,&DS1307_DiaSemana);      // Set día de la semana.
 	BANKSEL	_editMenuState
 	MOVF	_editMenuState,W
 	XORLW	0x06
 	BTFSS	STATUS,2
-	GOTO	_00345_DS_
+	GOTO	_00340_DS_
 	MOVLW	high (_DS1307_DiaSemana + 0)
 	BANKSEL	r0x1025
 	MOVWF	r0x1025
@@ -723,9 +725,9 @@ _00342_DS_:
 	PAGESEL	_cicloTimeSet
 	CALL	_cicloTimeSet
 	PAGESEL	$
-	GOTO	_00342_DS_
-_00347_DS_:
-;	.line	692; "main.c"	LCD_CURSOR_OFF;
+	GOTO	_00337_DS_
+_00342_DS_:
+;	.line	664; "main.c"	LCD_CURSOR_OFF;
 	MOVLW	0x0c
 	PAGESEL	_LCD_command
 	CALL	_LCD_command
@@ -795,7 +797,7 @@ _00347_DS_:
 S_main__cicloTimeSet	code
 _cicloTimeSet:
 ; 2 exit points
-;	.line	625; "main.c"	void cicloTimeSet(uint8_t limInf, uint8_t limSup, uint8_t lcdX, uint8_t lcdY, uint8_t* dato)
+;	.line	597; "main.c"	void cicloTimeSet(uint8_t limInf, uint8_t limSup, uint8_t lcdX, uint8_t lcdY, uint8_t* dato)
 	BANKSEL	r0x101B
 	MOVWF	r0x101B
 	MOVF	STK00,W
@@ -810,29 +812,29 @@ _cicloTimeSet:
 	MOVWF	r0x1020
 	MOVF	STK05,W
 	MOVWF	r0x1021
-;	.line	627; "main.c"	while((P_INC && P_DEC)==LOW_ST)  // Si se pulsa INC o DEC.
+;	.line	599; "main.c"	while((P_INC && P_DEC)==LOW_ST)  // Si se pulsa INC o DEC.
 	CLRF	r0x1022
 	MOVF	r0x101D,W
 	XORLW	0x0c
 	BTFSC	STATUS,2
 	INCF	r0x1022,F
-_00274_DS_:
+_00269_DS_:
 	BANKSEL	_PORTAbits
 	BTFSS	_PORTAbits,0
-	GOTO	_00275_DS_
+	GOTO	_00270_DS_
 	BTFSC	_PORTAbits,1
-	GOTO	_00276_DS_
-_00275_DS_:
-;	.line	629; "main.c"	LCD_CURSOR_OFF;
+	GOTO	_00271_DS_
+_00270_DS_:
+;	.line	601; "main.c"	LCD_CURSOR_OFF;
 	MOVLW	0x0c
 	PAGESEL	_LCD_command
 	CALL	_LCD_command
 	PAGESEL	$
-;	.line	630; "main.c"	if(P_INC==LOW_ST)            // Se ha pulsado INC.
+;	.line	602; "main.c"	if(P_INC==LOW_ST)            // Se ha pulsado INC.
 	BANKSEL	_PORTAbits
 	BTFSC	_PORTAbits,0
-	GOTO	_00269_DS_
-;	.line	632; "main.c"	(*dato)++;
+	GOTO	_00264_DS_
+;	.line	604; "main.c"	(*dato)++;
 	BANKSEL	r0x1021
 	MOVF	r0x1021,W
 	MOVWF	STK01
@@ -855,12 +857,12 @@ _00275_DS_:
 	PAGESEL	__gptrput1
 	CALL	__gptrput1
 	PAGESEL	$
-;	.line	633; "main.c"	if(*dato>limSup) *dato=limInf;  // Controla que no se supere el límite superior.
+;	.line	605; "main.c"	if(*dato>limSup) *dato=limInf;  // Controla que no se supere el límite superior.
 	BANKSEL	r0x1023
 	MOVF	r0x1023,W
 	SUBWF	r0x101C,W
 	BTFSC	STATUS,0
-	GOTO	_00270_DS_
+	GOTO	_00265_DS_
 ;;genSkipc:3257: created from rifx:00000000047658D0
 	MOVF	r0x101B,W
 	MOVWF	STK02
@@ -872,9 +874,9 @@ _00275_DS_:
 	PAGESEL	__gptrput1
 	CALL	__gptrput1
 	PAGESEL	$
-	GOTO	_00270_DS_
-_00269_DS_:
-;	.line	637; "main.c"	(*dato)--;
+	GOTO	_00265_DS_
+_00264_DS_:
+;	.line	609; "main.c"	(*dato)--;
 	BANKSEL	r0x1021
 	MOVF	r0x1021,W
 	MOVWF	STK01
@@ -897,7 +899,7 @@ _00269_DS_:
 	PAGESEL	__gptrput1
 	CALL	__gptrput1
 	PAGESEL	$
-;	.line	638; "main.c"	if((*dato<limInf)||(*dato==0xFF)) *dato=limSup; // Si limInf==0 (*Dato)-- puede ser 0xFF.
+;	.line	610; "main.c"	if((*dato<limInf)||(*dato==0xFF)) *dato=limSup; // Si limInf==0 (*Dato)-- puede ser 0xFF.
 	BANKSEL	r0x1021
 	MOVF	r0x1021,W
 	MOVWF	STK01
@@ -912,13 +914,13 @@ _00269_DS_:
 	MOVF	r0x101B,W
 	SUBWF	r0x1023,W
 	BTFSS	STATUS,0
-	GOTO	_00265_DS_
+	GOTO	_00260_DS_
 ;;genSkipc:3257: created from rifx:00000000047658D0
 	MOVF	r0x1024,W
 	XORLW	0xff
 	BTFSS	STATUS,2
-	GOTO	_00270_DS_
-_00265_DS_:
+	GOTO	_00265_DS_
+_00260_DS_:
 	BANKSEL	r0x101C
 	MOVF	r0x101C,W
 	MOVWF	STK02
@@ -930,8 +932,8 @@ _00265_DS_:
 	PAGESEL	__gptrput1
 	CALL	__gptrput1
 	PAGESEL	$
-_00270_DS_:
-;	.line	641; "main.c"	LCD_gotoXY(lcdX, lcdY);            // Coloca el cursor en la posición de inicio de impresión del dato editado.
+_00265_DS_:
+;	.line	613; "main.c"	LCD_gotoXY(lcdX, lcdY);            // Coloca el cursor en la posición de inicio de impresión del dato editado.
 	BANKSEL	r0x101E
 	MOVF	r0x101E,W
 	MOVWF	STK00
@@ -939,17 +941,17 @@ _00270_DS_:
 	PAGESEL	_LCD_gotoXY
 	CALL	_LCD_gotoXY
 	PAGESEL	$
-;	.line	642; "main.c"	if(lcdX==12) LCDPrintDiaSemana();  // Si se está editando del día de la semana, se imprime el texto.
+;	.line	614; "main.c"	if(lcdX==12) LCDPrintDiaSemana();  // Si se está editando del día de la semana, se imprime el texto.
 	BANKSEL	r0x1022
 	MOVF	r0x1022,W
 	BTFSC	STATUS,2
-	GOTO	_00272_DS_
+	GOTO	_00267_DS_
 	PAGESEL	_LCDPrintDiaSemana
 	CALL	_LCDPrintDiaSemana
 	PAGESEL	$
-	GOTO	_00273_DS_
-_00272_DS_:
-;	.line	643; "main.c"	else LCDPrintNumero(*dato);        // El resto son variables numéricas de 2 dígitos.
+	GOTO	_00268_DS_
+_00267_DS_:
+;	.line	615; "main.c"	else LCDPrintNumero(*dato);        // El resto son variables numéricas de 2 dígitos.
 	BANKSEL	r0x1021
 	MOVF	r0x1021,W
 	MOVWF	STK01
@@ -964,37 +966,37 @@ _00272_DS_:
 	PAGESEL	_LCDPrintNumero
 	CALL	_LCDPrintNumero
 	PAGESEL	$
-_00273_DS_:
-;	.line	644; "main.c"	delay_ms(TIEMPO_REPETICION);       // Espera el tiempo de autorepetición de la tecla pulsada.
+_00268_DS_:
+;	.line	616; "main.c"	delay_ms(TIEMPO_REPETICION);       // Espera el tiempo de autorepetición de la tecla pulsada.
 	MOVLW	0xf4
 	MOVWF	STK00
 	MOVLW	0x01
 	PAGESEL	_delay_ms
 	CALL	_delay_ms
 	PAGESEL	$
-	GOTO	_00274_DS_
-_00276_DS_:
-;	.line	647; "main.c"	if(P_SET==LOW_ST)                // Si se pulsa SET.
+	GOTO	_00269_DS_
+_00271_DS_:
+;	.line	619; "main.c"	if(P_SET==LOW_ST)                // Si se pulsa SET.
 	BANKSEL	_PORTAbits
 	BTFSC	_PORTAbits,2
-	GOTO	_00283_DS_
-;	.line	649; "main.c"	editMenuState++;
+	GOTO	_00278_DS_
+;	.line	621; "main.c"	editMenuState++;
 	BANKSEL	_editMenuState
 	INCF	_editMenuState,F
-_00277_DS_:
-;	.line	650; "main.c"	while(P_SET==LOW_ST) delay_ms(TIEMPO_ANTIREBOTE);  // Espera antirebote mecánico del pulsador.
+_00272_DS_:
+;	.line	622; "main.c"	while(P_SET==LOW_ST) delay_ms(TIEMPO_ANTIREBOTE);  // Espera antirebote mecánico del pulsador.
 	BANKSEL	_PORTAbits
 	BTFSC	_PORTAbits,2
-	GOTO	_00279_DS_
+	GOTO	_00274_DS_
 	MOVLW	0x0a
 	MOVWF	STK00
 	MOVLW	0x00
 	PAGESEL	_delay_ms
 	CALL	_delay_ms
 	PAGESEL	$
-	GOTO	_00277_DS_
-_00279_DS_:
-;	.line	651; "main.c"	if(*dato>limSup) *dato=limSup;  // Evita posible bug al modificar el año o el mes, si
+	GOTO	_00272_DS_
+_00274_DS_:
+;	.line	623; "main.c"	if(*dato>limSup) *dato=limSup;  // Evita posible bug al modificar el año o el mes, si
 	BANKSEL	r0x1021
 	MOVF	r0x1021,W
 	MOVWF	STK01
@@ -1008,7 +1010,7 @@ _00279_DS_:
 	MOVWF	r0x101B
 	SUBWF	r0x101C,W
 	BTFSC	STATUS,0
-	GOTO	_00283_DS_
+	GOTO	_00278_DS_
 ;;genSkipc:3257: created from rifx:00000000047658D0
 	MOVF	r0x101C,W
 	MOVWF	STK02
@@ -1020,10 +1022,10 @@ _00279_DS_:
 	PAGESEL	__gptrput1
 	CALL	__gptrput1
 	PAGESEL	$
-_00283_DS_:
-;	.line	655; "main.c"	if(lcdX==12) lcdX++;       // Si se está editando el día de la semana, se desplaza el cursor
+_00278_DS_:
+;	.line	627; "main.c"	if(lcdX==12) lcdX++;       // Si se está editando el día de la semana, se desplaza el cursor
 	MOVLW	0x00
-;	.line	658; "main.c"	LCD_gotoXY(++lcdX, lcdY);  // Coloca el cursor en la parte izquierda de la variable editada.
+;	.line	630; "main.c"	LCD_gotoXY(++lcdX, lcdY);  // Coloca el cursor en la parte izquierda de la variable editada.
 	BANKSEL	r0x1022
 	IORWF	r0x1022,W
 	BTFSS	STATUS,2
@@ -1035,7 +1037,7 @@ _00283_DS_:
 	PAGESEL	_LCD_gotoXY
 	CALL	_LCD_gotoXY
 	PAGESEL	$
-;	.line	659; "main.c"	LCD_CURSOR_UNDELINE;       // Cursor On
+;	.line	631; "main.c"	LCD_CURSOR_UNDELINE;       // Cursor On
 	MOVLW	0x0e
 	PAGESEL	_LCD_command
 	CALL	_LCD_command
@@ -1086,42 +1088,42 @@ _00283_DS_:
 S_main__timeShow	code
 _timeShow:
 ; 2 exit points
-;	.line	597; "main.c"	LCD_gotoXY(1,0);
+;	.line	569; "main.c"	LCD_gotoXY(1,0);
 	MOVLW	0x00
 	MOVWF	STK00
 	MOVLW	0x01
 	PAGESEL	_LCD_gotoXY
 	CALL	_LCD_gotoXY
 	PAGESEL	$
-;	.line	598; "main.c"	LCDPrintNumero(DS1307_Dia);
+;	.line	570; "main.c"	LCDPrintNumero(DS1307_Dia);
 	BANKSEL	_DS1307_Dia
 	MOVF	_DS1307_Dia,W
 	PAGESEL	_LCDPrintNumero
 	CALL	_LCDPrintNumero
 	PAGESEL	$
-;	.line	599; "main.c"	LCD_putChar('/');
+;	.line	571; "main.c"	LCD_putChar('/');
 	MOVLW	0x2f
 	PAGESEL	_LCD_putChar
 	CALL	_LCD_putChar
 	PAGESEL	$
-;	.line	600; "main.c"	LCDPrintNumero(DS1307_Mes);
+;	.line	572; "main.c"	LCDPrintNumero(DS1307_Mes);
 	BANKSEL	_DS1307_Mes
 	MOVF	_DS1307_Mes,W
 	PAGESEL	_LCDPrintNumero
 	CALL	_LCDPrintNumero
 	PAGESEL	$
-;	.line	601; "main.c"	LCD_putChar('/');
+;	.line	573; "main.c"	LCD_putChar('/');
 	MOVLW	0x2f
 	PAGESEL	_LCD_putChar
 	CALL	_LCD_putChar
 	PAGESEL	$
-;	.line	602; "main.c"	LCDPrintNumero(DS1307_Ano);
+;	.line	574; "main.c"	LCDPrintNumero(DS1307_Ano);
 	BANKSEL	_DS1307_Ano
 	MOVF	_DS1307_Ano,W
 	PAGESEL	_LCDPrintNumero
 	CALL	_LCDPrintNumero
 	PAGESEL	$
-;	.line	603; "main.c"	LCD_print("   ");
+;	.line	575; "main.c"	LCD_print("   ");
 	MOVLW	high (___str_7 + 0)
 	BANKSEL	r0x101B
 	MOVWF	r0x101B
@@ -1137,40 +1139,40 @@ _timeShow:
 	PAGESEL	_LCD_print
 	CALL	_LCD_print
 	PAGESEL	$
-;	.line	604; "main.c"	LCDPrintDiaSemana();
+;	.line	576; "main.c"	LCDPrintDiaSemana();
 	PAGESEL	_LCDPrintDiaSemana
 	CALL	_LCDPrintDiaSemana
 	PAGESEL	$
-;	.line	605; "main.c"	LCD_gotoXY(1,1);
+;	.line	577; "main.c"	LCD_gotoXY(1,1);
 	MOVLW	0x01
 	MOVWF	STK00
 	MOVLW	0x01
 	PAGESEL	_LCD_gotoXY
 	CALL	_LCD_gotoXY
 	PAGESEL	$
-;	.line	606; "main.c"	LCDPrintNumero(DS1307_Hora);
+;	.line	578; "main.c"	LCDPrintNumero(DS1307_Hora);
 	BANKSEL	_DS1307_Hora
 	MOVF	_DS1307_Hora,W
 	PAGESEL	_LCDPrintNumero
 	CALL	_LCDPrintNumero
 	PAGESEL	$
-;	.line	607; "main.c"	LCD_putChar(':');
+;	.line	579; "main.c"	LCD_putChar(':');
 	MOVLW	0x3a
 	PAGESEL	_LCD_putChar
 	CALL	_LCD_putChar
 	PAGESEL	$
-;	.line	608; "main.c"	LCDPrintNumero(DS1307_Minuto);
+;	.line	580; "main.c"	LCDPrintNumero(DS1307_Minuto);
 	BANKSEL	_DS1307_Minuto
 	MOVF	_DS1307_Minuto,W
 	PAGESEL	_LCDPrintNumero
 	CALL	_LCDPrintNumero
 	PAGESEL	$
-;	.line	609; "main.c"	LCD_putChar(':');
+;	.line	581; "main.c"	LCD_putChar(':');
 	MOVLW	0x3a
 	PAGESEL	_LCD_putChar
 	CALL	_LCD_putChar
 	PAGESEL	$
-;	.line	610; "main.c"	LCDPrintNumero(DS1307_Segundo);
+;	.line	582; "main.c"	LCDPrintNumero(DS1307_Segundo);
 	BANKSEL	_DS1307_Segundo
 	MOVF	_DS1307_Segundo,W
 	PAGESEL	_LCDPrintNumero
@@ -1200,10 +1202,10 @@ _timeShow:
 S_main__LCDPrintNumero	code
 _LCDPrintNumero:
 ; 2 exit points
-;	.line	583; "main.c"	void LCDPrintNumero(uint8_t numero)
+;	.line	555; "main.c"	void LCDPrintNumero(uint8_t numero)
 	BANKSEL	r0x1014
 	MOVWF	r0x1014
-;	.line	585; "main.c"	LCD_putChar((numero/10)+48);   // Imprime dígito decena.
+;	.line	557; "main.c"	LCD_putChar((numero/10)+48);   // Imprime dígito decena.
 	MOVLW	0x0a
 	MOVWF	STK00
 	MOVF	r0x1014,W
@@ -1218,7 +1220,7 @@ _LCDPrintNumero:
 	PAGESEL	_LCD_putChar
 	CALL	_LCD_putChar
 	PAGESEL	$
-;	.line	586; "main.c"	LCD_putChar((numero%10)+48);   // Imprime dígito unidad.
+;	.line	558; "main.c"	LCD_putChar((numero%10)+48);   // Imprime dígito unidad.
 	MOVLW	0x0a
 	MOVWF	STK00
 	BANKSEL	r0x1014
@@ -1250,13 +1252,13 @@ _LCDPrintNumero:
 S_main__diasDelMes	code
 _diasDelMes:
 ; 2 exit points
-;	.line	565; "main.c"	if(DS1307_Mes==2)                 // Mes = febrero
+;	.line	537; "main.c"	if(DS1307_Mes==2)                 // Mes = febrero
 	BANKSEL	_DS1307_Mes
 	MOVF	_DS1307_Mes,W
 	XORLW	0x02
 	BTFSS	STATUS,2
-	GOTO	_00223_DS_
-;	.line	567; "main.c"	return bisiesto() ? 29 : 28;  // Bisiesto: 29 días / No bisiesto: 28 días.
+	GOTO	_00218_DS_
+;	.line	539; "main.c"	return bisiesto() ? 29 : 28;  // Bisiesto: 29 días / No bisiesto: 28 días.
 	PAGESEL	_bisiesto
 	CALL	_bisiesto
 	PAGESEL	$
@@ -1264,45 +1266,45 @@ _diasDelMes:
 	MOVWF	r0x100A
 	MOVF	r0x100A,W
 	BTFSC	STATUS,2
-	GOTO	_00231_DS_
+	GOTO	_00226_DS_
 	MOVLW	0x1d
 	MOVWF	r0x100A
-	GOTO	_00232_DS_
-_00231_DS_:
+	GOTO	_00227_DS_
+_00226_DS_:
 	MOVLW	0x1c
 	BANKSEL	r0x100A
 	MOVWF	r0x100A
-_00232_DS_:
+_00227_DS_:
 	BANKSEL	r0x100A
 	MOVF	r0x100A,W
-	GOTO	_00229_DS_
-_00223_DS_:
-;	.line	569; "main.c"	if((DS1307_Mes==4) || (DS1307_Mes==6) || (DS1307_Mes==9) || (DS1307_Mes==11))
+	GOTO	_00224_DS_
+_00218_DS_:
+;	.line	541; "main.c"	if((DS1307_Mes==4) || (DS1307_Mes==6) || (DS1307_Mes==9) || (DS1307_Mes==11))
 	BANKSEL	_DS1307_Mes
 	MOVF	_DS1307_Mes,W
 	XORLW	0x04
 	BTFSC	STATUS,2
-	GOTO	_00224_DS_
+	GOTO	_00219_DS_
 	MOVF	_DS1307_Mes,W
 	XORLW	0x06
 	BTFSC	STATUS,2
-	GOTO	_00224_DS_
+	GOTO	_00219_DS_
 	MOVF	_DS1307_Mes,W
 	XORLW	0x09
 	BTFSC	STATUS,2
-	GOTO	_00224_DS_
+	GOTO	_00219_DS_
 	MOVF	_DS1307_Mes,W
 	XORLW	0x0b
 	BTFSS	STATUS,2
-	GOTO	_00225_DS_
-_00224_DS_:
-;	.line	571; "main.c"	return 30;                    // Meses de 30 días.
+	GOTO	_00220_DS_
+_00219_DS_:
+;	.line	543; "main.c"	return 30;                    // Meses de 30 días.
 	MOVLW	0x1e
-	GOTO	_00229_DS_
-_00225_DS_:
-;	.line	573; "main.c"	return 31;                        // Meses de 31 días.
+	GOTO	_00224_DS_
+_00220_DS_:
+;	.line	545; "main.c"	return 31;                        // Meses de 31 días.
 	MOVLW	0x1f
-_00229_DS_:
+_00224_DS_:
 	RETURN	
 ; exit point of _diasDelMes
 
@@ -1317,7 +1319,7 @@ _00229_DS_:
 S_main__bisiesto	code
 _bisiesto:
 ; 2 exit points
-;	.line	553; "main.c"	return !(DS1307_Ano%4);
+;	.line	525; "main.c"	return !(DS1307_Ano%4);
 	MOVLW	0x03
 	BANKSEL	_DS1307_Ano
 	ANDWF	_DS1307_Ano,W
@@ -1361,27 +1363,27 @@ S_main__LCDPrintDiaSemana	code
 _LCDPrintDiaSemana:
 ; 2 exit points
 ;;unsigned compare: left < lit(0x1=1), size=1
-;	.line	508; "main.c"	switch (DS1307_DiaSemana)
+;	.line	480; "main.c"	switch (DS1307_DiaSemana)
 	MOVLW	0x01
 	BANKSEL	_DS1307_DiaSemana
 	SUBWF	_DS1307_DiaSemana,W
 	BTFSS	STATUS,0
-	GOTO	_00203_DS_
+	GOTO	_00198_DS_
 ;;genSkipc:3257: created from rifx:00000000047658D0
 ;;swapping arguments (AOP_TYPEs 1/3)
 ;;unsigned compare: left >= lit(0x8=8), size=1
 	MOVLW	0x08
 	SUBWF	_DS1307_DiaSemana,W
 	BTFSC	STATUS,0
-	GOTO	_00203_DS_
+	GOTO	_00198_DS_
 ;;genSkipc:3257: created from rifx:00000000047658D0
 	DECF	_DS1307_DiaSemana,W
 	BANKSEL	r0x1018
 	MOVWF	r0x1018
-	MOVLW	HIGH(_00213_DS_)
+	MOVLW	HIGH(_00208_DS_)
 	BANKSEL	PCLATH
 	MOVWF	PCLATH
-	MOVLW	_00213_DS_
+	MOVLW	_00208_DS_
 	BANKSEL	r0x1018
 	ADDWF	r0x1018,W
 	BTFSS	STATUS,0
@@ -1390,16 +1392,16 @@ _LCDPrintDiaSemana:
 	INCF	PCLATH,F
 _00001_DS_:
 	MOVWF	PCL
-_00213_DS_:
+_00208_DS_:
+	GOTO	_00190_DS_
+	GOTO	_00191_DS_
+	GOTO	_00192_DS_
+	GOTO	_00193_DS_
+	GOTO	_00194_DS_
 	GOTO	_00195_DS_
 	GOTO	_00196_DS_
-	GOTO	_00197_DS_
-	GOTO	_00198_DS_
-	GOTO	_00199_DS_
-	GOTO	_00200_DS_
-	GOTO	_00201_DS_
-_00195_DS_:
-;	.line	511; "main.c"	LCD_print("DOM");
+_00190_DS_:
+;	.line	483; "main.c"	LCD_print("DOM");
 	MOVLW	high (___str_0 + 0)
 	BANKSEL	r0x1019
 	MOVWF	r0x1019
@@ -1415,10 +1417,10 @@ _00195_DS_:
 	PAGESEL	_LCD_print
 	CALL	_LCD_print
 	PAGESEL	$
-;	.line	512; "main.c"	break;
-	GOTO	_00203_DS_
-_00196_DS_:
-;	.line	514; "main.c"	LCD_print("LUN");
+;	.line	484; "main.c"	break;
+	GOTO	_00198_DS_
+_00191_DS_:
+;	.line	486; "main.c"	LCD_print("LUN");
 	MOVLW	high (___str_1 + 0)
 	BANKSEL	r0x1019
 	MOVWF	r0x1019
@@ -1434,10 +1436,10 @@ _00196_DS_:
 	PAGESEL	_LCD_print
 	CALL	_LCD_print
 	PAGESEL	$
-;	.line	515; "main.c"	break;
-	GOTO	_00203_DS_
-_00197_DS_:
-;	.line	517; "main.c"	LCD_print("MAR");
+;	.line	487; "main.c"	break;
+	GOTO	_00198_DS_
+_00192_DS_:
+;	.line	489; "main.c"	LCD_print("MAR");
 	MOVLW	high (___str_2 + 0)
 	BANKSEL	r0x1019
 	MOVWF	r0x1019
@@ -1453,10 +1455,10 @@ _00197_DS_:
 	PAGESEL	_LCD_print
 	CALL	_LCD_print
 	PAGESEL	$
-;	.line	518; "main.c"	break;
-	GOTO	_00203_DS_
-_00198_DS_:
-;	.line	520; "main.c"	LCD_print("MIE");
+;	.line	490; "main.c"	break;
+	GOTO	_00198_DS_
+_00193_DS_:
+;	.line	492; "main.c"	LCD_print("MIE");
 	MOVLW	high (___str_3 + 0)
 	BANKSEL	r0x1019
 	MOVWF	r0x1019
@@ -1472,10 +1474,10 @@ _00198_DS_:
 	PAGESEL	_LCD_print
 	CALL	_LCD_print
 	PAGESEL	$
-;	.line	521; "main.c"	break;
-	GOTO	_00203_DS_
-_00199_DS_:
-;	.line	523; "main.c"	LCD_print("JUE");
+;	.line	493; "main.c"	break;
+	GOTO	_00198_DS_
+_00194_DS_:
+;	.line	495; "main.c"	LCD_print("JUE");
 	MOVLW	high (___str_4 + 0)
 	BANKSEL	r0x1019
 	MOVWF	r0x1019
@@ -1491,10 +1493,10 @@ _00199_DS_:
 	PAGESEL	_LCD_print
 	CALL	_LCD_print
 	PAGESEL	$
-;	.line	524; "main.c"	break;
-	GOTO	_00203_DS_
-_00200_DS_:
-;	.line	526; "main.c"	LCD_print("VIE");
+;	.line	496; "main.c"	break;
+	GOTO	_00198_DS_
+_00195_DS_:
+;	.line	498; "main.c"	LCD_print("VIE");
 	MOVLW	high (___str_5 + 0)
 	BANKSEL	r0x1019
 	MOVWF	r0x1019
@@ -1510,10 +1512,10 @@ _00200_DS_:
 	PAGESEL	_LCD_print
 	CALL	_LCD_print
 	PAGESEL	$
-;	.line	527; "main.c"	break;
-	GOTO	_00203_DS_
-_00201_DS_:
-;	.line	529; "main.c"	LCD_print("SAB");
+;	.line	499; "main.c"	break;
+	GOTO	_00198_DS_
+_00196_DS_:
+;	.line	501; "main.c"	LCD_print("SAB");
 	MOVLW	high (___str_6 + 0)
 	BANKSEL	r0x1019
 	MOVWF	r0x1019
@@ -1529,8 +1531,8 @@ _00201_DS_:
 	PAGESEL	_LCD_print
 	CALL	_LCD_print
 	PAGESEL	$
-_00203_DS_:
-;	.line	531; "main.c"	}
+_00198_DS_:
+;	.line	503; "main.c"	}
 	RETURN	
 ; exit point of _LCDPrintDiaSemana
 
@@ -1572,92 +1574,92 @@ _00203_DS_:
 ;   _I2C_writeByte
 ;   _I2C_stop
 ;1 compiler assigned register :
-;   r0x100E
+;   r0x100C
 ;; Starting pCode block
 S_main__DS1307_timeWrite	code
 _DS1307_timeWrite:
 ; 2 exit points
-;	.line	485; "main.c"	I2C_start();          // Inicia comunicación I2C
+;	.line	457; "main.c"	I2C_start();          // Inicia comunicación I2C
 	PAGESEL	_I2C_start
 	CALL	_I2C_start
 	PAGESEL	$
-;	.line	486; "main.c"	I2C_writeByte(0xD0);  // Dirección I2C del DS1307.
+;	.line	458; "main.c"	I2C_writeByte(0xD0);  // Dirección I2C del DS1307.
 	MOVLW	0xd0
 	PAGESEL	_I2C_writeByte
 	CALL	_I2C_writeByte
 	PAGESEL	$
-;	.line	487; "main.c"	I2C_writeByte(0x00);  // Primera dirección a leer/escribir.
+;	.line	459; "main.c"	I2C_writeByte(0x00);  // Primera dirección a leer/escribir.
 	MOVLW	0x00
 	PAGESEL	_I2C_writeByte
 	CALL	_I2C_writeByte
 	PAGESEL	$
-;	.line	488; "main.c"	I2C_writeByte(0);     // Siempre que se ajusta la fecha y hora los Segundos=0.
+;	.line	460; "main.c"	I2C_writeByte(0);     // Siempre que se ajusta la fecha y hora los Segundos=0.
 	MOVLW	0x00
 	PAGESEL	_I2C_writeByte
 	CALL	_I2C_writeByte
 	PAGESEL	$
-;	.line	489; "main.c"	I2C_writeByte(decimalToBCD(DS1307_Minuto));
+;	.line	461; "main.c"	I2C_writeByte(decimalToBCD(DS1307_Minuto));
 	BANKSEL	_DS1307_Minuto
 	MOVF	_DS1307_Minuto,W
 	PAGESEL	_decimalToBCD
 	CALL	_decimalToBCD
 	PAGESEL	$
-	BANKSEL	r0x100E
-	MOVWF	r0x100E
+	BANKSEL	r0x100C
+	MOVWF	r0x100C
 	PAGESEL	_I2C_writeByte
 	CALL	_I2C_writeByte
 	PAGESEL	$
-;	.line	490; "main.c"	I2C_writeByte(decimalToBCD(DS1307_Hora));
+;	.line	462; "main.c"	I2C_writeByte(decimalToBCD(DS1307_Hora));
 	BANKSEL	_DS1307_Hora
 	MOVF	_DS1307_Hora,W
 	PAGESEL	_decimalToBCD
 	CALL	_decimalToBCD
 	PAGESEL	$
-	BANKSEL	r0x100E
-	MOVWF	r0x100E
+	BANKSEL	r0x100C
+	MOVWF	r0x100C
 	PAGESEL	_I2C_writeByte
 	CALL	_I2C_writeByte
 	PAGESEL	$
-;	.line	491; "main.c"	I2C_writeByte(DS1307_DiaSemana);  // Valor 1...7 (igual en decimal que en BCD)
+;	.line	463; "main.c"	I2C_writeByte(DS1307_DiaSemana);  // Valor 1...7 (igual en decimal que en BCD)
 	BANKSEL	_DS1307_DiaSemana
 	MOVF	_DS1307_DiaSemana,W
 	PAGESEL	_I2C_writeByte
 	CALL	_I2C_writeByte
 	PAGESEL	$
-;	.line	492; "main.c"	I2C_writeByte(decimalToBCD(DS1307_Dia));
+;	.line	464; "main.c"	I2C_writeByte(decimalToBCD(DS1307_Dia));
 	BANKSEL	_DS1307_Dia
 	MOVF	_DS1307_Dia,W
 	PAGESEL	_decimalToBCD
 	CALL	_decimalToBCD
 	PAGESEL	$
-	BANKSEL	r0x100E
-	MOVWF	r0x100E
+	BANKSEL	r0x100C
+	MOVWF	r0x100C
 	PAGESEL	_I2C_writeByte
 	CALL	_I2C_writeByte
 	PAGESEL	$
-;	.line	493; "main.c"	I2C_writeByte(decimalToBCD(DS1307_Mes));
+;	.line	465; "main.c"	I2C_writeByte(decimalToBCD(DS1307_Mes));
 	BANKSEL	_DS1307_Mes
 	MOVF	_DS1307_Mes,W
 	PAGESEL	_decimalToBCD
 	CALL	_decimalToBCD
 	PAGESEL	$
-	BANKSEL	r0x100E
-	MOVWF	r0x100E
+	BANKSEL	r0x100C
+	MOVWF	r0x100C
 	PAGESEL	_I2C_writeByte
 	CALL	_I2C_writeByte
 	PAGESEL	$
-;	.line	494; "main.c"	I2C_writeByte(decimalToBCD(DS1307_Ano));
+;	.line	466; "main.c"	I2C_writeByte(decimalToBCD(DS1307_Ano));
 	BANKSEL	_DS1307_Ano
 	MOVF	_DS1307_Ano,W
 	PAGESEL	_decimalToBCD
 	CALL	_decimalToBCD
 	PAGESEL	$
-	BANKSEL	r0x100E
-	MOVWF	r0x100E
+	BANKSEL	r0x100C
+	MOVWF	r0x100C
 	PAGESEL	_I2C_writeByte
 	CALL	_I2C_writeByte
 	PAGESEL	$
-;	.line	495; "main.c"	I2C_stop();
+;	.line	467; "main.c"	I2C_stop();
 	PAGESEL	_I2C_stop
 	CALL	_I2C_stop
 	PAGESEL	$
@@ -1708,114 +1710,114 @@ _DS1307_timeWrite:
 ;   _BCDToDecimal
 ;   _I2C_stop
 ;1 compiler assigned register :
-;   r0x100E
+;   r0x100C
 ;; Starting pCode block
 S_main__DS1307_timeRead	code
 _DS1307_timeRead:
 ; 2 exit points
-;	.line	461; "main.c"	I2C_start();          // Inicia comunicación I2C.
+;	.line	433; "main.c"	I2C_start();          // Inicia comunicación I2C.
 	PAGESEL	_I2C_start
 	CALL	_I2C_start
 	PAGESEL	$
-;	.line	462; "main.c"	I2C_writeByte(0xD0);  // Dirección I2C del DS1307.
+;	.line	434; "main.c"	I2C_writeByte(0xD0);  // Dirección I2C del DS1307.
 	MOVLW	0xd0
 	PAGESEL	_I2C_writeByte
 	CALL	_I2C_writeByte
 	PAGESEL	$
-;	.line	463; "main.c"	I2C_writeByte(0x00);  // Primera dirección a leer/escribir.
+;	.line	435; "main.c"	I2C_writeByte(0x00);  // Primera dirección a leer/escribir.
 	MOVLW	0x00
 	PAGESEL	_I2C_writeByte
 	CALL	_I2C_writeByte
 	PAGESEL	$
-;	.line	464; "main.c"	I2C_start();          // Reinicia comunicación I2C.
+;	.line	436; "main.c"	I2C_start();          // Reinicia comunicación I2C.
 	PAGESEL	_I2C_start
 	CALL	_I2C_start
 	PAGESEL	$
-;	.line	465; "main.c"	I2C_writeByte(0xD1);  // DS1307 en Modo Escritura.
+;	.line	437; "main.c"	I2C_writeByte(0xD1);  // DS1307 en Modo Escritura.
 	MOVLW	0xd1
 	PAGESEL	_I2C_writeByte
 	CALL	_I2C_writeByte
 	PAGESEL	$
-;	.line	466; "main.c"	DS1307_Segundo   = BCDToDecimal(I2C_readByte(true)); // ASK = 1
+;	.line	438; "main.c"	DS1307_Segundo   = BCDToDecimal(I2C_readByte(true)); // ASK = 1
 	MOVLW	0x01
 	PAGESEL	_I2C_readByte
 	CALL	_I2C_readByte
 	PAGESEL	$
-	BANKSEL	r0x100E
-	MOVWF	r0x100E
+	BANKSEL	r0x100C
+	MOVWF	r0x100C
 	PAGESEL	_BCDToDecimal
 	CALL	_BCDToDecimal
 	PAGESEL	$
 	BANKSEL	_DS1307_Segundo
 	MOVWF	_DS1307_Segundo
-;	.line	467; "main.c"	DS1307_Minuto    = BCDToDecimal(I2C_readByte(true));
+;	.line	439; "main.c"	DS1307_Minuto    = BCDToDecimal(I2C_readByte(true));
 	MOVLW	0x01
 	PAGESEL	_I2C_readByte
 	CALL	_I2C_readByte
 	PAGESEL	$
-	BANKSEL	r0x100E
-	MOVWF	r0x100E
+	BANKSEL	r0x100C
+	MOVWF	r0x100C
 	PAGESEL	_BCDToDecimal
 	CALL	_BCDToDecimal
 	PAGESEL	$
 	BANKSEL	_DS1307_Minuto
 	MOVWF	_DS1307_Minuto
-;	.line	468; "main.c"	DS1307_Hora      = BCDToDecimal(I2C_readByte(true));
+;	.line	440; "main.c"	DS1307_Hora      = BCDToDecimal(I2C_readByte(true));
 	MOVLW	0x01
 	PAGESEL	_I2C_readByte
 	CALL	_I2C_readByte
 	PAGESEL	$
-	BANKSEL	r0x100E
-	MOVWF	r0x100E
+	BANKSEL	r0x100C
+	MOVWF	r0x100C
 	PAGESEL	_BCDToDecimal
 	CALL	_BCDToDecimal
 	PAGESEL	$
 	BANKSEL	_DS1307_Hora
 	MOVWF	_DS1307_Hora
-;	.line	469; "main.c"	DS1307_DiaSemana = I2C_readByte(true);  // Valor 1...7 (igual en decimal que en BCD)
+;	.line	441; "main.c"	DS1307_DiaSemana = I2C_readByte(true);  // Valor 1...7 (igual en decimal que en BCD)
 	MOVLW	0x01
 	PAGESEL	_I2C_readByte
 	CALL	_I2C_readByte
 	PAGESEL	$
 	BANKSEL	_DS1307_DiaSemana
 	MOVWF	_DS1307_DiaSemana
-;	.line	470; "main.c"	DS1307_Dia       = BCDToDecimal(I2C_readByte(true));
+;	.line	442; "main.c"	DS1307_Dia       = BCDToDecimal(I2C_readByte(true));
 	MOVLW	0x01
 	PAGESEL	_I2C_readByte
 	CALL	_I2C_readByte
 	PAGESEL	$
-	BANKSEL	r0x100E
-	MOVWF	r0x100E
+	BANKSEL	r0x100C
+	MOVWF	r0x100C
 	PAGESEL	_BCDToDecimal
 	CALL	_BCDToDecimal
 	PAGESEL	$
 	BANKSEL	_DS1307_Dia
 	MOVWF	_DS1307_Dia
-;	.line	471; "main.c"	DS1307_Mes       = BCDToDecimal(I2C_readByte(true));
+;	.line	443; "main.c"	DS1307_Mes       = BCDToDecimal(I2C_readByte(true));
 	MOVLW	0x01
 	PAGESEL	_I2C_readByte
 	CALL	_I2C_readByte
 	PAGESEL	$
-	BANKSEL	r0x100E
-	MOVWF	r0x100E
+	BANKSEL	r0x100C
+	MOVWF	r0x100C
 	PAGESEL	_BCDToDecimal
 	CALL	_BCDToDecimal
 	PAGESEL	$
 	BANKSEL	_DS1307_Mes
 	MOVWF	_DS1307_Mes
-;	.line	472; "main.c"	DS1307_Ano       = BCDToDecimal(I2C_readByte(false)); // ASK = 0
+;	.line	444; "main.c"	DS1307_Ano       = BCDToDecimal(I2C_readByte(false)); // ASK = 0
 	MOVLW	0x00
 	PAGESEL	_I2C_readByte
 	CALL	_I2C_readByte
 	PAGESEL	$
-	BANKSEL	r0x100E
-	MOVWF	r0x100E
+	BANKSEL	r0x100C
+	MOVWF	r0x100C
 	PAGESEL	_BCDToDecimal
 	CALL	_BCDToDecimal
 	PAGESEL	$
 	BANKSEL	_DS1307_Ano
 	MOVWF	_DS1307_Ano
-;	.line	474; "main.c"	I2C_stop();
+;	.line	446; "main.c"	I2C_stop();
 	PAGESEL	_I2C_stop
 	CALL	_I2C_stop
 	PAGESEL	$
@@ -1840,10 +1842,10 @@ _DS1307_timeRead:
 S_main__decimalToBCD	code
 _decimalToBCD:
 ; 2 exit points
-;	.line	444; "main.c"	uint8_t decimalToBCD (uint8_t decimalByte)
+;	.line	416; "main.c"	uint8_t decimalToBCD (uint8_t decimalByte)
 	BANKSEL	r0x1008
 	MOVWF	r0x1008
-;	.line	447; "main.c"	a=((decimalByte / 10) << 4);
+;	.line	419; "main.c"	a=((decimalByte / 10) << 4);
 	MOVLW	0x0a
 	MOVWF	STK00
 	MOVF	r0x1008,W
@@ -1855,18 +1857,18 @@ _decimalToBCD:
 	SWAPF	r0x1009,W
 	ANDLW	0xf0
 	MOVWF	r0x100A
-;	.line	448; "main.c"	b= (decimalByte % 10);
+;	.line	420; "main.c"	b= (decimalByte % 10);
 	MOVLW	0x0a
 	MOVWF	STK00
 	MOVF	r0x1008,W
 	PAGESEL	__moduchar
 	CALL	__moduchar
 	PAGESEL	$
-;	.line	449; "main.c"	bcd=a|b;
+;	.line	421; "main.c"	bcd=a|b;
 	BANKSEL	r0x1009
 	MOVWF	r0x1009
 	IORWF	r0x100A,W
-;	.line	450; "main.c"	return bcd;
+;	.line	422; "main.c"	return bcd;
 	MOVWF	r0x1008
 	RETURN	
 ; exit point of _decimalToBCD
@@ -1887,10 +1889,10 @@ _decimalToBCD:
 S_main__BCDToDecimal	code
 _BCDToDecimal:
 ; 2 exit points
-;	.line	428; "main.c"	uint8_t BCDToDecimal(uint8_t bcdByte)
+;	.line	400; "main.c"	uint8_t BCDToDecimal(uint8_t bcdByte)
 	BANKSEL	r0x1008
 	MOVWF	r0x1008
-;	.line	431; "main.c"	a=(((bcdByte & 0xF0) >> 4) * 10);
+;	.line	403; "main.c"	a=(((bcdByte & 0xF0) >> 4) * 10);
 	MOVLW	0xf0
 	ANDWF	r0x1008,W
 	MOVWF	r0x1009
@@ -1905,13 +1907,13 @@ _BCDToDecimal:
 	PAGESEL	$
 	BANKSEL	r0x1009
 	MOVWF	r0x1009
-;	.line	432; "main.c"	b=(bcdByte & 0x0F);
+;	.line	404; "main.c"	b=(bcdByte & 0x0F);
 	MOVLW	0x0f
 	ANDWF	r0x1008,F
-;	.line	433; "main.c"	dec=a+b;
+;	.line	405; "main.c"	dec=a+b;
 	MOVF	r0x1008,W
 	ADDWF	r0x1009,F
-;	.line	434; "main.c"	return dec;
+;	.line	406; "main.c"	return dec;
 	MOVF	r0x1009,W
 	RETURN	
 ; exit point of _BCDToDecimal
@@ -1920,99 +1922,64 @@ _BCDToDecimal:
 ;  pBlock Stats: dbName = C
 ;***
 ;has an exit
-;functions called:
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
 ;3 compiler assigned registers:
+;   r0x1008
+;   r0x1009
 ;   r0x100A
-;   r0x100B
-;   r0x100C
 ;; Starting pCode block
 S_main__I2C_readByte	code
 _I2C_readByte:
 ; 2 exit points
-;	.line	393; "main.c"	uint8_t I2C_readByte(bool ACKBit)   // Receive data from I2C
-	BANKSEL	r0x100A
-	MOVWF	r0x100A
-;	.line	396; "main.c"	uint8_t dato=0;
-	CLRF	r0x100B
-;	.line	398; "main.c"	SDA_INPUT;
+;	.line	372; "main.c"	uint8_t I2C_readByte(bool ACKBit)   // Receive data from I2C
+	BANKSEL	r0x1008
+	MOVWF	r0x1008
+;	.line	375; "main.c"	uint8_t dato=0;
+	CLRF	r0x1009
+;	.line	377; "main.c"	SDA_INPUT;
 	BANKSEL	_TRISBbits
 	BSF	_TRISBbits,0
-;	.line	399; "main.c"	for(i=0; i<8; i++)
-	BANKSEL	r0x100C
-	CLRF	r0x100C
-_00174_DS_:
-;	.line	401; "main.c"	I2C_MEDIO_PULSO;
-	MOVLW	0x05
-	PAGESEL	_I2C_anchoPulso
-	CALL	_I2C_anchoPulso
-	PAGESEL	$
-;	.line	402; "main.c"	SCL_HIGH;
+;	.line	378; "main.c"	for(i=0; i<8; i++)
+	BANKSEL	r0x100A
+	CLRF	r0x100A
+_00169_DS_:
+;	.line	380; "main.c"	SCL_HIGH;
 	BANKSEL	_PORTBbits
 	BSF	_PORTBbits,1
-;	.line	403; "main.c"	I2C_MEDIO_PULSO;
-	MOVLW	0x05
-	PAGESEL	_I2C_anchoPulso
-	CALL	_I2C_anchoPulso
-	PAGESEL	$
-;	.line	404; "main.c"	dato<<=1;
+;	.line	381; "main.c"	dato<<=1;
 	BCF	STATUS,0
-;	.line	405; "main.c"	if(SDA) dato|=1;
-	BANKSEL	r0x100B
-	RLF	r0x100B,F
-;	.line	406; "main.c"	I2C_MEDIO_PULSO;
+;	.line	382; "main.c"	if(SDA) dato|=1;
+	BANKSEL	r0x1009
+	RLF	r0x1009,F
+;	.line	383; "main.c"	SCL_LOW;
 	BANKSEL	_PORTBbits
 	BTFSS	_PORTBbits,0
 	GOTO	_00002_DS_
-	BANKSEL	r0x100B
-	BSF	r0x100B,0
+	BANKSEL	r0x1009
+	BSF	r0x1009,0
 _00002_DS_:
-	MOVLW	0x05
-	PAGESEL	_I2C_anchoPulso
-	CALL	_I2C_anchoPulso
-	PAGESEL	$
-;	.line	407; "main.c"	SCL_LOW;
 	BANKSEL	_PORTBbits
 	BCF	_PORTBbits,1
-;	.line	408; "main.c"	I2C_MEDIO_PULSO;
-	MOVLW	0x05
-	PAGESEL	_I2C_anchoPulso
-	CALL	_I2C_anchoPulso
-	PAGESEL	$
-;	.line	399; "main.c"	for(i=0; i<8; i++)
-	BANKSEL	r0x100C
-	INCF	r0x100C,F
+;	.line	378; "main.c"	for(i=0; i<8; i++)
+	BANKSEL	r0x100A
+	INCF	r0x100A,F
 ;;unsigned compare: left < lit(0x8=8), size=1
 	MOVLW	0x08
-	SUBWF	r0x100C,W
+	SUBWF	r0x100A,W
 	BTFSS	STATUS,0
-	GOTO	_00174_DS_
+	GOTO	_00169_DS_
 ;;genSkipc:3257: created from rifx:00000000047658D0
-;	.line	411; "main.c"	SDA_OUTPUT;
+;	.line	386; "main.c"	SDA_OUTPUT;
 	BANKSEL	_TRISBbits
 	BCF	_TRISBbits,0
-;	.line	412; "main.c"	SDA = !ACKBit;
-	BANKSEL	r0x100A
-	MOVF	r0x100A,W
+;	.line	387; "main.c"	SDA = !ACKBit;
+	BANKSEL	r0x1008
+	MOVF	r0x1008,W
 	MOVLW	0x00
 	BTFSC	STATUS,2
 	MOVLW	0x01
-	MOVWF	r0x100C
 	MOVWF	r0x100A
-	RRF	r0x100A,W
+	MOVWF	r0x1008
+	RRF	r0x1008,W
 	BTFSC	STATUS,0
 	GOTO	_00003_DS_
 	BANKSEL	_PORTBbits
@@ -2023,30 +1990,14 @@ _00003_DS_:
 	BANKSEL	_PORTBbits
 	BSF	_PORTBbits,0
 _00004_DS_:
-;	.line	413; "main.c"	I2C_MEDIO_PULSO;
-	MOVLW	0x05
-	PAGESEL	_I2C_anchoPulso
-	CALL	_I2C_anchoPulso
-	PAGESEL	$
-;	.line	414; "main.c"	SCL_HIGH;
+;	.line	388; "main.c"	SCL_HIGH;
 	BANKSEL	_PORTBbits
 	BSF	_PORTBbits,1
-;	.line	415; "main.c"	I2C_ANCHO_PULSO;
-	MOVLW	0x0a
-	PAGESEL	_I2C_anchoPulso
-	CALL	_I2C_anchoPulso
-	PAGESEL	$
-;	.line	416; "main.c"	SCL_LOW;
-	BANKSEL	_PORTBbits
+;	.line	389; "main.c"	SCL_LOW;
 	BCF	_PORTBbits,1
-;	.line	417; "main.c"	I2C_MEDIO_PULSO;
-	MOVLW	0x05
-	PAGESEL	_I2C_anchoPulso
-	CALL	_I2C_anchoPulso
-	PAGESEL	$
-;	.line	418; "main.c"	return dato;
-	BANKSEL	r0x100B
-	MOVF	r0x100B,W
+;	.line	390; "main.c"	return dato;
+	BANKSEL	r0x1009
+	MOVF	r0x1009,W
 	RETURN	
 ; exit point of _I2C_readByte
 
@@ -2054,47 +2005,30 @@ _00004_DS_:
 ;  pBlock Stats: dbName = C
 ;***
 ;has an exit
-;functions called:
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
 ;4 compiler assigned registers:
+;   r0x1008
+;   r0x1009
 ;   r0x100A
 ;   r0x100B
-;   r0x100C
-;   r0x100D
 ;; Starting pCode block
 S_main__I2C_writeByte	code
 _I2C_writeByte:
 ; 2 exit points
-;	.line	364; "main.c"	bool I2C_writeByte(uint8_t dato)     // Send data to I2C
-	BANKSEL	r0x100A
-	MOVWF	r0x100A
-;	.line	369; "main.c"	for(i=0; i<8; i++)
-	CLRF	r0x100B
-_00166_DS_:
-;	.line	371; "main.c"	SDA = (dato & 0x80);    // SDA = bit de más peso del valor dato.
-	BANKSEL	r0x100A
-	MOVF	r0x100A,W
+;	.line	351; "main.c"	bool I2C_writeByte(uint8_t dato)     // Send data to I2C
+	BANKSEL	r0x1008
+	MOVWF	r0x1008
+;	.line	356; "main.c"	for(i=0; i<8; i++)
+	CLRF	r0x1009
+_00161_DS_:
+;	.line	358; "main.c"	SDA = (dato & 0x80);    // SDA = bit de más peso del valor dato.
+	BANKSEL	r0x1008
+	MOVF	r0x1008,W
 	ANDLW	0x80
 	BTFSS	STATUS,2
 	MOVLW	0x01
-;;1	MOVWF	r0x100C
-	MOVWF	r0x100D
-	RRF	r0x100D,W
+;;1	MOVWF	r0x100A
+	MOVWF	r0x100B
+	RRF	r0x100B,W
 	BTFSC	STATUS,0
 	GOTO	_00005_DS_
 	BANKSEL	_PORTBbits
@@ -2105,96 +2039,57 @@ _00005_DS_:
 	BANKSEL	_PORTBbits
 	BSF	_PORTBbits,0
 _00006_DS_:
-;	.line	372; "main.c"	I2C_MEDIO_PULSO;
-	MOVLW	0x05
-	PAGESEL	_I2C_anchoPulso
-	CALL	_I2C_anchoPulso
-	PAGESEL	$
-;	.line	373; "main.c"	SCL_HIGH;
+;	.line	359; "main.c"	SCL_HIGH;
 	BANKSEL	_PORTBbits
 	BSF	_PORTBbits,1
-;	.line	374; "main.c"	I2C_ANCHO_PULSO;
-	MOVLW	0x0a
-	PAGESEL	_I2C_anchoPulso
-	CALL	_I2C_anchoPulso
-	PAGESEL	$
-;	.line	375; "main.c"	SCL_LOW;
+;	.line	360; "main.c"	dato<<=1;
+	BCF	STATUS,0
+	BANKSEL	r0x1008
+	RLF	r0x1008,F
+;	.line	361; "main.c"	SCL_LOW;
 	BANKSEL	_PORTBbits
 	BCF	_PORTBbits,1
-;	.line	376; "main.c"	I2C_MEDIO_PULSO;
-	MOVLW	0x05
-	PAGESEL	_I2C_anchoPulso
-	CALL	_I2C_anchoPulso
-	PAGESEL	$
-;	.line	377; "main.c"	dato<<=1;
-	BCF	STATUS,0
-	BANKSEL	r0x100A
-	RLF	r0x100A,F
-;	.line	369; "main.c"	for(i=0; i<8; i++)
-	INCF	r0x100B,F
+;	.line	356; "main.c"	for(i=0; i<8; i++)
+	BANKSEL	r0x1009
+	INCF	r0x1009,F
 ;;unsigned compare: left < lit(0x8=8), size=1
 	MOVLW	0x08
-	SUBWF	r0x100B,W
+	SUBWF	r0x1009,W
 	BTFSS	STATUS,0
-	GOTO	_00166_DS_
+	GOTO	_00161_DS_
 ;;genSkipc:3257: created from rifx:00000000047658D0
-;	.line	380; "main.c"	SDA_INPUT;
+;	.line	364; "main.c"	SDA_INPUT;
 	BANKSEL	_TRISBbits
 	BSF	_TRISBbits,0
-;	.line	381; "main.c"	I2C_MEDIO_PULSO;
-	MOVLW	0x05
-	PAGESEL	_I2C_anchoPulso
-	CALL	_I2C_anchoPulso
-	PAGESEL	$
-;	.line	382; "main.c"	SCL_HIGH;
+;	.line	365; "main.c"	SCL_HIGH;
 	BANKSEL	_PORTBbits
 	BSF	_PORTBbits,1
-;	.line	383; "main.c"	I2C_MEDIO_PULSO;
-	MOVLW	0x05
-	PAGESEL	_I2C_anchoPulso
-	CALL	_I2C_anchoPulso
-	PAGESEL	$
-;	.line	384; "main.c"	ACKbit = SDA;
-	BANKSEL	r0x100A
-	CLRF	r0x100A
+;	.line	366; "main.c"	ACKbit = SDA;
+	BANKSEL	r0x1008
+	CLRF	r0x1008
 	BANKSEL	_PORTBbits
 	BTFSS	_PORTBbits,0
 	GOTO	_00007_DS_
-	BANKSEL	r0x100A
-	INCF	r0x100A,F
+	BANKSEL	r0x1008
+	INCF	r0x1008,F
 _00007_DS_:
-	BANKSEL	r0x100A
-	MOVF	r0x100A,W
+	BANKSEL	r0x1008
+	MOVF	r0x1008,W
 	BTFSC	STATUS,2
 	MOVLW	0x01
-	MOVWF	r0x100B
-;	.line	385; "main.c"	I2C_MEDIO_PULSO;
-	MOVLW	0x05
-	PAGESEL	_I2C_anchoPulso
-	CALL	_I2C_anchoPulso
-	PAGESEL	$
-;	.line	386; "main.c"	SCL_LOW;
+	MOVWF	r0x1009
+;	.line	367; "main.c"	SCL_LOW;
 	BANKSEL	_PORTBbits
 	BCF	_PORTBbits,1
-;	.line	387; "main.c"	I2C_MEDIO_PULSO;
-	MOVLW	0x05
-	PAGESEL	_I2C_anchoPulso
-	CALL	_I2C_anchoPulso
-	PAGESEL	$
-;	.line	388; "main.c"	SDA_OUTPUT;
+;	.line	368; "main.c"	SDA_OUTPUT;
 	BANKSEL	_TRISBbits
 	BCF	_TRISBbits,0
-;	.line	389; "main.c"	SDA_LOW;
+;	.line	369; "main.c"	SDA_LOW;
 	BANKSEL	_PORTBbits
 	BCF	_PORTBbits,0
-;	.line	390; "main.c"	I2C_MEDIO_PULSO;
-	MOVLW	0x05
-	PAGESEL	_I2C_anchoPulso
-	CALL	_I2C_anchoPulso
-	PAGESEL	$
-;	.line	391; "main.c"	return ACKbit;
-	BANKSEL	r0x100B
-	MOVF	r0x100B,W
+;	.line	370; "main.c"	return ACKbit;
+	BANKSEL	r0x1009
+	MOVF	r0x1009,W
 	RETURN	
 ; exit point of _I2C_writeByte
 
@@ -2202,33 +2097,16 @@ _00007_DS_:
 ;  pBlock Stats: dbName = C
 ;***
 ;has an exit
-;functions called:
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
 ;; Starting pCode block
 S_main__I2C_stop	code
 _I2C_stop:
 ; 2 exit points
-;	.line	358; "main.c"	SDA_LOW;
+;	.line	347; "main.c"	SDA_LOW;
 	BANKSEL	_PORTBbits
 	BCF	_PORTBbits,0
-;	.line	359; "main.c"	I2C_MEDIO_PULSO;
-	MOVLW	0x05
-	PAGESEL	_I2C_anchoPulso
-	CALL	_I2C_anchoPulso
-	PAGESEL	$
-;	.line	360; "main.c"	SCL_HIGH;            // STOP function for communicate I2C
-	BANKSEL	_PORTBbits
+;	.line	348; "main.c"	SCL_HIGH;            // STOP function for communicate I2C
 	BSF	_PORTBbits,1
-;	.line	361; "main.c"	I2C_MEDIO_PULSO;
-	MOVLW	0x05
-	PAGESEL	_I2C_anchoPulso
-	CALL	_I2C_anchoPulso
-	PAGESEL	$
-;	.line	362; "main.c"	SDA_HIGH;
-	BANKSEL	_PORTBbits
+;	.line	349; "main.c"	SDA_HIGH;
 	BSF	_PORTBbits,0
 	RETURN	
 ; exit point of _I2C_stop
@@ -2237,76 +2115,27 @@ _I2C_stop:
 ;  pBlock Stats: dbName = C
 ;***
 ;has an exit
-;functions called:
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
-;   _I2C_anchoPulso
 ;; Starting pCode block
 S_main__I2C_start	code
 _I2C_start:
 ; 2 exit points
-;	.line	346; "main.c"	SDA_HIGH;
+;	.line	338; "main.c"	SDA_HIGH;
 	BANKSEL	_PORTBbits
 	BSF	_PORTBbits,0
-;	.line	347; "main.c"	SCL_HIGH;
+;	.line	339; "main.c"	SCL_HIGH;
 	BSF	_PORTBbits,1
-;	.line	348; "main.c"	SCL_OUTPUT;    // Configura pines I2C como Salidas.
+;	.line	340; "main.c"	SCL_OUTPUT;    // Configura pines I2C como Salidas.
 	BANKSEL	_TRISBbits
 	BCF	_TRISBbits,1
-;	.line	349; "main.c"	SDA_OUTPUT;
+;	.line	341; "main.c"	SDA_OUTPUT;
 	BCF	_TRISBbits,0
-;	.line	350; "main.c"	I2C_MEDIO_PULSO;
-	MOVLW	0x05
-	PAGESEL	_I2C_anchoPulso
-	CALL	_I2C_anchoPulso
-	PAGESEL	$
-;	.line	351; "main.c"	SDA_LOW;             // START function for communicate I2C
+;	.line	342; "main.c"	SDA_LOW;             // START function for communicate I2C
 	BANKSEL	_PORTBbits
 	BCF	_PORTBbits,0
-;	.line	352; "main.c"	I2C_MEDIO_PULSO;
-	MOVLW	0x05
-	PAGESEL	_I2C_anchoPulso
-	CALL	_I2C_anchoPulso
-	PAGESEL	$
-;	.line	353; "main.c"	SCL_LOW;
-	BANKSEL	_PORTBbits
+;	.line	343; "main.c"	SCL_LOW;
 	BCF	_PORTBbits,1
-;	.line	354; "main.c"	I2C_MEDIO_PULSO;
-	MOVLW	0x05
-	PAGESEL	_I2C_anchoPulso
-	CALL	_I2C_anchoPulso
-	PAGESEL	$
 	RETURN	
 ; exit point of _I2C_start
-
-;***
-;  pBlock Stats: dbName = C
-;***
-;has an exit
-;2 compiler assigned registers:
-;   r0x1008
-;   r0x1009
-;; Starting pCode block
-S_main__I2C_anchoPulso	code
-_I2C_anchoPulso:
-; 2 exit points
-;	.line	340; "main.c"	void I2C_anchoPulso(uint8_t loops)
-	BANKSEL	r0x1008
-	MOVWF	r0x1008
-_00152_DS_:
-;	.line	342; "main.c"	while(loops--);
-	BANKSEL	r0x1008
-	MOVF	r0x1008,W
-	MOVWF	r0x1009
-	DECF	r0x1008,F
-	MOVF	r0x1009,W
-	BTFSS	STATUS,2
-	GOTO	_00152_DS_
-	RETURN	
-; exit point of _I2C_anchoPulso
 
 ;***
 ;  pBlock Stats: dbName = C
@@ -2345,33 +2174,45 @@ _00152_DS_:
 S_main__LCD_init	code
 _LCD_init:
 ; 2 exit points
-;	.line	303; "main.c"	LCD_DATA_4_DIR = OUTPUT_PIN;   // Pines iniciados como Salidas.
+;	.line	301; "main.c"	LCD_DATA_4_DIR = OUTPUT_PIN;   // Pines iniciados como Salidas.
 	BANKSEL	_TRISBbits
 	BCF	_TRISBbits,4
-;	.line	304; "main.c"	LCD_DATA_5_DIR = OUTPUT_PIN;
+;	.line	302; "main.c"	LCD_DATA_5_DIR = OUTPUT_PIN;
 	BCF	_TRISBbits,5
-;	.line	305; "main.c"	LCD_DATA_6_DIR = OUTPUT_PIN;
+;	.line	303; "main.c"	LCD_DATA_6_DIR = OUTPUT_PIN;
 	BCF	_TRISBbits,6
-;	.line	306; "main.c"	LCD_DATA_7_DIR = OUTPUT_PIN;
+;	.line	304; "main.c"	LCD_DATA_7_DIR = OUTPUT_PIN;
 	BCF	_TRISBbits,7
-;	.line	307; "main.c"	LCD_RS_DIR     = OUTPUT_PIN;
+;	.line	305; "main.c"	LCD_RS_DIR     = OUTPUT_PIN;
 	BCF	_TRISBbits,2
-;	.line	308; "main.c"	LCD_EN_DIR     = OUTPUT_PIN;
+;	.line	306; "main.c"	LCD_EN_DIR     = OUTPUT_PIN;
 	BCF	_TRISBbits,3
-;	.line	310; "main.c"	delay_ms(200);   // Espera para asegurar tensión estable tras inicio.
+;	.line	308; "main.c"	delay_ms(200);   // Espera para asegurar tensión estable tras inicio.
 	MOVLW	0xc8
 	MOVWF	STK00
 	MOVLW	0x00
 	PAGESEL	_delay_ms
 	CALL	_delay_ms
 	PAGESEL	$
-;	.line	311; "main.c"	LCD_RS = LOW_ST;
+;	.line	309; "main.c"	LCD_RS = LOW_ST;
 	BANKSEL	_PORTBbits
 	BCF	_PORTBbits,2
-;	.line	312; "main.c"	LCD_EN = LOW_ST;
+;	.line	310; "main.c"	LCD_EN = LOW_ST;
 	BCF	_PORTBbits,3
-;	.line	317; "main.c"	delay_ms(30);    // Espera >= 15 ms
+;	.line	315; "main.c"	delay_ms(30);    // Espera >= 15 ms
 	MOVLW	0x1e
+	MOVWF	STK00
+	MOVLW	0x00
+	PAGESEL	_delay_ms
+	CALL	_delay_ms
+	PAGESEL	$
+;	.line	317; "main.c"	LCD_send4Bits(0b00110000);
+	MOVLW	0x30
+	PAGESEL	_LCD_send4Bits
+	CALL	_LCD_send4Bits
+	PAGESEL	$
+;	.line	318; "main.c"	delay_ms(5);    // Espera >= 4.1 ms
+	MOVLW	0x05
 	MOVWF	STK00
 	MOVLW	0x00
 	PAGESEL	_delay_ms
@@ -2382,8 +2223,8 @@ _LCD_init:
 	PAGESEL	_LCD_send4Bits
 	CALL	_LCD_send4Bits
 	PAGESEL	$
-;	.line	320; "main.c"	delay_ms(5);    // Espera >= 4.1 ms
-	MOVLW	0x05
+;	.line	320; "main.c"	delay_ms(1);    // Espera >= 100 us
+	MOVLW	0x01
 	MOVWF	STK00
 	MOVLW	0x00
 	PAGESEL	_delay_ms
@@ -2394,44 +2235,32 @@ _LCD_init:
 	PAGESEL	_LCD_send4Bits
 	CALL	_LCD_send4Bits
 	PAGESEL	$
-;	.line	322; "main.c"	delay_ms(1);    // Espera >= 100 us
-	MOVLW	0x01
-	MOVWF	STK00
-	MOVLW	0x00
-	PAGESEL	_delay_ms
-	CALL	_delay_ms
-	PAGESEL	$
-;	.line	323; "main.c"	LCD_send4Bits(0b00110000);
-	MOVLW	0x30
-	PAGESEL	_LCD_send4Bits
-	CALL	_LCD_send4Bits
-	PAGESEL	$
-;	.line	324; "main.c"	LCD_send4Bits(0b00100000);
+;	.line	322; "main.c"	LCD_send4Bits(0b00100000);
 	MOVLW	0x20
 	PAGESEL	_LCD_send4Bits
 	CALL	_LCD_send4Bits
 	PAGESEL	$
-;	.line	325; "main.c"	LCD_command(LCD_CMD_FUNCTION_SET + LCD_CMD_4BIT_INTERFACE + LCD_CMD_2LINES + LCD_CMD_F_FONT_5_8);
+;	.line	323; "main.c"	LCD_command(LCD_CMD_FUNCTION_SET + LCD_CMD_4BIT_INTERFACE + LCD_CMD_2LINES + LCD_CMD_F_FONT_5_8);
 	MOVLW	0x28
 	PAGESEL	_LCD_command
 	CALL	_LCD_command
 	PAGESEL	$
-;	.line	329; "main.c"	LCD_OFF;
+;	.line	327; "main.c"	LCD_OFF;
 	MOVLW	0x08
 	PAGESEL	_LCD_command
 	CALL	_LCD_command
 	PAGESEL	$
-;	.line	330; "main.c"	LCD_command(LCD_CMD_CHARACTER_ENTRY_MODE + LCD_CMD_INCREMENT + LCD_CMD_DISPLAY_SHIFT_OFF);
+;	.line	328; "main.c"	LCD_command(LCD_CMD_CHARACTER_ENTRY_MODE + LCD_CMD_INCREMENT + LCD_CMD_DISPLAY_SHIFT_OFF);
 	MOVLW	0x06
 	PAGESEL	_LCD_command
 	CALL	_LCD_command
 	PAGESEL	$
-;	.line	331; "main.c"	LCD_ON;
+;	.line	329; "main.c"	LCD_ON;
 	MOVLW	0x0c
 	PAGESEL	_LCD_command
 	CALL	_LCD_command
 	PAGESEL	$
-;	.line	332; "main.c"	LCD_CLEAR;
+;	.line	330; "main.c"	LCD_CLEAR;
 	MOVLW	0x01
 	PAGESEL	_LCD_command
 	CALL	_LCD_command
@@ -2459,7 +2288,7 @@ _LCD_init:
 S_main__LCD_print	code
 _LCD_print:
 ; 2 exit points
-;	.line	293; "main.c"	void LCD_print(uint8_t *str)
+;	.line	291; "main.c"	void LCD_print(uint8_t *str)
 	BANKSEL	r0x1014
 	MOVWF	r0x1014
 	MOVF	STK00,W
@@ -2467,7 +2296,7 @@ _LCD_print:
 	MOVF	STK01,W
 	MOVWF	r0x1016
 _00140_DS_:
-;	.line	295; "main.c"	while(*str)
+;	.line	293; "main.c"	while(*str)
 	BANKSEL	r0x1016
 	MOVF	r0x1016,W
 	MOVWF	STK01
@@ -2482,12 +2311,12 @@ _00140_DS_:
 	MOVF	r0x1017,W
 	BTFSC	STATUS,2
 	GOTO	_00143_DS_
-;	.line	297; "main.c"	LCD_putChar(*str);
+;	.line	295; "main.c"	LCD_putChar(*str);
 	MOVF	r0x1017,W
 	PAGESEL	_LCD_putChar
 	CALL	_LCD_putChar
 	PAGESEL	$
-;	.line	298; "main.c"	str++;
+;	.line	296; "main.c"	str++;
 	BANKSEL	r0x1016
 	INCF	r0x1016,F
 	BTFSC	STATUS,2
@@ -2516,16 +2345,16 @@ _00143_DS_:
 S_main__LCD_gotoXY	code
 _LCD_gotoXY:
 ; 2 exit points
-;	.line	286; "main.c"	void LCD_gotoXY(uint8_t columna, uint8_t fila)
+;	.line	284; "main.c"	void LCD_gotoXY(uint8_t columna, uint8_t fila)
 	BANKSEL	r0x1014
 	MOVWF	r0x1014
 	MOVF	STK00,W
 	MOVWF	r0x1015
-;	.line	288; "main.c"	if(fila == 0)
+;	.line	286; "main.c"	if(fila == 0)
 	MOVF	r0x1015,W
 	BTFSS	STATUS,2
 	GOTO	_00133_DS_
-;	.line	289; "main.c"	LCD_command(LCD_CMD_SET_DISPLAY_ADDRESS + columna + LCD_CMD_ROW_0);
+;	.line	287; "main.c"	LCD_command(LCD_CMD_SET_DISPLAY_ADDRESS + columna + LCD_CMD_ROW_0);
 	MOVLW	0x80
 	ADDWF	r0x1014,W
 	MOVWF	r0x1015
@@ -2534,7 +2363,7 @@ _LCD_gotoXY:
 	PAGESEL	$
 	GOTO	_00135_DS_
 _00133_DS_:
-;	.line	291; "main.c"	LCD_command(LCD_CMD_SET_DISPLAY_ADDRESS + columna + LCD_CMD_ROW_1);
+;	.line	289; "main.c"	LCD_command(LCD_CMD_SET_DISPLAY_ADDRESS + columna + LCD_CMD_ROW_1);
 	MOVLW	0xc0
 	BANKSEL	r0x1014
 	ADDWF	r0x1014,F
@@ -2559,13 +2388,13 @@ _00135_DS_:
 S_main__LCD_putChar	code
 _LCD_putChar:
 ; 2 exit points
-;	.line	281; "main.c"	void LCD_putChar(uint8_t chr)
+;	.line	279; "main.c"	void LCD_putChar(uint8_t chr)
 	BANKSEL	r0x1013
 	MOVWF	r0x1013
-;	.line	283; "main.c"	LCD_RS = LCD_CharMode;
+;	.line	281; "main.c"	LCD_RS = LCD_CharMode;
 	BANKSEL	_PORTBbits
 	BSF	_PORTBbits,2
-;	.line	284; "main.c"	LCD_send(chr);
+;	.line	282; "main.c"	LCD_send(chr);
 	BANKSEL	r0x1013
 	MOVF	r0x1013,W
 	PAGESEL	_LCD_send
@@ -2587,13 +2416,13 @@ _LCD_putChar:
 S_main__LCD_command	code
 _LCD_command:
 ; 2 exit points
-;	.line	276; "main.c"	void LCD_command(uint8_t comm)
+;	.line	274; "main.c"	void LCD_command(uint8_t comm)
 	BANKSEL	r0x1013
 	MOVWF	r0x1013
-;	.line	278; "main.c"	LCD_RS = LCD_CmdMode;
+;	.line	276; "main.c"	LCD_RS = LCD_CmdMode;
 	BANKSEL	_PORTBbits
 	BCF	_PORTBbits,2
-;	.line	279; "main.c"	LCD_send(comm);
+;	.line	277; "main.c"	LCD_send(comm);
 	BANKSEL	r0x1013
 	MOVF	r0x1013,W
 	PAGESEL	_LCD_send
@@ -2618,14 +2447,14 @@ _LCD_command:
 S_main__LCD_send	code
 _LCD_send:
 ; 2 exit points
-;	.line	271; "main.c"	void LCD_send(uint8_t date)
+;	.line	269; "main.c"	void LCD_send(uint8_t date)
 	BANKSEL	r0x1011
 	MOVWF	r0x1011
-;	.line	273; "main.c"	LCD_send4Bits(date);
+;	.line	271; "main.c"	LCD_send4Bits(date);
 	PAGESEL	_LCD_send4Bits
 	CALL	_LCD_send4Bits
 	PAGESEL	$
-;	.line	274; "main.c"	LCD_send4Bits(date<<4);
+;	.line	272; "main.c"	LCD_send4Bits(date<<4);
 	BANKSEL	r0x1011
 	SWAPF	r0x1011,W
 	ANDLW	0xf0
@@ -2654,10 +2483,10 @@ _LCD_send:
 S_main__LCD_send4Bits	code
 _LCD_send4Bits:
 ; 2 exit points
-;	.line	260; "main.c"	void LCD_send4Bits(uint8_t date)
+;	.line	258; "main.c"	void LCD_send4Bits(uint8_t date)
 	BANKSEL	r0x100E
 	MOVWF	r0x100E
-;	.line	262; "main.c"	LCD_DATA_4 = (date & 0x10);
+;	.line	260; "main.c"	LCD_DATA_4 = (date & 0x10);
 	ANDLW	0x10
 	BTFSS	STATUS,2
 	MOVLW	0x01
@@ -2674,7 +2503,7 @@ _00008_DS_:
 	BANKSEL	_PORTBbits
 	BSF	_PORTBbits,4
 _00009_DS_:
-;	.line	263; "main.c"	LCD_DATA_5 = (date & 0x20);
+;	.line	261; "main.c"	LCD_DATA_5 = (date & 0x20);
 	BANKSEL	r0x100E
 	MOVF	r0x100E,W
 	ANDLW	0x20
@@ -2693,7 +2522,7 @@ _00010_DS_:
 	BANKSEL	_PORTBbits
 	BSF	_PORTBbits,5
 _00011_DS_:
-;	.line	264; "main.c"	LCD_DATA_6 = (date & 0x40);
+;	.line	262; "main.c"	LCD_DATA_6 = (date & 0x40);
 	BANKSEL	r0x100E
 	MOVF	r0x100E,W
 	ANDLW	0x40
@@ -2712,7 +2541,7 @@ _00012_DS_:
 	BANKSEL	_PORTBbits
 	BSF	_PORTBbits,6
 _00013_DS_:
-;	.line	265; "main.c"	LCD_DATA_7 = (date & 0x80);
+;	.line	263; "main.c"	LCD_DATA_7 = (date & 0x80);
 	BANKSEL	r0x100E
 	MOVF	r0x100E,W
 	ANDLW	0x80
@@ -2731,20 +2560,20 @@ _00014_DS_:
 	BANKSEL	_PORTBbits
 	BSF	_PORTBbits,7
 _00015_DS_:
-;	.line	266; "main.c"	LCD_EN     = HIGH_ST;
+;	.line	264; "main.c"	LCD_EN     = HIGH_ST;
 	BANKSEL	_PORTBbits
 	BSF	_PORTBbits,3
-;	.line	267; "main.c"	delay_ms(1);
+;	.line	265; "main.c"	delay_ms(1);
 	MOVLW	0x01
 	MOVWF	STK00
 	MOVLW	0x00
 	PAGESEL	_delay_ms
 	CALL	_delay_ms
 	PAGESEL	$
-;	.line	268; "main.c"	LCD_EN     = LOW_ST;
+;	.line	266; "main.c"	LCD_EN     = LOW_ST;
 	BANKSEL	_PORTBbits
 	BCF	_PORTBbits,3
-;	.line	269; "main.c"	delay_ms(1);
+;	.line	267; "main.c"	delay_ms(1);
 	MOVLW	0x01
 	MOVWF	STK00
 	MOVLW	0x00
@@ -2770,13 +2599,13 @@ _00015_DS_:
 S_main__delay_ms	code
 _delay_ms:
 ; 2 exit points
-;	.line	240; "main.c"	void delay_ms(uint16_t ms)
+;	.line	238; "main.c"	void delay_ms(uint16_t ms)
 	BANKSEL	r0x1008
 	MOVWF	r0x1008
 	MOVF	STK00,W
 	MOVWF	r0x1009
 _00108_DS_:
-;	.line	250; "main.c"	while(ms--)
+;	.line	248; "main.c"	while(ms--)
 	BANKSEL	r0x1009
 	MOVF	r0x1009,W
 	MOVWF	r0x100A
@@ -2790,7 +2619,7 @@ _00108_DS_:
 	IORWF	r0x100B,W
 	BTFSC	STATUS,2
 	GOTO	_00111_DS_
-;	.line	253; "main.c"	while(aux--);
+;	.line	251; "main.c"	while(aux--);
 	MOVLW	0x3d
 	MOVWF	r0x100A
 	CLRF	r0x100B
@@ -2815,6 +2644,6 @@ _00111_DS_:
 
 
 ;	code size estimation:
-;	 1011+  472 =  1483 instructions ( 3910 byte)
+;	  965+  427 =  1392 instructions ( 3638 byte)
 
 	end

@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1509139630 source:o:\github\sdcc-pic\digital_clock_pic_test_picpas\main.c
+	<pic14/pic16f877a.h>
+	<stdint.h>
+	<stdbool.h>
+

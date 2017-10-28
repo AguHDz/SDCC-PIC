@@ -94,8 +94,6 @@ static __code uint16_t __at (_CONFIG) configword1 = _CP_OFF & _DEBUG_OFF & _WRT_
 #define SCL_OUTPUT          SCL_DIR = 0 // SCL como salida.
 #define SCL_HIGH            SCL = 1     // SCL nivel alto.
 #define SCL_LOW             SCL = 0     // SCL nivel bajo.
-#define I2C_SPEED           10          // Dependerá de la velocidad de reloj.
-
 //
 // __Pulsadores________________________________________________________________
 #define P_INC               RA0    // Pulsador INC
@@ -240,9 +238,9 @@ uint8_t editMenuState;          // Posición o estado dentro del menú de edición.
 void delay_ms(uint16_t ms)
 {
 #define __FOSC_CALIBRATED 4000000L    // Calibrado a 4 MHz
-//#ifdef __PIC16F877A_H__
+#ifdef __PIC16F877A_H__
   #define DELAY_CALIBRATED 61  // Calibrated delay, ~1ms/loop @ 4MHz
-//#endif
+#endif
 // Se extrapola a cualquier velocidad del microcontrolador.
 #define DELAY_CALIBRATED_VAR (DELAY_CALIBRATED*FOSC/__FOSC_CALIBRATED)
    uint16_t aux;
@@ -335,30 +333,19 @@ void LCD_init(void)
 /****************************************************************************
   Funciones de comunicación I2C mediante software.
 *****************************************************************************/
-#define I2C_ANCHO_PULSO I2C_anchoPulso(I2C_SPEED)     //width of data bit on SDA
-#define I2C_MEDIO_PULSO I2C_anchoPulso(I2C_SPEED/2)   //width of clock pulse on SCL
-void I2C_anchoPulso(uint8_t loops)
-{
-    while(loops--);
-}
 void I2C_start(void)
 {
     SDA_HIGH;
     SCL_HIGH;
     SCL_OUTPUT;    // Configura pines I2C como Salidas.
     SDA_OUTPUT;
-    I2C_MEDIO_PULSO;
     SDA_LOW;             // START function for communicate I2C
-    I2C_MEDIO_PULSO;
     SCL_LOW;
-    I2C_MEDIO_PULSO;
 }
 void I2C_stop(void)
 {
     SDA_LOW;
-    I2C_MEDIO_PULSO;
     SCL_HIGH;            // STOP function for communicate I2C
-    I2C_MEDIO_PULSO;
     SDA_HIGH;
 }
 bool I2C_writeByte(uint8_t dato)     // Send data to I2C
@@ -369,25 +356,17 @@ bool I2C_writeByte(uint8_t dato)     // Send data to I2C
     for(i=0; i<8; i++)
     {
         SDA = (dato & 0x80);    // SDA = bit de más peso del valor dato.
-        I2C_MEDIO_PULSO;
         SCL_HIGH;
-        I2C_ANCHO_PULSO;
-        SCL_LOW;
-        I2C_MEDIO_PULSO;
         dato<<=1;
+        SCL_LOW;
     }
 
     SDA_INPUT;
-    I2C_MEDIO_PULSO;
     SCL_HIGH;
-    I2C_MEDIO_PULSO;
     ACKbit = SDA;
-    I2C_MEDIO_PULSO;
     SCL_LOW;
-    I2C_MEDIO_PULSO;
     SDA_OUTPUT;
     SDA_LOW;
-    I2C_MEDIO_PULSO;
     return ACKbit;
 }
 uint8_t I2C_readByte(bool ACKBit)   // Receive data from I2C
@@ -398,23 +377,16 @@ uint8_t I2C_readByte(bool ACKBit)   // Receive data from I2C
     SDA_INPUT;
     for(i=0; i<8; i++)
     {
-        I2C_MEDIO_PULSO;
         SCL_HIGH;
-        I2C_MEDIO_PULSO;
         dato<<=1;
         if(SDA) dato|=1;
-        I2C_MEDIO_PULSO;
         SCL_LOW;
-        I2C_MEDIO_PULSO;
     }
 
     SDA_OUTPUT;
     SDA = !ACKBit;
-    I2C_MEDIO_PULSO;
     SCL_HIGH;
-    I2C_ANCHO_PULSO;
     SCL_LOW;
-    I2C_MEDIO_PULSO;
     return dato;
 }
 
@@ -701,7 +673,8 @@ void timeSet(void)
 *****************************************************************************/
 void setup(void)
 {
-    ADCON1 = 0x07;          // Todos los pines configurados como digitales.
+    CMCON  = 0x07;          // Deshabilita comparadores.
+    ADCON1 = 0x06;          // Todos los pines configurados como digitales.
     ADCON0 = 0x00;          // Desactiva conversor A/D.
     GIE    = false;         // Todas las interrupciones desactivadas.
 
@@ -710,13 +683,13 @@ void setup(void)
     P_SET_DIR = INPUT_PIN;
     SOUT_DIR  = INPUT_PIN;
 
-    I2C_start();            // Inicia comunicación I2C
+    I2C_start();                 // Inicia comunicación I2C
     I2C_writeByte(0xD0);         // Dirección I2C del DS1307.
     I2C_writeByte(0x07);         // Escribe en la dirección 07h.
     I2C_writeByte(DS1307_CONF);  // Configura 1 Hz en salida SOUT del DS1307
     I2C_stop();
 
-    LCD_init();             // Inicializa display LCD.
+    LCD_init();                  // Inicializa display LCD.
 }
 
 /****************************************************************************
@@ -736,12 +709,11 @@ void main(void)
             editMenuState=1;
             // Espera fin pulsación y antirebote mecánico.
             while(P_SET==LOW_ST) delay_ms(TIEMPO_ANTIREBOTE);
-            timeSet();
-            DS1307_timeWrite();
+            timeSet();            // Ajuste de reloj.
+            DS1307_timeWrite();   // Envía datos editados.
         }
 
-        DS1307_timeRead();
-
+        DS1307_timeRead();  // Lee datos de fecha y hora.
         timeShow();         // Actualiza display LCD con fecha y hora.
 
         // Espera 1 segundo usando salida SOUT del DS1307 (1 Hz)

@@ -8,7 +8,7 @@
   <PWI>
    <POPUP w="800" x="-1882" flags="00000002" y="129" h="200" pid="0" iid="-1">
     <PROPERTIES>
-     <ITEM name="Message Column Width">542</ITEM>
+     <ITEM name="Message Column Width">663</ITEM>
      <ITEM name="ShowGrid">No</ITEM>
      <ITEM name="Source Column Width">100</ITEM>
      <ITEM name="Time Column Width">120</ITEM>
@@ -32,7 +32,7 @@
      <ITEM name="nItems">0</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="1159" x="-1842" flags="00000022" y="169" h="783" pid="0" iid="12">
+   <POPUP w="450" x="-1842" flags="00000022" y="169" h="250" pid="0" iid="12">
     <PROPERTIES>
      <ITEM name="ComboBox1000">S</ITEM>
      <ITEM name="ComboBox1001">Sr</ITEM>
@@ -84,7 +84,7 @@
    <POPUP w="114" x="-1742" flags="00000008" y="269" h="127" pid="7" iid="1">
     <PROPERTIES/>
    </POPUP>
-   <POPUP w="8" x="-1722" flags="80000002" y="289" h="8" pid="8" iid="1">
+   <POPUP w="8" x="-1722" flags="00000002" y="289" h="8" pid="8" iid="1">
     <PROPERTIES>
      <ITEM name="DataType">2</ITEM>
      <ITEM name="DispChars">Yes</ITEM>
@@ -106,6 +106,9 @@
      <ITEM name="ShowToolTips">Yes</ITEM>
      <ITEM name="TopLineAddress">00000000</ITEM>
     </PROPERTIES>
+   </POPUP>
+   <POPUP w="695" x="-1191" flags="00000001" y="402" h="453" pid="0" iid="4">
+    <PROPERTIES/>
    </POPUP>
   </PWI>
  </MODULE>
